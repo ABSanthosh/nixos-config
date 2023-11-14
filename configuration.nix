@@ -14,6 +14,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  boot.kernelParams = ["quiet" "splash" "loglevel=0"];
+  boot.loader.timeout = 0;
+  boot.initrd.verbose = false;
+  boot.consoleLogLevel = 0;
+  boot.plymouth = {
+    enable = true;
+  };
 
   networking.hostName = "zoro"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -43,8 +50,11 @@
     LC_TIME = "en_IN";
   };
 
+  documentation.nixos.enable = false;
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -85,11 +95,10 @@
     description = "Santhosh";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
       neofetch
       gnome.gnome-tweaks
       lm_sensors
-    #  thunderbird
+      amberol
     ];
   };
 
@@ -103,6 +112,35 @@
   #  wget
      git
      neovim
+     vscode
+     pkgs.chromium
+     firefox
+  ];
+  environment.gnome.excludePackages = with pkgs.gnome; [
+    baobab      # disk usage analyzer
+    # cheese      # photo booth
+    # eog         # image viewer
+    epiphany    # web browser
+    gedit       # text editor
+    simple-scan # document scanner
+    # totem       # video player
+    yelp        # help viewer
+    # evince      # document viewer
+    # file-roller # archive manager
+    geary       # email client
+    seahorse    # password manager
+ 
+    pkgs.gnome-tour
+    gnome-characters
+    gnome-logs
+    gnome-maps 
+    gnome-music 
+    # gnome-photos 
+    # gnome-screenshot
+    gnome-weather
+    gnome-contacts
+    pkgs.gnome-connections
+    pkgs.gnome-photos
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -138,6 +176,10 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+
+    extraPackages = with pkgs; [
+	vaapiIntel
+    ];
   };
 
   # Load nvidia driver for Xorg and Wayland

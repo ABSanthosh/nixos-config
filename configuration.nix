@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
     ];
 
-  documentation.nixos.enable = false;
+  # documentation.nixos.enable = false;
   
   # Bootloader.
   boot = {
@@ -23,7 +23,14 @@
     kernelParams = ["quiet" "splash" "loglevel=0"];
     initrd.verbose = false;
     consoleLogLevel = 0;
-    plymouth.enable = true;
+    plymouth = { 
+      enable = true; 
+    };
+  };
+
+  systemd = {
+    targets.network-online.wantedBy = pkgs.lib.mkForce []; # Normally ["multi-user.target"]
+    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce []; # Normally ["network-online.target"]
   };
 
   # Enable OpenGL
@@ -34,29 +41,25 @@
       driSupport32Bit = true;
   
       extraPackages = with pkgs; [
-        vaapiIntel
+        vaapiVdpau
       ];
     };
 
-    nvidia = {
-      open = false;
-      nvidiaSettings = true;
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      powerManagement = {
-        enable = false;
-	finegrained = true;
-      };
-      prime = {
-        sync.enable = true;
-	offload = {
-	  enable = false;
-	  # enableOffloadCmd = true;
-	};
-	intelBusId = "PCI:0:2:0";
-	nvidiaBusId = "PCI:1:0:0";
-      };
-    };
+    #nvidia = {
+    #  open = false;
+    #  nvidiaSettings = true;
+    #  modesetting.enable = true;
+    #  package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #  powerManagement = {
+    #    enable = false;
+    #    finegrained = false;
+    #  };
+    #  prime = {
+    #    sync.enable = true;
+    #    intelBusId = "PCI:0:2:0";
+    #    nvidiaBusId = "PCI:1:0:0";
+    #    };
+    #};
   };
 
   networking.hostName = "zoro"; # Define your hostname.
@@ -98,7 +101,8 @@
       xkbVariant = "";
 
       # GPU
-      videoDrivers = lib.mkForce [ "nvidia" ];
+      # videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "intel" ];
     };
 
     # Enable CUPS to print documents.
@@ -132,6 +136,10 @@
 	STOP_CHARGE_THRESH_BAT0 = 60;
       };
     };
+
+    # Disable tracker 
+    gnome.tracker.enable = false;
+    gnome.tracker-miners.enable = false;
   };
 
   # Enable sound with pipewire.
@@ -145,43 +153,77 @@
     description = "Santhosh";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
     ];
   };
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
+  fonts = { 
+    fonts = with pkgs; [
+      jetbrains-mono
+    ];
+    fontconfig = {
+      enable = true;
+      antialias = true;
+      allowBitmaps = true;
+      defaultFonts = {
+        # monospace = "jetbrains-mono";
+      };
+    };
+  };
+  console.font = "jetbrains-mono";
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     git
-     neovim
-     vscode
-     pkgs.chromium
-     firefox
-     amberol
-  ];
+  environment = { 
+    systemPackages = with pkgs; [
+      git
+      neovim
+      vscode
+      pkgs.librewolf
+      firefox
+      amberol
+      gnome.gnome-tweaks
+      pkgs.brave
 
-  environment.gnome.excludePackages = with pkgs.gnome; [
-    baobab      # disk usage analyzer
-    epiphany    # web browser
-    gedit       # text editor
-    simple-scan # document scanner
-    yelp        # help viewer
-    geary       # email client
-    seahorse    # password manager
- 
-    pkgs.gnome-tour
-    gnome-characters
-    gnome-logs
-    gnome-maps 
-    gnome-music 
-    gnome-weather
-    gnome-contacts
-    pkgs.gnome-connections
-    pkgs.gnome-photos
-  ];
+      # Development
+      nodejs
+      python311
+      mysql80
+      docker
+
+      # fonts
+      jetbrains-mono
+      gnomeExtensions.freon
+    ];
+
+    gnome.excludePackages = with pkgs.gnome; [
+      baobab      # disk usage analyzer
+      epiphany    # web browser
+      gedit       # text editor
+      simple-scan # document scanner
+      yelp        # help viewer
+      geary       # email client
+      seahorse    # password manager
+   
+      pkgs.gnome-tour
+      gnome-characters
+      gnome-logs
+      gnome-maps 
+      gnome-music 
+      gnome-weather
+      gnome-contacts
+      pkgs.gnome-connections
+      pkgs.gnome-photos
+    ];
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

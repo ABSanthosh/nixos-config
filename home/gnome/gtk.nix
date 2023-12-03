@@ -5,8 +5,14 @@ let
   breezeCursors = (pkgs.stdenvNoCC.mkDerivation rec {
     pname = "breeze-cursors";
     version = "1.0";
-    src = pkgs.fetchTarball {
-      url = "file:///etc/nixos/assets/theme/Beeze-Dark.tar.gz";
+    # src = pkgs.fetchTarball {
+    #   url = "file:///etc/nixos/assets/theme/Beeze-Dark.tar.gz";
+    #   hash = "sha256-i0N/QB5uzqHapMCDl6h6PWPJ4GOAyB1ds9qlqmZacLY=";
+    # };
+    src = pkgs.fetchFromGitHub {
+      owner = "ABSanthosh";
+      repo = "NixOS-dots";
+      rev = version;
       hash = "sha256-i0N/QB5uzqHapMCDl6h6PWPJ4GOAyB1ds9qlqmZacLY=";
     };
     buildPhase = "";

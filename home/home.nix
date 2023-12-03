@@ -38,7 +38,6 @@
 
       # fonts
       jetbrains-mono
-      gnomeExtensions.freon
     ];
   };
 

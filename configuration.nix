@@ -32,7 +32,13 @@
 
   systemd = {
     targets.network-online.wantedBy = pkgs.lib.mkForce [ ]; # Normally ["multi-user.target"]
-    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce [ ]; # Normally ["network-online.target"]
+    services = {
+      systemd-udev-settle.enable = false;
+      NetworkManager-wait-online = {
+        enable = false;
+        wantedBy = pkgs.lib.mkForce [ ]; # Normally ["network-online.target"] 
+      };
+    };
   };
 
   # Enable OpenGL
@@ -64,11 +70,15 @@
     };
   };
 
-  networking.hostName = "zoro"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "zoro";
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" "9.9.9.9" ];
+    dhcpcd = {
+      wait = "background";
+      extraConfig = "noarp";
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Kolkata";
@@ -107,9 +117,12 @@
 
       # Enable the GNOME Desktop Environment.
       displayManager = {
+        autoLogin = {
+          enable = true;
+          user = "santhosh";
+        };
         gdm = {
           enable = true;
-          wayland = false;
         };
       };
       desktopManager = {
@@ -222,7 +235,7 @@
       simple-scan # document scanner
       yelp # help viewer
       geary # email client
-      seahorse # password manager
+      # seahorse # password manager
 
       pkgs.gnome-tour
       gnome-characters
@@ -249,12 +262,6 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

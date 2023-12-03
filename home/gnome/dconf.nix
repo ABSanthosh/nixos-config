@@ -1,14 +1,26 @@
 { config, pkgs, ... }:
-
+let
+  wallpaper = "/etc/nixos/assets/Wallpapers/Monterey/Monterey.jpg";
+in
 {
   dconf.settings = {
+    "org/gnome/desktop/screensaver" = {
+      picture-uri = "file://${wallpaper}";
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = "file://${wallpaper}";
+    };
+    "org/gnome/desktop/peripherals/touchpad" = {
+      tap-to-click = true;
+      two-finger-scrolling-enabled = true;
+    };
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
       clock-show-weekday = true;
       color-scheme = "prefer-dark";
       enable-hot-corners = true;
       font-antialiasing = "grayscale";
-      font-hinting = "slight";
+      font-hinting = "none";
     };
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "" ];
@@ -17,12 +29,10 @@
       switch-applications-backward = [ "" ];
       switch-windows = [ "<Alt>Tab" ];
     };
-    "org/gnome/desktop/peripherals/touchpad" = {
-      tap-to-click = true;
-      two-finger-scrolling-enabled = true;
-    };
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";
+      auto-raise = false;
+      focus-new-windows = "smart";
     };
     "org/gnome/shell/keybindings" = {
       screenshot = [ "Print" ];

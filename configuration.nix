@@ -6,12 +6,14 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./home/home-manager.nix
     ];
 
   # documentation.nixos.enable = false;
-  
+
   # Bootloader.
   boot = {
     loader = {
@@ -20,17 +22,17 @@
       timeout = 0;
     };
     supportedFilesystems = [ "ntfs" ];
-    kernelParams = ["quiet" "splash" "loglevel=0"];
+    kernelParams = [ "quiet" "splash" "loglevel=0" ];
     initrd.verbose = false;
     consoleLogLevel = 0;
-    plymouth = { 
-      enable = true; 
+    plymouth = {
+      enable = true;
     };
   };
 
   systemd = {
-    targets.network-online.wantedBy = pkgs.lib.mkForce []; # Normally ["multi-user.target"]
-    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce []; # Normally ["network-online.target"]
+    targets.network-online.wantedBy = pkgs.lib.mkForce [ ]; # Normally ["multi-user.target"]
+    services.NetworkManager-wait-online.wantedBy = pkgs.lib.mkForce [ ]; # Normally ["network-online.target"]
   };
 
   # Enable OpenGL
@@ -39,27 +41,27 @@
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
-  
+
       extraPackages = with pkgs; [
         vaapiVdpau
       ];
     };
 
-    #nvidia = {
-    #  open = false;
-    #  nvidiaSettings = true;
-    #  modesetting.enable = true;
-    #  package = config.boot.kernelPackages.nvidiaPackages.stable;
-    #  powerManagement = {
-    #    enable = false;
-    #    finegrained = false;
-    #  };
-    #  prime = {
-    #    sync.enable = true;
-    #    intelBusId = "PCI:0:2:0";
-    #    nvidiaBusId = "PCI:1:0:0";
-    #    };
-    #};
+    nvidia = {
+      open = false;
+      nvidiaSettings = true;
+      modesetting.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      powerManagement = {
+        enable = false;
+        finegrained = false;
+      };
+      prime = {
+        sync.enable = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+      };
+    };
   };
 
   networking.hostName = "zoro"; # Define your hostname.
@@ -86,23 +88,43 @@
     LC_TIME = "en_IN";
   };
 
+  # Nix
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+    gc = {
+      options = "--delete-older-than +5";
+      automatic = true;
+    };
+  };
+
   # Enable the X11 windowing system.
   services = {
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
-    
+
       # Enable the GNOME Desktop Environment.
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
+      displayManager = {
+        gdm = {
+          enable = true;
+          wayland = false;
+        };
+      };
+      desktopManager = {
+        gnome = {
+          enable = true;
+        };
+      };
 
       # Configure keymap in X11
       layout = "us";
       xkbVariant = "";
 
       # GPU
-      # videoDrivers = [ "nvidia" ];
-      videoDrivers = [ "intel" ];
+      videoDrivers = [ "nvidia" ];
+      # videoDrivers = [ "intel" ];
     };
 
     # Enable CUPS to print documents.
@@ -127,13 +149,13 @@
 
         CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
         CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
- 
+
         CPU_MIN_PERF_ON_AC = 0;
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 20;
-	START_CHARGE_THRESH_BAT0 = 65;
-	STOP_CHARGE_THRESH_BAT0 = 60;
+        START_CHARGE_THRESH_BAT0 = 65;
+        STOP_CHARGE_THRESH_BAT0 = 60;
       };
     };
 
@@ -152,8 +174,7 @@
     isNormalUser = true;
     description = "Santhosh";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    ];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -163,8 +184,8 @@
     };
   };
 
-  fonts = { 
-    fonts = with pkgs; [
+  fonts = {
+    packages = with pkgs; [
       jetbrains-mono
     ];
     fontconfig = {
@@ -172,58 +193,48 @@
       antialias = true;
       allowBitmaps = true;
       defaultFonts = {
-        # monospace = "jetbrains-mono";
+        monospace = [ "jetbrains-mono" ];
       };
     };
   };
-  console.font = "jetbrains-mono";
-
+  console = {
+    earlySetup = true;
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
+    packages = with pkgs; [ terminus_font ];
+    keyMap = "us";
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment = { 
-    systemPackages = with pkgs; [
-      git
-      neovim
-      vscode
-      pkgs.librewolf
-      firefox
-      amberol
-      gnome.gnome-tweaks
-      pkgs.brave
-
-      # Development
-      nodejs
-      python311
-      mysql80
-      docker
-
-      # fonts
-      jetbrains-mono
-      gnomeExtensions.freon
-    ];
+  environment = {
+    shellAliases = {
+      nix-garbage = "sudo nix-collect-garbage && sudo nix-env --delete-generations +5 && sudo nixos-rebuild switch";
+      nix-install = "sudo nvim /etc/nixos/home.nix";
+      nix-config = "sudo nvim /etc/nixos/configuration.nix";
+      nix-refresh = "sudo nixos-rebuild switch";
+    };
+    systemPackages = with pkgs; [ ];
 
     gnome.excludePackages = with pkgs.gnome; [
-      baobab      # disk usage analyzer
-      epiphany    # web browser
-      gedit       # text editor
+      baobab # disk usage analyzer
+      epiphany # web browser
+      gedit # text editor
       simple-scan # document scanner
-      yelp        # help viewer
-      geary       # email client
-      seahorse    # password manager
-   
+      yelp # help viewer
+      geary # email client
+      seahorse # password manager
+
       pkgs.gnome-tour
       gnome-characters
       gnome-logs
-      gnome-maps 
-      gnome-music 
+      gnome-maps
+      gnome-music
       gnome-weather
       gnome-contacts
       pkgs.gnome-connections
       pkgs.gnome-photos
     ];
   };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -243,6 +254,7 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -250,5 +262,11 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system = {
+    stateVersion = "23.11"; # Did you read the comment?
+    autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+    };
+  };
 }

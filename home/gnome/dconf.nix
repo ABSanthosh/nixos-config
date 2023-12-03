@@ -1,14 +1,19 @@
 { config, pkgs, ... }:
 let
-  wallpaper = "/etc/nixos/assets/Wallpapers/Monterey/Monterey.jpg";
+  wallpaper = "/etc/nixos/assets/Wallpapers/Ventura/Ventura-dark.jpg";
 in
 {
   dconf.settings = {
     "org/gnome/desktop/screensaver" = {
       picture-uri = "file://${wallpaper}";
+      primary-color = "#000000000000";
+      secondary-color = "#000000000000";
     };
     "org/gnome/desktop/background" = {
       picture-uri = "file://${wallpaper}";
+      picture-uri-dark = "file://${wallpaper}";
+      picture-options = "zoom";
+      color-shading-type = "solid";
     };
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;

@@ -7,6 +7,7 @@
     ./programs/git.nix
 
     # Gnome
+    ./gnome/gtk.nix
     ./gnome/dconf.nix
     ./gnome/extensions.nix
   ];

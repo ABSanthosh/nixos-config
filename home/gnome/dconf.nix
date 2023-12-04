@@ -53,6 +53,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -69,6 +70,11 @@ in
       name = "Terminal";
       command = "kgx";
       binding = "<Super>c";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+      name = "Screenshot";
+      command = "sh /etc/nixos/scripts/screenshot.sh";
+      binding = "<Shift><Alt>s";
     };
   };
 }

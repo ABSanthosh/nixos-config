@@ -21,6 +21,7 @@
       efi.canTouchEfiVariables = true;
       timeout = 0;
     };
+    cleanTmpDir = true;
     supportedFilesystems = [ "ntfs" ];
     kernelParams = [ "quiet" "splash" "loglevel=0" ];
     initrd.verbose = false;

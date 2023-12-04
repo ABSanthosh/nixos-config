@@ -54,8 +54,8 @@
           {"element":"taskbar","visible":true,"position":"centerMonitor"},
           {"element":"centerBox","visible":true,"position":"stackedBR"},
           {"element":"rightBox","visible":true,"position":"stackedBR"},
-          {"element":"dateMenu","visible":true,"position":"stackedBR"},
           {"element":"systemMenu","visible":true,"position":"stackedBR"},
+          {"element":"dateMenu","visible":true,"position":"stackedBR"},
           {"element":"desktopButton","visible":false,"position":"stackedBR"}
         ]
       }'';

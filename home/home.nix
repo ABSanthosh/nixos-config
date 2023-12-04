@@ -18,15 +18,15 @@
     homeDirectory = "/home/santhosh";
     stateVersion = "23.11";
     packages = with pkgs; [
-      firefox
       git
       neovim
       vscode
-      librewolf
       amberol
       gnome.gnome-tweaks
-      brave
       lm_sensors
+      mpv
+      vlc
+      htop
 
       # Screenshot
       # They removed the old, straightforward screenshot tool and replaced it with a new one that is not as good.
@@ -40,7 +40,6 @@
       python311
       mysql80
       docker
-      microsoft-edge-dev
       yarn
       nixpkgs-fmt
 

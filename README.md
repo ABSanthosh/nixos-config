@@ -6,4 +6,15 @@
 
 
 ### ToDo
-- [ ] Browser config
+- [ ] Icons
+- [ ] Sounds
+- [ ] Git credentials
+- [ ] Fonts
+- [ ] Editors
+  - [ ] VSCode(Config ref: [1](https://github.com/utdemir/dotfiles-nix/blob/297edd96ade9b6437dcf2cb0a7336513ad10f495/home-modules/vscode.nix))
+  - [ ] Neovim(Config ref: [1](https://github.com/Kranzes/nix-config/blob/9a1a96ad4994059e40e217fd9266a0cc2fd16b01/home/kranzes/editors.nix))
+- [x] Browser config
+- [x] Screenshot tool _[ref](https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5208#note_1426865)_
+- [x] Cursor
+- [x] Gnome extensions
+- [x] Wallpaper

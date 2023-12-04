@@ -21,13 +21,18 @@
       efi.canTouchEfiVariables = true;
       timeout = 0;
     };
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
     kernelParams = [ "quiet" "splash" "loglevel=0" ];
     initrd.verbose = false;
     consoleLogLevel = 0;
     plymouth = {
       enable = true;
+      logo = /etc/nixos/assets/plymouth/logo.svg;
+      # pkgs.fetchurl {
+      #   url = "file://";
+      #   sha256 = "1ivzgd7iz0i06y36p8m5w48fd8pjqwxhdaavc0pxs7w1g7mcy5si";
+      # };
     };
   };
 
@@ -85,18 +90,19 @@
   time.timeZone = "Asia/Kolkata";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_IN";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_IN";
-    LC_IDENTIFICATION = "en_IN";
-    LC_MEASUREMENT = "en_IN";
-    LC_MONETARY = "en_IN";
-    LC_NAME = "en_IN";
-    LC_NUMERIC = "en_IN";
-    LC_PAPER = "en_IN";
-    LC_TELEPHONE = "en_IN";
-    LC_TIME = "en_IN";
+  i18n = {
+    defaultLocale = "en_IN";
+    extraLocaleSettings = {
+      LC_ADDRESS = "en_IN";
+      LC_IDENTIFICATION = "en_IN";
+      LC_MEASUREMENT = "en_IN";
+      LC_MONETARY = "en_IN";
+      LC_NAME = "en_IN";
+      LC_NUMERIC = "en_IN";
+      LC_PAPER = "en_IN";
+      LC_TELEPHONE = "en_IN";
+      LC_TIME = "en_IN";
+    };
   };
 
   # Nix
@@ -142,14 +148,17 @@
     };
 
     # Enable CUPS to print documents.
-    printing.enable = true;
+    printing.enable = false;
+    avahi = {
+      enable = false;
+    };
 
     pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      jack.enable = true;
+      # jack.enable = true;
     };
 
     # TLP
@@ -179,7 +188,7 @@
   };
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
@@ -187,7 +196,7 @@
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
     packages = with pkgs; [ ];
   };
 

@@ -10,6 +10,12 @@
         init = {
           defaultBranch = "main";
         };
+        core = {
+          fileMode = false;
+        };
+        credential.helper = "${
+          pkgs.git.override { withLibsecret = true; }
+        }/bin/git-credential-libsecret";
       };
     };
   };

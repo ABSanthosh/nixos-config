@@ -1,34 +1,35 @@
-{ config, inputs, lib, pkgs, system, ... }:
-
+{ config, lib, pkgs, ... }:
 let
-
-  breezeCursors = (pkgs.stdenvNoCC.mkDerivation rec {
-    pname = "breeze-cursors";
-    version = "1.0";
-    # src = pkgs.fetchTarball {
-    #   url = "file:///etc/nixos/assets/theme/Beeze-Dark.tar.gz";
-    #   hash = "sha256-i0N/QB5uzqHapMCDl6h6PWPJ4GOAyB1ds9qlqmZacLY=";
-    # };
-    src = pkgs.fetchFromGitHub {
-      owner = "ABSanthosh";
-      repo = "NixOS-dots";
-      rev = version;
-      hash = "sha256-i0N/QB5uzqHapMCDl6h6PWPJ4GOAyB1ds9qlqmZacLY=";
-    };
-    buildPhase = "";
-    installPhase = ''
-      mkdir -p $out/share/icons
-      cp -r Breeze_Dark $out/share/icons/
-    '';
-  });
+  cursor-size = 32;
 in
 {
   gtk = {
     enable = true;
-    cursorTheme = breezeCursors;
+    cursorTheme = {
+      name = "capitaine-cursors";
+      package = pkgs.capitaine-cursors;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+      gtk-cursor-theme-name = "capitaine-cursors";
+      gtk-cursor-theme-size = cursor-size;
+    };
+    gtk2.extraConfig = "gtk-cursor-theme-size=32";
+  };
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      cursor-theme = "capitaine-cursors";
+      cursor-size = cursor-size;
+    };
+  };
+
+  xresources.properties = {
+    "Xcursor.size" = cursor-size;
+  };
+
+  home.pointerCursor = {
+    package = pkgs.capitaine-cursors;
+    name = "capitaine-cursors";
+    size = cursor-size;
   };
 }
-
-# sudo mv /home/santhosh/.gtkrc-2.0 /home/santhosh/.gtkrc-2.0.bak
-# sudo mv /home/santhosh/.config/gtk-4.0/settings.ini /home/santhosh/.config/gtk-4.0.bak
-# sudo mv /home/santhosh/.config/gtk-3.0/settings.ini /home/santhosh/.config/gtk-3.0.bak

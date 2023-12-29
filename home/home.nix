@@ -42,7 +42,8 @@
       docker
       yarn
       nixpkgs-fmt
-
+      python311Packages.pip
+      
       # fonts
       jetbrains-mono
     ];

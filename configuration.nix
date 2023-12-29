@@ -112,8 +112,8 @@
     };
   };
 
-  # Enable the X11 windowing system.
   services = {
+    # Enable the X11 windowing system.
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
@@ -181,6 +181,27 @@
     # Disable tracker 
     gnome.tracker.enable = false;
     gnome.tracker-miners.enable = false;
+
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
+
+    # mySql
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
+      # To configure the database, run the following
+      # [nix-shell:~]$ mysql
+      # mysql> select password('<password>');
+      # +-------------------------------------------+
+      # | password("Ranchero0")                     |
+      # +-------------------------------------------+
+      # | *432C338E13B8D7FB08E225BECBD0C0959CF98292 |
+      # +-------------------------------------------+
+
+      # [nix-shell:~]$ sudo mysql_secure_installation
+      # then paste the above password and follow the instructions
+
+    };
   };
 
   # Enable sound with pipewire.
@@ -262,12 +283,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

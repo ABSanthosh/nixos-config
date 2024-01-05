@@ -8,7 +8,7 @@
 ### ToDo
 - [ ] Icons
 - [ ] Sounds
-- [ ] Git credentials
+- [ ] Git credentials, how to set up git so it won't ask for credentials every time?
 - [ ] Fonts
 - [ ] Editors
   - [ ] VSCode(Config ref: [1](https://github.com/utdemir/dotfiles-nix/blob/297edd96ade9b6437dcf2cb0a7336513ad10f495/home-modules/vscode.nix))

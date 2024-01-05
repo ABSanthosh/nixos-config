@@ -85,7 +85,7 @@
     };
 
     "org/gnome/shell/extensions/clipboard-history" = {
-      toggle-menu = [ "<Super>h" ];
+      toggle-menu = [ "<Super>v" ];
       display-mode = 3;
       strip-text = true;
       window-width-percentage = 15;

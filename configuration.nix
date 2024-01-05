@@ -23,7 +23,7 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" ];
-    kernelParams = [ "quiet" "splash" "loglevel=0" ];
+    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=active" ];
     initrd.verbose = false;
     consoleLogLevel = 0;
     plymouth = {

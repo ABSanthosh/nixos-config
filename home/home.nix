@@ -5,7 +5,6 @@
     # Programs
     ./programs/browsers.nix
     ./programs/git.nix
-    ./programs/direnv.nix
 
     # Gnome
     ./gnome/gtk.nix

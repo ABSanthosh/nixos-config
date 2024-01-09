@@ -10,9 +10,13 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./home/home-manager.nix
+
+      # Modules
+      ./modules/postgresql.nix
     ];
 
   # documentation.nixos.enable = false;
+  virtualisation.docker.enable = true;
 
   # Bootloader.
   boot = {
@@ -213,7 +217,7 @@
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
     packages = with pkgs; [ ];
   };
 

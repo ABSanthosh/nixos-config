@@ -43,6 +43,7 @@
       yarn
       nixpkgs-fmt
       python311Packages.pip
+      supabase-cli
       
       # fonts
       jetbrains-mono

@@ -278,6 +278,14 @@
       pkgs.gnome-connections
       pkgs.gnome-photos
     ];
+
+    variables = with pkgs; {
+      PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/migration-engine";
+      PRISMA_QUERY_ENGINE_BINARY = "${prisma-engines}/bin/query-engine";
+      PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
+      PRISMA_INTROSPECTION_ENGINE_BINARY = "${prisma-engines}/bin/introspection-engine";
+      PRISMA_FMT_BINARY = "${prisma-engines}/bin/prisma-fmt";
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

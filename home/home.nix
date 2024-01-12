@@ -44,6 +44,7 @@
       nixpkgs-fmt
       python311Packages.pip
       supabase-cli
+      nodePackages.prisma
       
       # fonts
       jetbrains-mono

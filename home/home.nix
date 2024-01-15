@@ -52,6 +52,7 @@
 
       # Games
       prismlauncher
+      
     ];
   };
 

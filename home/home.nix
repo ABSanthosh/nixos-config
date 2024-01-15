@@ -45,9 +45,13 @@
       python311Packages.pip
       supabase-cli
       nodePackages.prisma
+      typescript
       
       # fonts
       jetbrains-mono
+
+      # Games
+      prismlauncher
     ];
   };
 

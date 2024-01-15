@@ -60,7 +60,7 @@
     };
 
     nvidia = {
-      open = false;
+      open = true;
       nvidiaSettings = true;
       modesetting.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
@@ -69,7 +69,11 @@
         finegrained = false;
       };
       prime = {
-        sync.enable = true;
+        # sync.enable = true;
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
       };
@@ -111,8 +115,8 @@
       experimental-features = [ "nix-command" "flakes" ];
     };
     gc = {
-      options = "--delete-older-than +5";
       automatic = true;
+      options = "--delete-older-than 5d";
     };
   };
 
@@ -253,8 +257,7 @@
   environment = {
     shellAliases = {
       nix-garbage = "sudo nix-collect-garbage && sudo nix-env --delete-generations +5 && sudo nixos-rebuild switch";
-      nix-install = "sudo nvim /etc/nixos/home.nix";
-      nix-config = "sudo nvim /etc/nixos/configuration.nix";
+      nix-clear = "sudo nix profile wipe-history --profile /nix/var/nix/profile/system --older-than 5d && sudo nixos-rebuild switch";
       nix-refresh = "sudo nixos-rebuild switch";
     };
     systemPackages = with pkgs; [ ];

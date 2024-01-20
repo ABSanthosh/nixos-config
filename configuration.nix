@@ -34,6 +34,12 @@
       enable = true;
       logo = /etc/nixos/assets/plymouth/logo.svg;
     };
+    
+    # blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
+    # extraModprobeConfig = ''
+    #    blacklist nouveau
+    #    options nouveau modeset=0
+    # '';
   };
 
   systemd = {
@@ -60,23 +66,25 @@
     };
 
     nvidia = {
-      open = true;
-      nvidiaSettings = true;
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-      powerManagement = {
-        enable = false;
-        finegrained = false;
-      };
-      prime = {
-        # sync.enable = true;
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
+     open = false;
+     nvidiaSettings = true;
+     modesetting.enable = false;
+     forceFullCompositionPipeline = true;
+     package = config.boot.kernelPackages.nvidiaPackages.production;
+     powerManagement = {
+       enable = false;
+       finegrained = false;
+     };
+     prime = {
+       # sync.enable = true;
+       # reverseSync.enable = true;
+       offload = {
+         enable = false;
+         enableOffloadCmd = false;
+       };
+       intelBusId = "PCI:0:2:0";
+       nvidiaBusId = "PCI:1:0:0";
+     };
     };
   };
 
@@ -147,9 +155,24 @@
       xkbVariant = "";
 
       # GPU
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "intel" "nvidia" ];
       # videoDrivers = [ "intel" ];
     };
+
+    # udev.extraRules = ''
+    #   # Remove NVIDIA USB xHCI Host Controller devices, if present
+    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
+
+    #   # Remove NVIDIA USB Type-C UCSI devices, if present
+    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
+
+    #   # Remove NVIDIA Audio devices, if present
+    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
+
+
+    # # Remove NVIDIA VGA/3D controller devices
+    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+    # '';
 
     # Enable CUPS to print documents.
     printing.enable = false;
@@ -309,7 +332,7 @@
     stateVersion = "23.11"; # Did you read the comment?
     autoUpgrade = {
       enable = true;
-      allowReboot = true;
+      allowReboot = false;
     };
   };
 }

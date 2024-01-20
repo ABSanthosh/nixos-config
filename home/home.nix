@@ -51,8 +51,7 @@
       jetbrains-mono
 
       # Games
-      prismlauncher
-      
+      prismlauncher      
     ];
   };
 

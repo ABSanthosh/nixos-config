@@ -5,6 +5,8 @@
     # Programs
     ./programs/browsers.nix
     ./programs/git.nix
+    ./programs/neovim.nix
+    ./programs/tmux.nix
 
     # Gnome
     ./gnome/gtk.nix
@@ -18,15 +20,13 @@
     homeDirectory = "/home/santhosh";
     stateVersion = "23.11";
     packages = with pkgs; [
-      git
-      neovim
-      vscode
       amberol
       gnome.gnome-tweaks
       lm_sensors
       mpv
       vlc
       htop
+      sioyek
 
       # Screenshot
       # They removed the old, straightforward screenshot tool and replaced it with a new one that is not as good.
@@ -36,22 +36,39 @@
       xclip
 
       # Development
-      nodejs
-      python311
-      mysql80
-      docker
+      git
       yarn
-      nixpkgs-fmt
-      python311Packages.pip
+      vscode
+      nodejs
+      docker
+      mysql80
+      python311
+      typescript
       supabase-cli
       nodePackages.prisma
-      typescript
-      
+      gnome.gnome-terminal
+
+      black                   # Code format Python
+      shfmt                   # Code format Shell
+      rustfmt                 # Code format Rust
+      shellcheck              # Code lint Shell
+      nixpkgs-fmt             # Code format Nix
+      nodePackages.prettier   # Code format
+
+      # Python
+      python311Packages.pip
+      python311Packages.python-lsp-server
+
       # fonts
       jetbrains-mono
 
       # Games
-      prismlauncher      
+      rare
+      osu-lazer
+      winetricks
+      prismlauncher
+      yuzu-mainline
+      wineWowPackages.stable
     ];
   };
 

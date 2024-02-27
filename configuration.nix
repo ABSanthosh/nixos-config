@@ -10,13 +10,19 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./home/home-manager.nix
+      # ./home/system/vm.nix
 
       # Modules
       ./modules/postgresql.nix
+      ./modules/tlp.nix
+      ./modules/nix.nix
+      ./modules/fonts.nix
+      ./modules/hardware.nix
+      ./modules/docker.nix
+      ./modules/bluetooth.nix
+      ./modules/fast-networking.nix
+      ./modules/sound.nix
     ];
-
-  # documentation.nixos.enable = false;
-  virtualisation.docker.enable = true;
 
   # Bootloader.
   boot = {
@@ -26,20 +32,14 @@
       timeout = 0;
     };
     tmp.cleanOnBoot = true;
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = [ "ntfs" "exfat" ];
     kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=active" ];
     initrd.verbose = false;
     consoleLogLevel = 0;
     plymouth = {
       enable = true;
-      logo = /etc/nixos/assets/plymouth/logo.svg;
+      logo = /etc/nixos/assets/plymouth/logo.png;
     };
-    
-    # blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
-    # extraModprobeConfig = ''
-    #    blacklist nouveau
-    #    options nouveau modeset=0
-    # '';
   };
 
   systemd = {
@@ -50,41 +50,6 @@
         enable = false;
         wantedBy = pkgs.lib.mkForce [ ]; # Normally ["network-online.target"] 
       };
-    };
-  };
-
-  # Enable OpenGL
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-
-      extraPackages = with pkgs; [
-        vaapiVdpau
-      ];
-    };
-
-    nvidia = {
-     open = false;
-     nvidiaSettings = true;
-     modesetting.enable = false;
-     forceFullCompositionPipeline = true;
-     package = config.boot.kernelPackages.nvidiaPackages.production;
-     powerManagement = {
-       enable = false;
-       finegrained = false;
-     };
-     prime = {
-       # sync.enable = true;
-       # reverseSync.enable = true;
-       offload = {
-         enable = false;
-         enableOffloadCmd = false;
-       };
-       intelBusId = "PCI:0:2:0";
-       nvidiaBusId = "PCI:1:0:0";
-     };
     };
   };
 
@@ -117,17 +82,6 @@
     };
   };
 
-  # Nix
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-    };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 5d";
-    };
-  };
-
   services = {
     # Enable the X11 windowing system.
     xserver = {
@@ -155,58 +109,15 @@
       xkbVariant = "";
 
       # GPU
-      videoDrivers = [ "intel" "nvidia" ];
+      videoDrivers = lib.mkForce [ "nvidia" ];
       # videoDrivers = [ "intel" ];
     };
-
-    # udev.extraRules = ''
-    #   # Remove NVIDIA USB xHCI Host Controller devices, if present
-    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
-
-    #   # Remove NVIDIA USB Type-C UCSI devices, if present
-    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
-
-    #   # Remove NVIDIA Audio devices, if present
-    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
-
-
-    # # Remove NVIDIA VGA/3D controller devices
-    #   ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
-    # '';
 
     # Enable CUPS to print documents.
     printing.enable = false;
     avahi = {
-      enable = false;
-    };
-
-    pipewire = {
       enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # jack.enable = true;
-    };
-
-    # TLP
-    thermald.enable = true;
-    power-profiles-daemon.enable = false;
-    tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 20;
-        START_CHARGE_THRESH_BAT0 = 65;
-        STOP_CHARGE_THRESH_BAT0 = 60;
-      };
+      nssmdns = true;
     };
 
     # Disable tracker 
@@ -235,11 +146,6 @@
     };
   };
 
-  # Enable sound with pipewire.
-  # sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.santhosh = {
     isNormalUser = true;
@@ -248,26 +154,6 @@
     packages = with pkgs; [ ];
   };
 
-  # Allow unfree packages
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
-
-  fonts = {
-    packages = with pkgs; [
-      jetbrains-mono
-    ];
-    fontconfig = {
-      enable = true;
-      antialias = true;
-      allowBitmaps = true;
-      defaultFonts = {
-        monospace = [ "jetbrains-mono" ];
-      };
-    };
-  };
   console = {
     earlySetup = true;
     font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
@@ -312,6 +198,10 @@
       PRISMA_INTROSPECTION_ENGINE_BINARY = "${prisma-engines}/bin/introspection-engine";
       PRISMA_FMT_BINARY = "${prisma-engines}/bin/prisma-fmt";
     };
+  };
+
+  powerManagement = {
+    cpuFreqGovernor = "performance";
   };
 
   # Some programs need SUID wrappers, can be configured further or are

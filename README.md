@@ -18,3 +18,4 @@
 - [x] Cursor
 - [x] Gnome extensions
 - [x] Wallpaper
+- [ ] How to add apps that has latest versions but not in nixpkgs yet?

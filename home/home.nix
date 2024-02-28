@@ -26,6 +26,7 @@
       mpv
       vlc
       htop
+      # fprintd
       sioyek
 
       # Screenshot
@@ -38,6 +39,7 @@
       # Development
       git
       yarn
+      # atuin
       vscode
       nodejs
       docker
@@ -63,12 +65,12 @@
       jetbrains-mono
 
       # Games
-      rare
+      # rare
       osu-lazer
-      winetricks
+      # winetricks
       prismlauncher
-      yuzu-mainline
-      wineWowPackages.stable
+      # yuzu-mainline
+      # wineWowPackages.stable
     ];
   };
 

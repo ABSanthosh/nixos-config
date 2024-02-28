@@ -3,7 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, lib, pkgs, ... }:
-
+let
+  profile = "/etc/nixos/assets/santhosh";
+  username = "santhosh";
+in
 {
   imports =
     [
@@ -33,7 +36,7 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
-    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=active" ];
+    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=passive" ];
     initrd.verbose = false;
     consoleLogLevel = 0;
     plymouth = {
@@ -160,6 +163,12 @@
     packages = with pkgs; [ terminus_font ];
     keyMap = "us";
   };
+
+  # Set user photo: https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/4
+  system.activationScripts.script.text = ''
+    cp ${profile} /var/lib/AccountsService/icons/${username}
+  '';
+  
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

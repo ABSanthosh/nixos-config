@@ -2,7 +2,9 @@
 {
   services = {
     # TLP
-    fprintd.enable = true;
+    # fprintd.enable = true;
+    # fprintd.tod.enable = true;
+    # fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
     thermald.enable = true;
     power-profiles-daemon.enable = false;
     auto-cpufreq.enable = true;

@@ -168,7 +168,7 @@ in
   system.activationScripts.script.text = ''
     cp ${profile} /var/lib/AccountsService/icons/${username}
   '';
-  
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

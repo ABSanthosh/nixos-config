@@ -3,10 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, lib, pkgs, ... }:
-let
-  profile = "/etc/nixos/assets/santhosh";
-  username = "santhosh";
-in
 {
   imports =
     [
@@ -25,6 +21,7 @@ in
       ./modules/bluetooth.nix
       ./modules/fast-networking.nix
       ./modules/sound.nix
+      ./modules/activationScripts.nix
     ];
 
   # Bootloader.
@@ -163,12 +160,6 @@ in
     packages = with pkgs; [ terminus_font ];
     keyMap = "us";
   };
-
-  # Set user photo: https://discourse.nixos.org/t/setting-the-user-profile-image-under-gnome/36233/4
-  system.activationScripts.script.text = ''
-    cp ${profile} /var/lib/AccountsService/icons/${username}
-  '';
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

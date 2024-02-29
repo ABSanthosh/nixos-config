@@ -19,6 +19,17 @@ in
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
     };
+    "org/gnome/shell" = {
+      favorite-apps = [
+        "brave-browser.desktop"
+        "code.desktop"
+        "org.gnome.Terminal.desktop"
+      ];
+    };
+    "org/gnome/nautilus/preferences" = { click-policy = "single"; };
+    "org/gnome/nautilus/list-view" = {
+      use-tree-view = true;
+    };
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
       clock-show-weekday = true;

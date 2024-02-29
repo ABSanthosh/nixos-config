@@ -28,6 +28,7 @@
       htop
       # fprintd
       sioyek
+      deja-dup
 
       # Screenshot
       # They removed the old, straightforward screenshot tool and replaced it with a new one that is not as good.

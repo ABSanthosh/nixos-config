@@ -15,7 +15,7 @@
         { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
         { id = "chphlpgkkbolifaimnlloiipkdnihall"; } # OneTab
         { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # Video Speed Controller
-        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark-reader
+        # { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # dark-reader
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock
         { id = "aljlkinhomaaahfdojalfmimeidofpih"; } # Hide Youtube shorts
       ];

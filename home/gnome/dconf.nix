@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   wallpaper = "/etc/nixos/assets/Wallpapers/Ventura/Ventura-dark.jpg";
 in
@@ -15,9 +15,16 @@ in
       picture-options = "zoom";
       color-shading-type = "solid";
     };
+    "org/gnome/settings-daemon/plugins/power" = { 
+      idle-dim = false; 
+      sleep-inactive-battery-type = "nothing";
+      sleep-inactive-ac-type = "nothing";
+      power-button-action = "nothing";
+    };
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
+      disable-while-typing = true;
     };
     "org/gnome/shell" = {
       favorite-apps = [
@@ -26,9 +33,19 @@ in
         "org.gnome.Terminal.desktop"
       ];
     };
+    "org/gtk/settings/file-chooser" = {
+      # Why lib.hm.gvariant.mkTuple? - https://discourse.nixos.org/t/set-keyboard-repeat-in-gnome-wayland-with-home-manager/25040/2
+      window-size = lib.hm.gvariant.mkTuple [ 632 251 ];
+      clock-format = "12h";
+    };
     "org/gnome/nautilus/preferences" = { click-policy = "single"; };
     "org/gnome/nautilus/list-view" = {
       use-tree-view = true;
+    };
+    "org/gnome/mutter" = {
+      center-new-windows = true;
+      edge-tiling = true;
+      dynamic-workspaces = true;
     };
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
@@ -37,6 +54,7 @@ in
       enable-hot-corners = true;
       font-antialiasing = "grayscale";
       font-hinting = "none";
+      show-battery-percentage = true;
     };
     "org/gnome/desktop/wm/keybindings" = {
       close = [ "" ];
@@ -44,6 +62,13 @@ in
       switch-applications = [ "" ];
       switch-applications-backward = [ "" ];
       switch-windows = [ "<Alt>Tab" ];
+      switch-windows-backward = [ "<Shift><Alt>Tab" ];
+    };
+    "org/gnome/desktop/session" = {
+      idle-delay = lib.hm.gvariant.mkUint32 0; 
+    };
+    "org/gnome/desktop/interface" = {
+      clock-format = "12h";
     };
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";

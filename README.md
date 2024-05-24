@@ -6,6 +6,9 @@
 
 
 ### ToDo
+- [ ] Sounds
+  - [ ] move 'ocean' from `~/.local/share/sounds` to `/nixos/assets` and make a symlink to it.
+- [ ] Bookmark in nautilus: https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
 - [x] Git credentials, how to set up git so it won't ask for credentials every time?
 - [x] Fonts
 - [x] Editors
@@ -16,6 +19,7 @@
 - [x] Cursor
 - [x] Gnome extensions
 - [x] Wallpaper
+- [ ] User picture not working
 - [x] Time to 12 hours format
 - [ ] brave browser
   - [ ] Addresses

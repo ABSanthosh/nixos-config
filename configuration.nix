@@ -19,7 +19,7 @@
       ./modules/hardware.nix
       ./modules/docker.nix
       ./modules/bluetooth.nix
-      ./modules/fast-networking.nix
+      # ./modules/fast-networking.nix
       ./modules/sound.nix
       ./modules/activationScripts.nix
     ];
@@ -209,13 +209,19 @@
       pkgs.gnome-photos
     ];
 
-    variables = with pkgs; {
-      PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/migration-engine";
-      PRISMA_QUERY_ENGINE_BINARY = "${prisma-engines}/bin/query-engine";
-      PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
-      PRISMA_INTROSPECTION_ENGINE_BINARY = "${prisma-engines}/bin/introspection-engine";
-      PRISMA_FMT_BINARY = "${prisma-engines}/bin/prisma-fmt";
-    };
+    # sessionVariables = {
+    #   NIXOS_OZONE_WL = "1";
+    #   WLR_NO_HARDWARE_CURSORS = "1";
+    # };
+
+
+    # variables = with pkgs; {
+    #   PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/migration-engine";
+    #   PRISMA_QUERY_ENGINE_BINARY = "${prisma-engines}/bin/query-engine";
+    #   PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
+    #   PRISMA_INTROSPECTION_ENGINE_BINARY = "${prisma-engines}/bin/introspection-engine";
+    #   PRISMA_FMT_BINARY = "${prisma-engines}/bin/prisma-fmt";
+    # };
   };
 
   powerManagement = {

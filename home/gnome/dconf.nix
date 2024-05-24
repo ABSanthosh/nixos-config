@@ -47,6 +47,9 @@ in
       edge-tiling = true;
       dynamic-workspaces = true;
     };
+    "org/gnome/Console" = {
+      font-scale = 1.3;
+    };
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
       clock-show-weekday = true;

@@ -7,6 +7,7 @@
     ./programs/git.nix
     ./programs/neovim.nix
     ./programs/tmux.nix
+    ./programs/hyprland.nix
 
     # Gnome
     ./gnome/gtk.nix
@@ -38,17 +39,20 @@
       xclip
 
       # Development
+      go
       git
-      yarn
       # atuin
       vscode
       nodejs
       docker
       mysql80
+      openssl
+      hyprland
       python311
       typescript
-      supabase-cli
-      nodePackages.prisma
+      # yarn-berry
+      # supabase-cli
+      # nodePackages.prisma
       gnome.gnome-terminal
 
       black                   # Code format Python

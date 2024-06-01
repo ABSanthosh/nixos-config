@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   # wallpaper = "/etc/nixos/assets/Wallpapers/Ventura/Ventura-dark.jpg";
-  wallpaper = "/etc/nixos/assets/Wallpapers/cat.png";
+  wallpaper = "/etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png";
 in
 {
   dconf.settings = {

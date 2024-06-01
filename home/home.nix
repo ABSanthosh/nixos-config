@@ -6,8 +6,9 @@
     ./programs/browsers.nix
     ./programs/git.nix
     ./programs/neovim.nix
-    ./programs/tmux.nix
-    ./programs/hyprland.nix
+    # ./programs/tmux.nix
+    # ./programs/hyprland.nix
+    
 
     # Gnome
     ./gnome/gtk.nix
@@ -27,8 +28,6 @@
       mpv
       vlc
       htop
-      # fprintd
-      sioyek
       deja-dup
 
       # Screenshot
@@ -41,18 +40,13 @@
       # Development
       go
       git
-      # atuin
       vscode
       nodejs
       docker
       mysql80
       openssl
-      hyprland
       python311
       typescript
-      # yarn-berry
-      # supabase-cli
-      # nodePackages.prisma
       gnome.gnome-terminal
 
       black                   # Code format Python
@@ -70,12 +64,8 @@
       jetbrains-mono
 
       # Games
-      # rare
       osu-lazer
-      # winetricks
       prismlauncher
-      # yuzu-mainline
-      # wineWowPackages.stable
     ];
   };
 

@@ -19,27 +19,12 @@
       ./modules/hardware.nix
       ./modules/docker.nix
       ./modules/bluetooth.nix
-      # ./modules/fast-networking.nix
       ./modules/sound.nix
       ./modules/activationScripts.nix
     ];
 
   nixpkgs = {
     config.allowAliases = false;
-    overlays = [
-      (final: prev: {
-        gnome = prev.gnome.overrideScope' (gnomeFinal: gnomePrev: {
-          mutter = gnomePrev.mutter.overrideAttrs (old: {
-            src = pkgs.fetchgit {
-              url = "https://gitlab.gnome.org/vanvugt/mutter.git";
-              # GNOME 45: triple-buffering-v4-45
-              rev = "0b896518b2028d9c4d6ea44806d093fd33793689";
-              sha256 = "sha256-mzNy5GPlB2qkI2KEAErJQzO//uo8yO0kPQUwvGDwR4w=";
-            };
-          });
-        });
-      })
-    ];
   };
 
   # Bootloader.
@@ -114,6 +99,7 @@
         };
         gdm = {
           enable = true;
+          wayland = true;
         };
       };
       desktopManager = {
@@ -121,6 +107,7 @@
           enable = true;
         };
       };
+
 
       # Configure keymap in X11
       layout = "us";
@@ -208,20 +195,6 @@
       pkgs.gnome-connections
       pkgs.gnome-photos
     ];
-
-    # sessionVariables = {
-    #   NIXOS_OZONE_WL = "1";
-    #   WLR_NO_HARDWARE_CURSORS = "1";
-    # };
-
-
-    # variables = with pkgs; {
-    #   PRISMA_SCHEMA_ENGINE_BINARY = "${prisma-engines}/bin/migration-engine";
-    #   PRISMA_QUERY_ENGINE_BINARY = "${prisma-engines}/bin/query-engine";
-    #   PRISMA_QUERY_ENGINE_LIBRARY = "${prisma-engines}/lib/libquery_engine.node";
-    #   PRISMA_INTROSPECTION_ENGINE_BINARY = "${prisma-engines}/bin/introspection-engine";
-    #   PRISMA_FMT_BINARY = "${prisma-engines}/bin/prisma-fmt";
-    # };
   };
 
   powerManagement = {

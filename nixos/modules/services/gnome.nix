@@ -1,27 +1,31 @@
 { config, lib, pkgs, ... }:
 {
-  services.xserver = {
-    # Enable the GNOME Desktop Environment.
+  services = {
     displayManager = {
       autoLogin = {
         enable = true;
         user = "santhosh";
       };
-      gdm = {
-        enable = true;
-        wayland = true;
+    };
+    xserver = {
+      displayManager = {
+        gdm = {
+          enable = true;
+          wayland = true;
+        };
+      };
+      # Enable the GNOME Desktop Environment.
+      desktopManager = {
+        gnome = {
+          enable = true;
+        };
       };
     };
-    desktopManager = {
-      gnome = {
-        enable = true;
-      };
-    };
-  };
 
-  # Disable tracker 
-  gnome.tracker.enable = false;
-  gnome.tracker-miners.enable = false;
+    # Disable tracker 
+    gnome.tracker.enable = false;
+    gnome.tracker-miners.enable = false;
+  };
 
   environment = {
     gnome.excludePackages = with pkgs.gnome; [

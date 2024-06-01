@@ -44,6 +44,8 @@ in
     username = username;
     stateVersion = stateVersion;
     homeDirectory = homeDirectory;
+    # TODO: change to true when home-manager is updated to 24.11
+    enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
       amberol

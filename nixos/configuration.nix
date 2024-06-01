@@ -47,9 +47,10 @@
       enable = true;
       excludePackages = [ pkgs.xterm ];
 
-      layout = "us";
-      xkbVariant = "";
-
+      xkb = {
+        layout = "us";
+        variant = "";
+      };
       # GPU
       videoDrivers = lib.mkForce [ "nvidia" ];
       # videoDrivers = [ "intel" ];
@@ -59,7 +60,7 @@
     printing.enable = false;
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
     };
 
     # Enable the OpenSSH daemon.

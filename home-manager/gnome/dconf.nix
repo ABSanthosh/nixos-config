@@ -15,8 +15,8 @@ in
       picture-options = "zoom";
       color-shading-type = "solid";
     };
-    "org/gnome/settings-daemon/plugins/power" = { 
-      idle-dim = false; 
+    "org/gnome/settings-daemon/plugins/power" = {
+      idle-dim = false;
       sleep-inactive-battery-type = "nothing";
       sleep-inactive-ac-type = "nothing";
       power-button-action = "nothing";
@@ -68,7 +68,7 @@ in
       switch-windows-backward = [ "<Shift><Alt>Tab" ];
     };
     "org/gnome/desktop/session" = {
-      idle-delay = lib.hm.gvariant.mkUint32 0; 
+      idle-delay = lib.hm.gvariant.mkUint32 0;
     };
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
@@ -117,3 +117,6 @@ in
     };
   };
 }
+
+# bash command to make all sh files in the scripts directory executable
+# find /etc/nixos/scripts -type f -name "*.sh" -exec chmod +x {} \;

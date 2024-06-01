@@ -3,7 +3,6 @@
 
   inputs = {
     # Nixpkgs
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # Home manager
@@ -18,20 +17,22 @@
       system = "x86_64-linux";
       hostname = "zoro";
       username = "santhosh";
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       nixosConfigurations = {
         zoro = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./nixos/configuration.nix ];
-        };
-      };
-
-      homeConfigurations = {
-        "santhosh@zoro" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/home.nix ];
+          # specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./nixos/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useUserPackages = true;
+                users.santhosh = ./home-manager/home.nix;
+              };
+            }
+          ];
         };
       };
     };

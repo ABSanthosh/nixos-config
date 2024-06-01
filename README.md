@@ -40,3 +40,9 @@ echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": t
 7) Enjoy!
 
 _Note: Don't delete the "No Profile" account before you create a new offline account, that will break it!_
+
+### Remove "Failed to save 'xyz': insufficient permissions" error
+[ref](https://stackoverflow.com/a/62515421/10376131)
+```sh
+sudo chown -R $USER .
+```

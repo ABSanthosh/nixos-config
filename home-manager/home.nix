@@ -1,7 +1,7 @@
 { inputs, lib, config, pkgs, ... }:
 let
   username = "santhosh";
-  stateVersion = "23.11";
+  stateVersion = "24.05";
   homeDirectory = "/home/${username}";
 in
 {
@@ -74,6 +74,7 @@ in
       python311
       typescript
       gnome.gnome-terminal
+      gnome.gnome-boxes
 
       black # Code format Python
       shfmt # Code format Shell

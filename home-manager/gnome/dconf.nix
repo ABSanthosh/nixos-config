@@ -36,7 +36,7 @@ in
     };
     "org/gtk/settings/file-chooser" = {
       # Why lib.hm.gvariant.mkTuple? - https://discourse.nixos.org/t/set-keyboard-repeat-in-gnome-wayland-with-home-manager/25040/2
-      window-size = lib.hm.gvariant.mkTuple [ 632 251 ];
+      # window-size = lib.hm.gvariant.mkTuple [ 632 251 ];
       clock-format = "12h";
     };
     "org/gnome/nautilus/preferences" = { click-policy = "single"; };

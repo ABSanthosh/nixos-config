@@ -11,7 +11,11 @@
       displayManager = {
         gdm = {
           enable = true;
-          wayland = true;
+          # wayland = true;
+          banner = ''
+            Hello, Santhosh!
+          '';
+          autoLogin.delay = 0;
         };
       };
       # Enable the GNOME Desktop Environment.

@@ -8,15 +8,14 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
-    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=passive" "reboot=acpi" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=disable" "reboot=acpi" ];
+    kernelPackages = pkgs.linuxPackages_zen;
     initrd = {
       verbose = false;
     };
     consoleLogLevel = 0;
     plymouth = {
       enable = true;
-    #   logo = /etc/nixos/assets/plymouth/logo.png;
     };
   };
   systemd = {

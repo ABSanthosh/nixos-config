@@ -18,7 +18,8 @@
       ./modules/networking.nix
 
       # services
-      ./modules/services/gnome.nix
+      # ./modules/services/gnome.nix
+      # ./modules/services/sway.nix
       ./modules/services/mysql.nix
       ./modules/services/postgres.nix
     ];

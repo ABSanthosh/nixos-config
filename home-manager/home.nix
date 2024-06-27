@@ -45,16 +45,13 @@ in
     stateVersion = stateVersion;
     homeDirectory = homeDirectory;
     # TODO: change to true when home-manager is updated to 24.11
-    enableNixpkgsReleaseCheck = false;
+    # enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
       amberol
-      gnome.gnome-tweaks
       lm_sensors
       mpv
       vlc
-      htop
-      deja-dup
 
       # Screenshot
       # They removed the old, straightforward screenshot tool and replaced it with a new one that is not as good.
@@ -62,6 +59,11 @@ in
       # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5208#note_1426865
       gnome.gnome-screenshot
       xclip
+
+      # Gnome
+      gnome.gnome-boxes
+      gnome.gnome-tweaks
+      gnome.gnome-terminal
 
       # Development
       go
@@ -73,8 +75,6 @@ in
       openssl
       python311
       typescript
-      gnome.gnome-terminal
-      gnome.gnome-boxes
 
       black # Code format Python
       shfmt # Code format Shell
@@ -91,7 +91,6 @@ in
       jetbrains-mono
 
       # Games
-      osu-lazer
       prismlauncher
     ];
   };

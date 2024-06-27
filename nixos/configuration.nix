@@ -51,9 +51,6 @@
         layout = "us";
         variant = "";
       };
-      # GPU
-      videoDrivers = lib.mkForce [ "nvidia" ];
-      # videoDrivers = [ "intel" ];
     };
 
     # Enable CUPS to print documents.

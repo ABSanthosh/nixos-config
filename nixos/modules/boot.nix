@@ -9,7 +9,7 @@
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
     kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=passive" "reboot=acpi" ];
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       verbose = false;
     };

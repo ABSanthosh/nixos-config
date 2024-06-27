@@ -1,67 +1,82 @@
 { config, pkgs, lib, ... }:
-
+let
+  nvidiaDriverChannel =
+    config.boot.kernelPackages.nvidiaPackages.production; # stable, latest, etc.
+in
 {
   boot = {
-    blacklistedKernelModules = [ "nouveau" ];
-    kernelParams =
-      lib.optionals (lib.elem "nvidia" config.services.xserver.videoDrivers) [
-        "nvidia-drm.modeset=1"
-        "nvidia_drm.fbdev=1"
-      ];
+    extraModprobeConfig = lib.mkDefault ''
+      blacklist nouveau
+      options nouveau modeset=0
+    '';
+    initrd.kernelModules = [ "i915" ];
+    blacklistedKernelModules = [ "nouveau" "nvidia" "nvidia_drm" "nvidia_modeset" ];
   };
 
-  nixpkgs.config = {
-    nvidia.acceptLicense = true;
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        "cudatoolkit"
-        "nvidia-persistenced"
-        "nvidia-settings"
-        "nvidia-x11"
-      ];
+  environment.variables = {
+    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
   };
+
+  ##### disable nvidia, very nice battery life.
+  services.udev.extraRules = lib.mkDefault ''
+    # Remove NVIDIA USB xHCI Host Controller devices, if present
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
+
+    # Remove NVIDIA USB Type-C UCSI devices, if present
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
+
+    # Remove NVIDIA Audio devices, if present
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
+
+    # Remove NVIDIA VGA/3D controller devices
+    ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+  '';
 
   hardware = {
     enableRedistributableFirmware = true; # For some unfree drivers
 
+    # nvidia = {
+    #   open = false;
+    #   nvidiaSettings = true;
+    #   modesetting.enable = true;
+    #   package = nvidiaDriverChannel;
+    #   powerManagement = {
+    #     enable = true;
+    #     finegrained = false;
+    #   };
+
+    #   prime = {
+    #     # sync.enable = true;
+    #     offload = {
+    #       enable = true;
+    #       enableOffloadCmd = true;
+    #     };
+
+    #     intelBusId = "PCI:0:2:0";
+    #     nvidiaBusId = "PCI:1:0:0";
+    #   };
+    # };
+
     opengl = {
       enable = true;
-      # driSupport = true;
-      # driSupport32Bit = true;
-
+      # package = nvidiaDriverChannel;
+      # enable32Bit = true;
       extraPackages = with pkgs; [
-        vaapiVdpau
+        vaapiIntel
+        libvdpau-va-gl
+        intel-media-driver
       ];
-    };
-
-    nvidia = {
-      open = false;
-      nvidiaSettings = true;
-      modesetting.enable = true;
-      package = config.boot.kernelPackages.nvidiaPackages.production;
-      powerManagement = {
-        enable = false;
-        finegrained = false;
-      };
-
-      prime = {
-        # sync.enable = true;
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
-
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
     };
   };
 
   services = {
+    udisks2.enable = true;
     xserver = {
       videoDrivers = [
-        "nvidiaBeta" # nvidia should work fine as well
+        "intel"
       ];
+      # videoDrivers = lib.mkForce [ "nvidia" ];
+      # videoDrivers = [ "intel" ];
     };
   };
 }

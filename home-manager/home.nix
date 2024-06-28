@@ -21,7 +21,8 @@ in
     # ./desktop-env/gnome/extensions.nix
 
     # Sway
-    ./desktop-env/sway.nix
+    ./desktop-env/sway/sway.nix
+    ./desktop-env/sway/waybar.nix
   ];
 
   nixpkgs = {

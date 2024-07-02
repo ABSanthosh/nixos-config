@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   nvidiaDriverChannel =
-    config.boot.kernelPackages.nvidiaPackages.production; # stable, latest, etc.
+    config.boot.kernelPackages.nvidiaPackages.latest; # stable, latest, etc.
 
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1

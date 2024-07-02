@@ -8,8 +8,8 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
-    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=disable" "reboot=acpi" ];
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelParams = [ "quiet" "splash" "loglevel=0" "intel_pstate=passive"  ];
+    # kernelPackages = pkgs.linuxPackages_zen;
     initrd = {
       verbose = false;
     };

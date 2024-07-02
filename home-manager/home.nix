@@ -15,14 +15,14 @@ in
 
 
     # Gnome
-    # ./desktop-env/gnome/gtk.nix
-    # ./desktop-env/gnome/dconf.nix
-    # ./desktop-env/gnome/packages.nix
-    # ./desktop-env/gnome/extensions.nix
+    ./desktop-env/gnome/gtk.nix
+    ./desktop-env/gnome/dconf.nix
+    ./desktop-env/gnome/packages.nix
+    ./desktop-env/gnome/extensions.nix
 
     # Sway
-    ./desktop-env/sway/sway.nix
-    ./desktop-env/sway/waybar.nix
+    # ./desktop-env/sway/sway.nix
+    # ./desktop-env/sway/waybar.nix
   ];
 
   nixpkgs = {

@@ -31,7 +31,7 @@
       bindsym XF86AudioLowerVolume  exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
       bindsym XF86AudioMute         exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
-      default_border none
+      default_border pixel
 
       # Tap to click
       input "type:touchpad" {
@@ -53,6 +53,7 @@
       wl-clipboard # wl-copy and wl-paste for copy/paste from stdin / stdout
       mako # notification system developed by swaywm maintainer
       xfce.thunar
+      xfce.thunar-volman
       shotman
       brightnessctl
 

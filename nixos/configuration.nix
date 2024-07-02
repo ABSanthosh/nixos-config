@@ -17,9 +17,13 @@
       ./modules/bluetooth.nix
       ./modules/networking.nix
 
+      # gpu
+      ./modules/gpu/intel.nix
+      # ./modules/gpu/nvidia.nix
+
       # services
-      # ./modules/services/gnome.nix
-      ./modules/services/sway.nix
+      ./modules/services/gnome.nix
+      # ./modules/services/sway.nix
       ./modules/services/mysql.nix
       ./modules/services/postgres.nix
     ];

@@ -3,6 +3,7 @@
   hardware = {
     opengl = {
       enable = true;
+      driSupport32Bit = true;
       extraPackages = with pkgs; [
         vaapiIntel
         libvdpau-va-gl
@@ -10,10 +11,16 @@
       ];
     };
   };
-  environment.variables = {
-    VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+  environment = {
+    variables = {
+      VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
+    };
+    sessionVariables = {
+      LIBVA_DRIVER_NAME = "iHD";
+    };
   };
   boot = {
+    initrd.kernelModules = [ "i915" ];
     extraModprobeConfig = lib.mkDefault ''
       blacklist nouveau
       options nouveau modeset=0

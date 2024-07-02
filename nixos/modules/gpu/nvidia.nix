@@ -12,15 +12,18 @@ let
   '';
 in
 {
-
   boot = {
-    initrd.kernelModules = [ "i915" ];
+    kernelParams = lib.mkDefault [ "i915.modeset=0" ];
+    blacklistedKernelModules = lib.mkDefault [ "i915" ];
   };
   environment.systemPackages = [ nvidia-offload ];
   hardware = {
-    opengl.extraPackages = with pkgs; [
-      vaapiVdpau
-    ];
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+      ];
+    };
     nvidia = {
       open = false;
       nvidiaSettings = true;

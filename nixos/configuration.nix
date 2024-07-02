@@ -18,8 +18,8 @@
       ./modules/networking.nix
 
       # gpu
-      ./modules/gpu/intel.nix
-      # ./modules/gpu/nvidia.nix
+      # ./modules/gpu/intel.nix
+      ./modules/gpu/nvidia.nix
 
       # services
       ./modules/services/gnome.nix

@@ -2,6 +2,7 @@
 {
   wayland.windowManager.sway = {
     enable = true;
+    checkConfig = false;
     config = rec {
       modifier = "Mod4";
       # Use kitty as default terminal
@@ -26,11 +27,12 @@
       bindsym --locked XF86MonBrightnessUp exec brightnessctl set 1%+
 
       # Volume
+      exec 'pulseaudio --daemonize'
       bindsym XF86AudioRaiseVolume  exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
       bindsym XF86AudioLowerVolume  exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
       bindsym XF86AudioMute         exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
-      default_border pixel
+      default_border none
 
       # Tap to click
       input "type:touchpad" {
@@ -39,9 +41,8 @@
         natural_scroll enabled
         middle_emulation enabled
       }
-      # 1267:9990:ELAN_Touchscreen
-      
-      # output "*" bg /etc/a_rocket_launching_in_the_sky.png fill
+
+      output "*" bg '/etc/a_rocket_launching_in_the_sky.png' fill
     '';
   };
 
@@ -55,16 +56,17 @@
       
       acpi #battery status
       brightnessctl
+      
+      pulseaudio
       pulsemixer #audio manager
     ];
-  };
-
-  pointerCursor = {
-    name = "capitaine-cursors";
-    package = pkgs.capitaine-cursors;
-    size = 32;
-    x11 = {
-      enable = true;
+    pointerCursor = {
+      name = "capitaine-cursors";
+      package = pkgs.capitaine-cursors;
+      size = 32;
+      x11 = {
+        enable = true;
+      };
     };
   };
 }

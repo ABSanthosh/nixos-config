@@ -25,24 +25,20 @@
   #   };
   # };
 
-  # environment.etc.pipewire = {
-  #   extraConfig 
+  boot.extraModprobeConfig = ''
+    options snd slots=snd-hda-intel
+    options snd_hda_intel enable=0,1
+  '';
+
+  # services.pipewire = {
+  #   enable = false;
+  #   alsa.enable = false;
+  #   alsa.support32Bit = false;
+  #   pulse.enable = true;
+  #   wireplumber.enable = true;
   # };
 
-  # boot.extraModprobeConfig = ''
-  #   options snd slots=snd-hda-intel
-  #   options snd_hda_intel enable=0,1
-  # '';
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    wireplumber.enable = true;
-  };
-
-  # Enable sound with pipewire.
+  # # Enable sound with pipewire.
   # sound.enable = true;
   # security.rtkit.enable = true;
 

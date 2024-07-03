@@ -14,14 +14,22 @@ in
 
     ./desktop-env/sway/default.nix
   ];
+
+  nixpkgs = {
+    overlays = [];
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
+  };
+
   home = {
     username = username;
     stateVersion = stateVersion;
     homeDirectory = homeDirectory;
 
-    packages = with pkgs; [
-      
-
+    packages = with pkgs; [   
+      vscode
     ];
   };
 

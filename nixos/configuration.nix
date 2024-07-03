@@ -20,6 +20,10 @@
       # Services
       ./modules/services/sway.nix
       ./modules/services/default.nix
+
+      # Databases
+      ./modules/database/mysql.nix
+      ./modules/database/postgres.nix
   ];
 
   # Allow unfree packages

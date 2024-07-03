@@ -6,8 +6,8 @@
       modifier = "Mod4";
       terminal = "foot";
       startup = [
-       {command = "brave"}
-       {command = "foot"}
+       {command = "brave";}
+       {command = "foot";}
       ];
       output = {
         "eDP-1" = {
@@ -15,5 +15,12 @@
 	};
       };
     };
+  };
+
+  home = {
+    packages = with pkgs; [
+      foot
+      kitty
+    ];
   };
 }

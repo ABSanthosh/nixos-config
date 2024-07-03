@@ -1,6 +1,6 @@
 {config, pkgs, ... }:
 {
-  programs.get = {
+  programs.git = {
     enable = true;
   };
 }

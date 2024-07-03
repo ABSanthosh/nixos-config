@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     firefox
     chromium
-    microsoft-edge-dev
+   # microsoft-edge-dev
   ];
 
   programs.brave = {

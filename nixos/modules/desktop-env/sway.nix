@@ -36,27 +36,30 @@
     };
   };
 
-  services.gnome.gnome-keyring.enable = true;
-  programs.sway = {
-    wrapperFeatures.gtk = true;
-  };
+  services = {
+    gnome.gnome-keyring.enable = true;
+    gvfs.enable = true; # Mount, trash, and other functionalities
+    tumbler.enable = true; # Thumbnail support for images
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session.command = ''
-        ${pkgs.greetd.tuigreet}/bin/tuigreet \
-          --time \
-          --asterisks \
-          --user-menu \
-          --cmd sway
-      '';
+    greetd = {
+      enable = true;
+      settings = {
+        default_session.command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+            --time \
+            --asterisks \
+            --user-menu \
+            --cmd sway
+        '';
+      };
     };
   };
 
-  environment.etc."greetd/environments".text = ''
-    sway
-  '';
-  environment.etc."a_rocket_launching_in_the_sky.png".source = /etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment = {
+    etc."greetd/environments".text = ''
+      sway
+    '';
+    etc."a_rocket_launching_in_the_sky.png".source = /etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png;
+    sessionVariables.NIXOS_OZONE_WL = "1";
+  };
 }

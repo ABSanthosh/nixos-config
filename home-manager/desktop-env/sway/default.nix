@@ -1,11 +1,16 @@
 {config, pkgs, lib, ...}: 
+let 
+  mod4 = "Mod4";
+in 
 {
   wayland.windowManager.sway = {
     enable = true;
     checkConfig = false;
+    wrapperFeatures.gtk = true;
+
     config = rec {
-      modifier = "Mod4";
-      # Use kitty as default terminal
+      modifier = mod4;
+      defaultWorkspace = "1";
       terminal = "kitty";
       startup = [
         { command = "brave"; }
@@ -18,6 +23,8 @@
     };
 
     extraConfig = ''
+      set $mod ${mod4}
+
       bindsym Print               exec shotman -c output
       bindsym Print+Shift         exec shotman -c region
       bindsym Print+Shift+Control exec shotman -c window
@@ -32,7 +39,10 @@
       bindsym XF86AudioLowerVolume  exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
       bindsym XF86AudioMute         exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
 
-      default_border none
+      # Borders
+      default_border none 
+      # for_window [title="^.*"] title_format " "
+      # default_floating_border normal 0
 
       # Tap to click
       input "type:touchpad" {
@@ -51,8 +61,11 @@
       foot
       kitty
 
+      xfce.xfconf
       xfce.thunar
       xfce.thunar-volman
+      xfce.thunar-archive-plugin
+      xfce.thunar-media-tags-plugin
       
       acpi #battery status
       brightnessctl

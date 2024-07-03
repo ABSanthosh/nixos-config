@@ -3,12 +3,12 @@
 	boot = {
 		loader = {
 			systemd-boot.enable = true;
-			efi.canTouchVariables = true;
+			efi.canTouchEfiVariables = true;
 			timeout = 0;
 		};
 		tmp.cleanOnBoot = true;
 		supportedFilesystems = [ "ntfs" "exfat" ];
-		kernalParams = [ "quite" "splash" "loglevel=0" ];
+		kernelParams = [ "quite" "splash" "loglevel=0" ];
 		initrd = {
 			verbose = false;
 		};

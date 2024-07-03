@@ -8,6 +8,9 @@
       ./modules/nix.nix
       ./modules/i18n.nix
       ./modules/boot.nix
+      ./modules/sound.nix
+      ./modules/fonts.nix
+      ./modules/docker.nix
       ./modules/aliases.nix
       ./modules/hardware.nix
       ./modules/bluetooth.nix

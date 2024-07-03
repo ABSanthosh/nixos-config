@@ -18,16 +18,16 @@
 
 
       # Services
-      ./modules/services/sway.nix
       ./modules/services/default.nix
 
       # Databases
       ./modules/database/mysql.nix
       ./modules/database/postgres.nix
-  ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+      # Desktop Environment
+      # ./modules/desktop-env/gnome.nix
+      ./modules/desktop-env/sway.nix
+  ];
 
   users.users.santhosh = {
     isNormalUser = true;

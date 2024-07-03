@@ -12,7 +12,7 @@ in
     ./programs/git.nix
     ./programs/neovim.nix
 
-    ./desktop-env/sway/index.nix
+    ./desktop-env/sway/default.nix
   ];
   home = {
     username = username;

@@ -29,6 +29,11 @@
   #   extraConfig 
   # };
 
+  # boot.extraModprobeConfig = ''
+  #   options snd slots=snd-hda-intel
+  #   options snd_hda_intel enable=0,1
+  # '';
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -38,7 +43,11 @@
   };
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  # sound.enable = true;
+  # security.rtkit.enable = true;
+
+  # hardware.pulseaudio = {
+  #   enable = true;
+  #   extraConfig = "load-module module-combine-sink";
+  # };
 }

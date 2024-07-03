@@ -1,12 +1,13 @@
 {config, pkgs, lib, ...}: 
 {
     services = {
+        # Enable automatic login for the user.
+        getty.autologinUser = "santhosh";
+
         xserver = {
         enable = true;
         excludePackages = [ pkgs.xterm ];
 
-        # Enable automatic login for the user.
-        getty.autologinUser = "santhosh";
 
         xkb = {
             layout = "us";

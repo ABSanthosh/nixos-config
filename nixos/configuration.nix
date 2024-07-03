@@ -5,10 +5,14 @@
       ./hardware-configuration.nix
 
       # Modules
+      ./modules/nix.nix
       ./modules/i18n.nix
       ./modules/boot.nix
       ./modules/aliases.nix
+      ./modules/hardware.nix
+      ./modules/bluetooth.nix
       ./modules/networking.nix
+
 
       # Services
       ./modules/services/sway.nix

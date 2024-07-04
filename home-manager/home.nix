@@ -13,8 +13,8 @@ in
     ./programs/browsers.nix
 
     # Desktop Environment
-    ./desktop-env/sway/default.nix
-    # ./desktop-env/gnome/default.nix
+    # ./desktop-env/sway/default.nix
+    ./desktop-env/gnome/default.nix
   ];
 
   nixpkgs = {

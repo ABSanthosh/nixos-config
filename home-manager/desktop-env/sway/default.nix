@@ -79,6 +79,8 @@ in
       bindsym F10 exec playerctl play-pause
       bindsym F11 exec playerctl next
 
+      bindsym $mod+e exec thunar
+
       # Borders
       default_border none 
       # for_window [title="^.*"] title_format " "
@@ -126,6 +128,10 @@ in
       for_window [title="File Properties"] {
         floating enable 
         resize set width 800px height 600px
+      }
+      for_window [title="File Operation Progress"] {
+        floating enable 
+        resize set width 300px height 200px
       }
 
       # Tap to click

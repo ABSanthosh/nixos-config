@@ -32,7 +32,7 @@
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
-    extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" "docker" ];
     packages = with pkgs; [ ];
   };
 

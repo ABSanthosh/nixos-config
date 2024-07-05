@@ -2,8 +2,9 @@
 
 {
   home.packages = with pkgs; [
-    firefox
-    chromium
+    unstable.brave
+    unstable.firefox
+    unstable.chromium
     microsoft-edge-dev
   ];
 

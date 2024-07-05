@@ -17,10 +17,6 @@
           '';
           autoLogin.delay = 0;
         };
-        autoLogin = {
-          enable = true;
-          user = "santhosh";
-        };
       };
       # Enable the GNOME Desktop Environment.
       desktopManager = {
@@ -36,7 +32,7 @@
   };
 
   environment = {
-    gnome.excludePackages = with pkgs.gnome; [
+    gnome.excludePackages = with pkgs; [
       baobab # disk usage analyzer
       epiphany # web browser
       # gedit # text editor
@@ -46,12 +42,12 @@
       # seahorse # password manager
 
       pkgs.gnome-tour
-      gnome-characters
-      gnome-logs
-      gnome-maps
-      gnome-music
-      gnome-weather
-      gnome-contacts
+      gnome.gnome-characters
+      gnome.gnome-logs
+      gnome.gnome-maps
+      gnome.gnome-music
+      gnome.gnome-weather
+      gnome.gnome-contacts
       pkgs.gnome-connections
       pkgs.gnome-photos
     ];

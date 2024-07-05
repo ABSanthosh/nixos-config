@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
+{ inputs, lib, config, pkgs, outputs, ... }:
 let
   username = "santhosh";
   stateVersion = "24.05";
@@ -20,17 +20,8 @@ in
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      outputs.overlays.unstable-packages
     ];
 
     config = {
@@ -44,7 +35,7 @@ in
     stateVersion = stateVersion;
     homeDirectory = homeDirectory;
     # TODO: change to true when home-manager is updated to 24.11
-    # enableNixpkgsReleaseCheck = false;
+    enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
       amberol
@@ -55,7 +46,7 @@ in
       # Development
       go
       git
-      vscode
+      unstable.vscode
       nodejs
       docker
       mysql80

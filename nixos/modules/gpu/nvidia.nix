@@ -18,14 +18,14 @@ in
   };
   environment.systemPackages = [ nvidia-offload ];
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
       extraPackages = with pkgs; [
         vaapiVdpau
       ];
     };
     nvidia = {
-      open = false;
+      open = true;
       nvidiaSettings = true;
       modesetting.enable = true;
       package = nvidiaDriverChannel;

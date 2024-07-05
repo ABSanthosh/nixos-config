@@ -5,11 +5,9 @@
     enable = true;
     userName = "ABSanthosh";
     userEmail = "a.b.santhosh02@gmail.com";
-    config = {
+    extraConfig = {
       user.name = "ABSanthosh";
       user.email = "a.b.santhosh02@gmail.com";
-    };
-    extraConfig = {
       init.defaultBranch = "main";
       core = {
         fileMode = false;

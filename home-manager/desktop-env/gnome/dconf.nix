@@ -2,6 +2,12 @@
 let
   # wallpaper = "/etc/nixos/assets/Wallpapers/Ventura/Ventura-dark.jpg";
   wallpaper = "/etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png";
+
+  # run a bash command to make a symlink from /etc/nixos/assets/audio/ocean
+  # to /usr/share/sounds
+  # sudo mkdir -p /usr/share/sounds
+  # sudo ln -s /etc/nixos/assets/audio/ocean /usr/share/sounds/ocean
+  # sudo mkdir -p ~/.local/share/sounds && sudo ln -s /etc/nixos/assets/audio/ocean ~/.local/share/sounds
 in
 {
   dconf.settings = {
@@ -71,6 +77,9 @@ in
     "org/gnome/desktop/session" = {
       idle-delay = lib.hm.gvariant.mkUint32 0;
     };
+    "org/gnome/desktop/sound" = {
+      theme-name = "ocean";
+    };
     "org/gnome/desktop/interface" = {
       clock-format = "12h";
     };
@@ -94,9 +103,6 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-        # "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
-        # "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
-        # "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -119,21 +125,6 @@ in
       command = "sh /etc/nixos/scripts/screenshot.sh";
       binding = "<Shift><Alt>s";
     };
-    # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-    #   name = "Volume Up";
-    #   command = "sh /etc/nixos/scripts/screenshot.sh";
-    #   binding = "XF86AudioRaiseVolume";
-    # };
-    # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
-    #   name = "Volume Down";
-    #   command = "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-";
-    #   binding = "XF86AudioLowerVolume";
-    # };
-    # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
-    #   name = "Volume Mute";
-    #   command = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-    #   binding = "XF86AudioMute";
-    # };
   };
 }
 

@@ -13,5 +13,9 @@
     gnome.gnome-tweaks
     gnome.gnome-terminal
     gnome.gnome-power-manager
+
+    # Audio
+    pulseaudio
+    pulsemixer
   ];
 }

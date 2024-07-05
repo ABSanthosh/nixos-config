@@ -8,7 +8,7 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
-    kernelParams = [ "quiet" "splash" "loglevel=4" ];
+    kernelParams = [ "quiet" "loglevel=3" "systemd.show_status=auto" "rd.udev.log_level=3" "i915.fastboot=1"];
     initrd = {
       verbose = false;
     };

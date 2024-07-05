@@ -10,7 +10,7 @@
       ./modules/tlp.nix
       ./modules/nix.nix
       ./modules/boot.nix
-      ./modules/sound.nix
+      # ./modules/sound.nix
       ./modules/fonts.nix
       ./modules/docker.nix
       ./modules/aliases.nix

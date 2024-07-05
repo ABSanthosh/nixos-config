@@ -36,7 +36,7 @@ in
     };
     "org/gtk/settings/file-chooser" = {
       # Why lib.hm.gvariant.mkTuple? - https://discourse.nixos.org/t/set-keyboard-repeat-in-gnome-wayland-with-home-manager/25040/2
-      # window-size = lib.hm.gvariant.mkTuple [ 632 251 ];
+      window-size = lib.hm.gvariant.mkTuple [ 830 570 ];
       clock-format = "12h";
     };
     "org/gnome/nautilus/preferences" = { click-policy = "single"; };
@@ -94,6 +94,9 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -115,6 +118,21 @@ in
       name = "Screenshot";
       command = "sh /etc/nixos/scripts/screenshot.sh";
       binding = "<Shift><Alt>s";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      name = "Volume Up";
+      command = "sh /etc/nixos/scripts/screenshot.sh";
+      binding = "XF86AudioRaiseVolume";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      name = "Volume Down";
+      command = "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-";
+      binding = "XF86AudioLowerVolume";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
+      name = "Volume Mute";
+      command = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      binding = "XF86AudioMute";
     };
   };
 }

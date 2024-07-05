@@ -10,7 +10,7 @@
 
   programs = {
     brave = {
-      enable = true;
+      #enable = true;
       commandLineArgs = [ "--enable-features=TouchpadOverscrollHistoryNavigation" ];
       extensions = [
         { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
@@ -23,7 +23,7 @@
     };
 
     firefox = {
-      enable = true;
+      #enable = true;
       profiles.ihome = {
         isDefault = true;
         settings = {

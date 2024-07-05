@@ -7,7 +7,7 @@
 
       # modules
       ./modules/i18n.nix
-      # ./modules/tlp.nix
+      ./modules/tlp.nix
       ./modules/nix.nix
       ./modules/boot.nix
       ./modules/sound.nix

@@ -6,7 +6,8 @@
       ./hardware-configuration.nix
 
       # modules
-      ./modules/tlp.nix
+      ./modules/i18n.nix
+      # ./modules/tlp.nix
       ./modules/nix.nix
       ./modules/boot.nix
       ./modules/sound.nix
@@ -18,65 +19,29 @@
       ./modules/networking.nix
 
       # gpu
-      # ./modules/gpu/intel.nix
-      ./modules/gpu/nvidia.nix
+      ./modules/gpu/intel.nix
+      # ./modules/gpu/nvidia.nix
+
+      # Desktop Env
+      ./modules/desktop-env/gnome.nix
+      # ./modules/desktop-env/sway.nix
+      
+      # databases
+      ./modules/database/mysql.nix
+      ./modules/database/postgres.nix
 
       # services
-      ./modules/services/gnome.nix
-      # ./modules/services/sway.nix
-      ./modules/services/mysql.nix
-      ./modules/services/postgres.nix
+      ./modules/services/default.nix
     ];
 
-  # Time zone.
-  time.timeZone = "Asia/Kolkata";
-
-  # Internationalisation properties.
-  i18n = {
-    defaultLocale = "en_IN";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_IN";
-      LC_IDENTIFICATION = "en_IN";
-      LC_MEASUREMENT = "en_IN";
-      LC_MONETARY = "en_IN";
-      LC_NAME = "en_IN";
-      LC_NUMERIC = "en_IN";
-      LC_PAPER = "en_IN";
-      LC_TELEPHONE = "en_IN";
-      LC_TIME = "en_IN";
+  programs = {
+    mtr.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
     };
   };
-
-  services = {
-    xserver = {
-      enable = true;
-      excludePackages = [ pkgs.xterm ];
-
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
-    };
-
-    # Enable CUPS to print documents.
-    printing.enable = false;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-    };
-
-    # Enable the OpenSSH daemon.
-    openssh.enable = true;
-  };
-
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
+  
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
@@ -84,21 +49,11 @@
     packages = with pkgs; [ ];
   };
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }

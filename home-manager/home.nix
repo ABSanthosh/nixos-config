@@ -7,22 +7,16 @@ in
 {
   imports = [
     # Programs
-    ./programs/browsers.nix
     ./programs/git.nix
-    ./programs/neovim.nix
     # ./programs/tmux.nix
-    # ./programs/hyprland.nix
+    ./programs/neovim.nix
+    ./programs/browsers.nix
 
 
-    # Gnome
-    ./desktop-env/gnome/gtk.nix
-    ./desktop-env/gnome/dconf.nix
-    ./desktop-env/gnome/packages.nix
-    ./desktop-env/gnome/extensions.nix
-
-    # Sway
-    # ./desktop-env/sway/sway.nix
-    # ./desktop-env/sway/waybar.nix
+    # Desktop Env
+    ./desktop-env/gnome/default.nix
+    # ./desktop-env/sway/default.nix
+    # ./desktop-env/hyprland/default.nix
   ];
 
   nixpkgs = {
@@ -84,11 +78,10 @@ in
       jetbrains-mono
 
       # Games
-      prismlauncher
+      # prismlauncher
     ];
   };
 
-  # Enable home-manager and git
   programs = {
     home-manager.enable = true;
   };

@@ -46,13 +46,13 @@ in
       # Development
       go
       git
-      unstable.vscode
       nodejs
       docker
       mysql80
       openssl
       python311
       typescript
+      unstable.vscode
 
       black # Code format Python
       shfmt # Code format Shell

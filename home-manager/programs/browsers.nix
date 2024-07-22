@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    unstable.brave
+    # unstable.brave
     unstable.firefox
     unstable.chromium
     microsoft-edge-dev
@@ -10,7 +10,8 @@
 
   programs = {
     brave = {
-      #enable = true;
+      enable = true;
+      package = pkgs.unstable.brave;
       commandLineArgs = [ "--enable-features=TouchpadOverscrollHistoryNavigation" ];
       extensions = [
         { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration

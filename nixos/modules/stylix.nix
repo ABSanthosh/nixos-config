@@ -1,0 +1,4 @@
+{ pkgs, … }:
+{
+  stylix.enable = true;
+}

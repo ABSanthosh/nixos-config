@@ -8,7 +8,8 @@ in
   imports = [
     # Programs
     ./programs/git.nix
-    # ./programs/tmux.nix
+    ./programs/tmux.nix
+    ./programs/yazi.nix
     ./programs/kitty.nix
     ./programs/neovim.nix
     ./programs/browsers.nix
@@ -47,6 +48,7 @@ in
       # Development
       go
       git
+      yazi
       kitty
       nodejs
       docker

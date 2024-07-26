@@ -8,11 +8,8 @@
       # Kitty confif file
       confirm_os_window_close 0
 
-      # Set zsh as default shell
-      shell zsh
-
       # Set margin
-      window_padding_width 20
+      window_padding_width 2
 
       # Fonts
       font_family      Liberation Mono
@@ -34,7 +31,7 @@
       background_opacity 1
 
       # Blur, too much will lead to performance problems
-      # background_blur 10
+      background_blur 10
 
       # Path to a background image. Must be in PNG format.
       background_image none
@@ -42,71 +39,80 @@
       # Set nvim as default editor
       editor nvim
 
-      # kitten themes -------------------------
+      hide_window_decorations titlebar-only
 
-      # Dark One Nuanced by ariasuni, https://store.kde.org/p/1225908
-      # Imported from KDE .colorscheme format by thematdev, https://thematdev.org
-      # For migrating your schemes from Konsole format see 
-      # https://git.thematdev.org/thematdev/konsole-scheme-migration
+      # The basic colors
+      foreground              #cdd6f4
+      background              #1e1e2e
+      selection_foreground    #1e1e2e
+      selection_background    #f5e0dc
 
+      # Cursor colors
+      cursor                  #f5e0dc
+      cursor_text_color       #1e1e2e
 
-      # importing Background
-      background #282c34
-      # importing BackgroundFaint
-      # importing BackgroundIntense
-      # importing Color0
-      color0 #3f4451
-      # importing Color0Faint
-      color16 #282c34
-      # importing Color0Intense
-      color8 #4f5666
-      # importing Color1
-      color1 #e06c75
-      # importing Color1Faint
-      color17 #c25d66
-      # importing Color1Intense
-      color9 #ff7b86
-      # importing Color2
-      color2 #98c379
-      # importing Color2Faint
-      color18 #82a566
-      # importing Color2Intense
-      color10 #b1e18b
-      # importing Color3
-      color3 #d19a66
-      # importing Color3Faint
-      color19 #b38257
-      # importing Color3Intense
-      color11 #efb074
-      # importing Color4
-      color4 #61afef
-      # importing Color4Faint
-      color20 #5499d1
-      # importing Color4Intense
-      color12 #67cdff
-      # importing Color5
-      color5 #c678dd
-      # importing Color5Faint
-      color21 #a966bd
-      # importing Color5Intense
-      color13 #e48bff
-      # importing Color6
-      color6 #56b6c2
-      # importing Color6Faint
-      color22 #44919a
-      # importing Color6Intense
-      color14 #63d4e0
-      # importing Color7
-      color7 #e6e6e6
-      # importing Color7Faint
-      color23 #c8c8c8
-      # importing Color7Intense
-      color15 #ffffff
-      # importing Foreground
-      foreground #abb2bf
-      # importing ForegroundFaint
-      # importing ForegroundIntense
-      # importing General
+      # URL underline color when hovering with mouse
+      url_color               #f5e0dc
+
+      # Kitty window border colors
+      active_border_color     #b4befe
+      inactive_border_color   #6c7086
+      bell_border_color       #f9e2af
+
+      # OS Window titlebar colors
+      wayland_titlebar_color
+      system
+      macos_titlebar_color
+      system
+
+      # Tab bar colors
+      active_tab_foreground   #11111b
+      active_tab_background   #cba6f7
+      inactive_tab_foreground #cdd6f4
+      inactive_tab_background #181825
+      tab_bar_background      #11111b
+
+      # Colors for marks (marked text in the terminal)
+      mark1_foreground #1e1e2e
+      mark1_background #b4befe
+      mark2_foreground #1e1e2e
+      mark2_background #cba6f7
+      mark3_foreground #1e1e2e
+      mark3_background #74c7ec
+
+      # The 16 terminal colors
+
+      # black
+      color0 #45475a
+      color8 #585b70
+
+      # red
+      color1 #f38ba8
+      color9 #f38ba8
+
+      # green
+      color2  #a6e3a1
+      color10 #a6e3a1
+
+      # yellow
+      color3  #f9e2af
+      color11 #f9e2af
+
+      # blue
+      color4  #89b4fa
+      color12 #89b4fa
+
+      # magenta
+      color5  #f5c2e7
+      color13 #f5c2e7
+
+      # cyan
+      color6  #94e2d5
+      color14 #94e2d5
+
+      # white
+      color7  #bac2de
+      color15 #a6adc8
     '';
   };
 }

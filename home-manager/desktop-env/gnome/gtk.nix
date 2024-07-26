@@ -16,20 +16,20 @@ in
     };
     gtk2.extraConfig = "gtk-cursor-theme-size=32";
   };
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      cursor-theme = "capitaine-cursors";
-      cursor-size = cursor-size;
-    };
-  };
+  # dconf.settings = {
+  #   "org/gnome/desktop/interface" = {
+  #     cursor-theme = "capitaine-cursors";
+  #     cursor-size = cursor-size;
+  #   };
+  # };
 
   xresources.properties = {
     "Xcursor.size" = cursor-size;
   };
 
-  home.pointerCursor = {
-    package = pkgs.capitaine-cursors;
-    name = "capitaine-cursors";
-    size = cursor-size;
-  };
+  # home.pointerCursor = {
+  #   package = pkgs.capitaine-cursors;
+  #   name = "capitaine-cursors";
+  #   size = cursor-size;
+  # };
 }

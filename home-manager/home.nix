@@ -70,6 +70,9 @@ in
 
       # Games
       # prismlauncher
+
+      # Style
+      base16-schemes
     ];
   };
 

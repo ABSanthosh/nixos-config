@@ -11,6 +11,7 @@
       init.defaultBranch = "main";
       core = {
         fileMode = false;
+        # git config core.filemode false   
         autocrlf = false;
       };
       safe = {

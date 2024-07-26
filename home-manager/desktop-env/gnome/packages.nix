@@ -11,7 +11,7 @@
     # Gnome
     gnome.gnome-boxes
     gnome.gnome-tweaks
-    gnome.gnome-terminal
+    # gnome.gnome-terminal
     gnome.gnome-power-manager
 
     # Audio

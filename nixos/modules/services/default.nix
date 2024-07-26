@@ -1,6 +1,6 @@
-{config, pkgs, ... }: 
+{ config, pkgs, ... }:
 {
-    services = {
+  services = {
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];
@@ -19,7 +19,9 @@
     };
 
     # Enable the OpenSSH daemon.
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings.PasswordAuthentication = true;
+    };
   };
-  
 }

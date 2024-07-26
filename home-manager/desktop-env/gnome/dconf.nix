@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
-  # wallpaper = "/etc/nixos/assets/Wallpapers/Ventura/Ventura-dark.jpg";
-  wallpaper = "/etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png";
+  wallpaper = "/etc/nixos/assets/Wallpapers/Misc/a_lighthouse_with_a_large_cloud_of_pink_clouds.jpg";
 
   # run a bash command to make a symlink from /etc/nixos/assets/audio/ocean
   # to /usr/share/sounds
@@ -11,17 +10,17 @@ let
 in
 {
   dconf.settings = {
-    # "org/gnome/desktop/screensaver" = {
-    #   picture-uri = "file://${wallpaper}";
-    #   primary-color = "#000000000000";
-    #   secondary-color = "#000000000000";
-    # };
-    # "org/gnome/desktop/background" = {
-    #   picture-uri = "file://${wallpaper}";
-    #   picture-uri-dark = "file://${wallpaper}";
-    #   picture-options = "zoom";
-    #   color-shading-type = "solid";
-    # };
+    "org/gnome/desktop/screensaver" = {
+      picture-uri = "file://${wallpaper}";
+      primary-color = "#000000000000";
+      secondary-color = "#000000000000";
+    };
+    "org/gnome/desktop/background" = {
+      picture-uri = "file://${wallpaper}";
+      picture-uri-dark = "file://${wallpaper}";
+      picture-options = "zoom";
+      color-shading-type = "solid";
+    };
     "org/gnome/settings-daemon/plugins/power" = {
       idle-dim = false;
       sleep-inactive-battery-type = "nothing";
@@ -60,7 +59,7 @@ in
     "org/gnome/desktop/interface" = {
       clock-show-seconds = true;
       clock-show-weekday = true;
-      # color-scheme = "prefer-dark";
+      color-scheme = "prefer-dark";
       enable-hot-corners = true;
       font-antialiasing = "grayscale";
       font-hinting = "none";

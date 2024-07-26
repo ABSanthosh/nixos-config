@@ -9,6 +9,7 @@ in
     # Programs
     ./programs/git.nix
     # ./programs/tmux.nix
+    ./programs/kitty.nix
     ./programs/neovim.nix
     ./programs/browsers.nix
 
@@ -46,6 +47,7 @@ in
       # Development
       go
       git
+      kitty
       nodejs
       docker
       mysql80
@@ -70,9 +72,6 @@ in
 
       # Games
       # prismlauncher
-
-      # Style
-      base16-schemes
     ];
   };
 

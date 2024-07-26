@@ -50,6 +50,7 @@
       gnome-contacts
       pkgs.gnome-connections
       pkgs.gnome-photos
+      pkgs.gnome-console
     ];
   };
 }

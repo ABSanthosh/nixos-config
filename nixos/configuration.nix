@@ -32,9 +32,6 @@
 
       # services
       ./modules/services/default.nix
-
-      # Style
-      ./modules/stylix/default.nix
     ];
 
   programs = {

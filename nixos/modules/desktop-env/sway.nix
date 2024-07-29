@@ -1,5 +1,12 @@
 { config, lib, pkgs, ... }:
 {
+  imports = [
+    ../sound.nix
+  ];
+  
+  boot = {
+    kernelParams = [ "psmouse.synaptics_intertouch=0" ];
+  };
   security.polkit = {
     enable = true;
     extraConfig = ''
@@ -59,6 +66,8 @@
     sway
   '';
   environment.etc."a_rocket_launching_in_the_sky.png".source = /etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  # environment.sessionVariables.XDG_CACHE_HOME = "$(mktemp -d)";
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    GTK_THEME = "dark";
+  };
 }

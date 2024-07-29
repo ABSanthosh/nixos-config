@@ -20,6 +20,8 @@
       bind = [
         "$mod, F, exec, firefox"
         "$mod, C, exec, kitty"
+        "$mod, B, exec, brave"
+        "$mod, T, togglegroup"
         ", Print, exec, grimblast copy area"
       ] ++ (
         # workspaces
@@ -43,3 +45,4 @@
     };
   };
 }
+ 

@@ -10,7 +10,6 @@
       ./modules/tlp.nix
       ./modules/nix.nix
       ./modules/boot.nix
-      # ./modules/sound.nix
       ./modules/fonts.nix
       ./modules/docker.nix
       ./modules/aliases.nix
@@ -24,8 +23,8 @@
 
       # Desktop Env
       # ./modules/desktop-env/gnome.nix
-      # ./modules/desktop-env/sway.nix
-      ./modules/desktop-env/hyprland.nix
+      ./modules/desktop-env/sway.nix
+      # ./modules/desktop-env/hyprland.nix
       
       # databases
       ./modules/database/mysql.nix

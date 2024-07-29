@@ -79,60 +79,28 @@ in
       bindsym F10 exec playerctl play-pause
       bindsym F11 exec playerctl next
 
-      bindsym $mod+e exec thunar
+      bindsym --no-warn $mod+e exec "kitty yazi"
+      bindsym $mod+c exec "kitty"
+      bindsym $mod+t layout toggle tabbed split
 
       # Borders
       default_border none 
       # for_window [title="^.*"] title_format " "
       default_floating_border normal 0
 
-      for_window [title="Picture-in-picture"] {
-        floating enable
-        sticky enable
-        resize set width 100ppt
-        resize set width 340px
-      }
+      for_window [title="Picture-in-picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
+      for_window [title="Picture in picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
 
-      for_window [title="Open Files"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Open Folders"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Open File"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Open Folder"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Settings"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Save File"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Copy Files"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="Choose Files"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="File Properties"] {
-        floating enable 
-        resize set width 800px height 600px
-      }
-      for_window [title="File Operation Progress"] {
-        floating enable 
-        resize set width 300px height 200px
-      }
+      for_window [title="Open Files"] floating enable, resize set 800 600, move position center
+      for_window [title="Open Folders"] floating enable, resize set 800 600, move position center
+      for_window [title="Open File"] floating enable, resize set 800 600, move position center
+      for_window [title="Open Folder"] floating enable, resize set 800 600, move position center
+      for_window [title="Settings"] floating enable, resize set 800 600, move position center
+      for_window [title="Save File"] floating enable, resize set 800 600, move position center
+      for_window [title="Copy Files"] floating enable, resize set 800 600, move position center
+      for_window [title="Choose Files"] floating enable, resize set 800 600, move position center
+      for_window [title="File Properties"] floating enable, resize set 800 600, move position center
+      for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
       # Tap to click
       input "type:touchpad" {
@@ -159,9 +127,7 @@ in
   home = {
     packages = with pkgs; [
       ags
-      foot
       mako
-      kitty
       wl-clipboard
 
       xfce.xfconf

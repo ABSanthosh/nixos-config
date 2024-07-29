@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  imports =[
+    ../sound.nix
+  ];
+  
   programs.hyprland = {
     # Install the packages from nixpkgs
     enable = true;
@@ -40,5 +44,10 @@
         TimeoutStopSec = 10;
       };
     };
+  };
+
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
   };
 }

@@ -23,8 +23,9 @@
       # ./modules/gpu/nvidia.nix
 
       # Desktop Env
-      ./modules/desktop-env/gnome.nix
+      # ./modules/desktop-env/gnome.nix
       # ./modules/desktop-env/sway.nix
+      ./modules/desktop-env/hyprland.nix
       
       # databases
       ./modules/database/mysql.nix

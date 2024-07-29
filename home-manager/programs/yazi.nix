@@ -5,8 +5,6 @@
     # Overwrite the file
     force = true;
     text = ''
-      [preview]
-      max_width
     '';
   };
 }

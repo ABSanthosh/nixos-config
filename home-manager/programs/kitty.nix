@@ -12,7 +12,7 @@
       window_padding_width 2
 
       # Fonts
-      font_family      Liberation Mono
+      font_family      Jetbrains Mono
       bold_font        auto
       italic_font      auto
       bold_italic_font auto
@@ -21,19 +21,8 @@
       # Change font size
       font_size 11.0
 
-      # Direct URL under the mouse
-      direct_urls yes
-
-      # Opacity, Be aware that using a value
-      # less than 1.0 is a (possibly significant)
-      # performance hit
-      # background_opacity 0.6
+      detect_urls yes
       background_opacity 1
-
-      # Blur, too much will lead to performance problems
-      background_blur 10
-
-      # Path to a background image. Must be in PNG format.
       background_image none
 
       # Set nvim as default editor
@@ -58,12 +47,6 @@
       active_border_color     #b4befe
       inactive_border_color   #6c7086
       bell_border_color       #f9e2af
-
-      # OS Window titlebar colors
-      wayland_titlebar_color
-      system
-      macos_titlebar_color
-      system
 
       # Tab bar colors
       active_tab_foreground   #11111b

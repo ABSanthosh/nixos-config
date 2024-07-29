@@ -1,11 +1,11 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  programs = {
-    kitty = {
-      enable = true;
-    };
-  };
+  # programs = {
+  #   kitty = {
+  #     enable = true;
+  #   };
+  # };
 
   home.packages = with pkgs; [
     polkit_gnome
@@ -19,6 +19,7 @@
       "$mod" = "SUPER";
       bind = [
         "$mod, F, exec, firefox"
+        "$mod, C, exec, kitty"
         ", Print, exec, grimblast copy area"
       ] ++ (
         # workspaces

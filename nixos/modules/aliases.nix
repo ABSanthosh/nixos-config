@@ -6,5 +6,6 @@
     # https://github.com/Misterio77/nix-starter-configs#usage
     nix-refresh = "sudo nixos-rebuild switch --flake .#zoro";
     nix-update = "nix flake update";
+    yy = "yazi";
   };
 }

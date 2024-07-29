@@ -16,9 +16,9 @@ in
 
 
     # Desktop Env
-    ./desktop-env/gnome/default.nix
+    # ./desktop-env/gnome/default.nix
     # ./desktop-env/sway/default.nix
-    # ./desktop-env/hyprland/default.nix
+    ./desktop-env/hyprland/default.nix
   ];
 
   nixpkgs = {

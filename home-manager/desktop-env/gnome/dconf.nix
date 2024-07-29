@@ -36,7 +36,7 @@ in
       favorite-apps = [
         "brave-browser.desktop"
         "code.desktop"
-        "org.gnome.Terminal.desktop"
+        "kitty.desktop"
       ];
     };
     "org/gtk/settings/file-chooser" = {
@@ -92,7 +92,7 @@ in
       show-screenshot-ui = [ "<Shift><Super>s" ];
     };
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      home = [ "<Super>e" ];
+      # home = [ "<Super>e" ];
       next = [ "F11" ];
       previous = [ "F9" ];
       play = [ "F10" ];
@@ -102,6 +102,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -116,13 +117,18 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       name = "Terminal";
-      command = "kgx";
+      command = "kitty";
       binding = "<Super>c";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       name = "Screenshot";
       command = "sh /etc/nixos/scripts/screenshot.sh";
       binding = "<Shift><Alt>s";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      name = "File Explorer";
+      command = "kitty yazi";
+      binding = "<Super>e";
     };
   };
 }

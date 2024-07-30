@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }:
 let
+  imports = [
+
+  ];
+
   mod4 = "Mod4";
 
   dbus-sway-environment = pkgs.writeTextFile {
@@ -9,8 +13,8 @@ let
 
     text = ''
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+      systemctl --user stop pipewire pipewire-media-session
+      systemctl --user start pipewire pipewire-media-session
     '';
   };
 
@@ -22,11 +26,11 @@ let
       let
         schema = pkgs.gsettings-desktop-schemas;
         datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+        # gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
       in
       ''`
         export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        gnome_schema=org.gnome.desktop.interface
-        gsettings set $gnome_schema gtk-theme 'Dracula'
+        export GTK_THEME=Adwaita:dark
       '';
   };
 in
@@ -38,7 +42,7 @@ in
 
     config = rec {
       modifier = mod4;
-      defaultWorkspace = "1";
+      defaultWorkspace = "workspace number 1";
       terminal = "kitty";
       startup = [
         { command = "brave"; }
@@ -54,7 +58,7 @@ in
     extraConfig = ''
       set $mod ${mod4}
 
-      exec mako
+      exec swaync
       exec wl-paste -t text --watch clipman store --no-persist
 
       bindsym Print               exec shotman -c output
@@ -62,8 +66,8 @@ in
       bindsym Print+Shift+Control exec shotman -c window
 
       # Brightness
-      bindsym --locked XF86MonBrightnessDown exec brightnessctl set 1%-
-      bindsym --locked XF86MonBrightnessUp exec brightnessctl set 1%+
+      bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
+      bindsym --locked XF86MonBrightnessUp exec brightnessctl --save set 1%+
 
       # Volume
       bindsym XF86AudioRaiseVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+'
@@ -83,6 +87,9 @@ in
       bindsym $mod+c exec "kitty"
       bindsym $mod+t layout toggle tabbed split
 
+      # Control Center
+      bindsym $mod+Shift+n exec swaync-client -t -sw
+
       # Borders
       default_border none 
       # for_window [title="^.*"] title_format " "
@@ -91,15 +98,15 @@ in
       for_window [title="Picture-in-picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
       for_window [title="Picture in picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
 
-      for_window [title="Open Files"] floating enable, resize set 800 600, move position center
-      for_window [title="Open Folders"] floating enable, resize set 800 600, move position center
-      for_window [title="Open File"] floating enable, resize set 800 600, move position center
-      for_window [title="Open Folder"] floating enable, resize set 800 600, move position center
-      for_window [title="Settings"] floating enable, resize set 800 600, move position center
-      for_window [title="Save File"] floating enable, resize set 800 600, move position center
-      for_window [title="Copy Files"] floating enable, resize set 800 600, move position center
-      for_window [title="Choose Files"] floating enable, resize set 800 600, move position center
-      for_window [title="File Properties"] floating enable, resize set 800 600, move position center
+      for_window [title="Open Files"] floating enable, move position center
+      for_window [title="Open Folders"] floating enable, move position center
+      for_window [title="Open File"] floating enable, move position center
+      for_window [title="Open Folder"] floating enable, move position center
+      for_window [title="Settings"] floating enable, move position center
+      for_window [title="Save File"] floating enable, move position center
+      for_window [title="Copy Files"] floating enable, move position center
+      for_window [title="Choose Files"] floating enable, move position center
+      for_window [title="File Properties"] floating enable, move position center
       for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
       # Tap to click
@@ -111,7 +118,7 @@ in
       }
 
       # Set wallpaper
-      output "*" bg '/etc/a_rocket_launching_in_the_sky.png' fill
+      output "*" bg '/etc/wallpaper.png' fill
 
       # Disable HDMI-4
       output HDMI-A-4 disable
@@ -120,15 +127,15 @@ in
       workspace_layout tabbed
 
       exec dbus-sway-environment
-      exec configure-gtk
+      # exec configure-gtk
     '';
   };
 
   home = {
     packages = with pkgs; [
-      ags
-      mako
+      libnotify
       wl-clipboard
+      swaynotificationcenter
 
       xfce.xfconf
       xfce.thunar
@@ -140,6 +147,7 @@ in
       brightnessctl
 
       glib
+      dconf
       bemenu
       playerctl
       configure-gtk
@@ -153,5 +161,14 @@ in
         enable = true;
       };
     };
+  };
+
+  home.file.".config/gtk-3.0/settings.ini" = {
+    # Overwrite the file
+    force = true;
+    text = ''
+      [Settings]
+      gtk-application-prefer-dark-theme=true
+    '';
   };
 }

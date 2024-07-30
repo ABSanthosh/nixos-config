@@ -3,7 +3,7 @@
   imports = [
     ../sound.nix
   ];
-  
+
   boot = {
     kernelParams = [ "psmouse.synaptics_intertouch=0" ];
   };
@@ -43,31 +43,33 @@
     };
   };
 
-  services.gnome.gnome-keyring.enable = true;
   programs.sway = {
     # enable = true;
     wrapperFeatures.gtk = true;
   };
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session.command = ''
-        ${pkgs.greetd.tuigreet}/bin/tuigreet \
-          --time \
-          --asterisks \
-          --user-menu \
-          --cmd sway
-      '';
+  services = {
+    gnome.gnome-keyring.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session.command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+            --time \
+            --asterisks \
+            --user-menu \
+            --cmd sway
+        '';
+      };
     };
   };
 
   environment.etc."greetd/environments".text = ''
     sway
   '';
-  environment.etc."a_rocket_launching_in_the_sky.png".source = /etc/nixos/assets/Wallpapers/Misc/a_rocket_launching_in_the_sky.png;
+  environment.etc."wallpaper.png".source = /etc/nixos/assets/Wallpapers/Misc/a_lighthouse_with_a_large_cloud_of_pink_clouds.jpg;
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    GTK_THEME = "dark";
+    GTK_THEME = "Adwaita:dark";
   };
 }

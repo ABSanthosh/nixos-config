@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   imports = [
-
+    ./swaync/default.nix
   ];
 
   mod4 = "Mod4";

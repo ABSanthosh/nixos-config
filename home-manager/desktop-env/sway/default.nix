@@ -1,9 +1,5 @@
 { config, pkgs, lib, ... }:
 let
-  imports = [
-    ./swaync/default.nix
-  ];
-
   mod4 = "Mod4";
 
   dbus-sway-environment = pkgs.writeTextFile {
@@ -35,6 +31,10 @@ let
   };
 in
 {
+  imports = [
+    ./ags
+  ];
+
   wayland.windowManager.sway = {
     enable = true;
     checkConfig = false;
@@ -58,7 +58,6 @@ in
     extraConfig = ''
       set $mod ${mod4}
 
-      exec swaync
       exec wl-paste -t text --watch clipman store --no-persist
 
       bindsym Print               exec shotman -c output
@@ -88,7 +87,7 @@ in
       bindsym $mod+t layout toggle tabbed split
 
       # Control Center
-      bindsym $mod+Shift+n exec swaync-client -t -sw
+      # bindsym $mod+Shift+n exec swaync-client -t -sw
 
       # Borders
       default_border none 
@@ -135,7 +134,6 @@ in
     packages = with pkgs; [
       libnotify
       wl-clipboard
-      swaynotificationcenter
 
       xfce.xfconf
       xfce.thunar

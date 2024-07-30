@@ -8,11 +8,12 @@
     };
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ntfs" "exfat" ];
-    kernelParams = [ "quiet" "loglevel=3" "systemd.show_status=auto" "rd.udev.log_level=3" "i915.fastboot=1" "usbcore.autosuspend=-1"];
-    initrd = {
-      verbose = false;
-    };
-    consoleLogLevel = 0;
+    kernelParams = [  "i915.fastboot=1" "usbcore.autosuspend=-1"];
+    # "quiet" "loglevel=3" "systemd.show_status=auto" "rd.udev.log_level=3"
+    # initrd = {
+    #   verbose = false;
+    # };
+    # consoleLogLevel = 0;
     plymouth = {
       enable = true;
     };

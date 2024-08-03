@@ -13,6 +13,7 @@ in
     ./programs/bash.nix
     ./programs/kitty.nix
     ./programs/neovim.nix
+    ./programs/monitors.nix
     ./programs/browsers.nix
 
 

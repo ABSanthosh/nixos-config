@@ -3,8 +3,8 @@
 {
   home = {
     packages = with pkgs; [ ags ];
-    file = {
-      ".config/ags/config.js".source = ./config.js
-    };
+    # file = {
+    #   ".config/ags/config.js".source = ./config.js;
+    # };
   };
 }

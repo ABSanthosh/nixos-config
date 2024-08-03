@@ -87,7 +87,7 @@ in
       bindsym $mod+t layout toggle tabbed split
 
       # Control Center
-      # bindsym $mod+Shift+n exec swaync-client -t -sw
+      bindsym --no-warn $mod+a exec ags --toggle-window "cc"
 
       # Borders
       default_border none 
@@ -143,7 +143,7 @@ in
 
       acpi #battery status
       brightnessctl
-
+      
       glib
       dconf
       bemenu

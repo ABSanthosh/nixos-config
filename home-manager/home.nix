@@ -10,14 +10,15 @@ in
     ./programs/git.nix
     ./programs/tmux.nix
     ./programs/yazi.nix
+    ./programs/bash.nix
     ./programs/kitty.nix
     ./programs/neovim.nix
     ./programs/browsers.nix
 
 
     # Desktop Env
-    # ./desktop-env/gnome/default.nix
-    ./desktop-env/sway/default.nix
+    ./desktop-env/gnome/default.nix
+    # ./desktop-env/sway/default.nix
     # ./desktop-env/hyprland/default.nix
   ];
 
@@ -40,10 +41,11 @@ in
     enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
-      amberol
-      lm_sensors
       mpv
       vlc
+      amberol
+      starship
+      lm_sensors
 
       # Development
       go
@@ -55,6 +57,7 @@ in
       mysql80
       openssl
       python311
+      zed-editor
       typescript
       unstable.vscode
 

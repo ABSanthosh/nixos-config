@@ -9,5 +9,9 @@
       wait = "background";
       extraConfig = "noarp";
     };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 80 ];
+    };
   };
 }

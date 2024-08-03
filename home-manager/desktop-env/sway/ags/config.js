@@ -1,3 +1,6 @@
+const audio = await Service.import("audio")
+const battery = await Service.import("battery")
+
 const myLabel = Widget.Label({
   label: 'some example content',
 })

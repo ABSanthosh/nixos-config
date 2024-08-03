@@ -72,6 +72,9 @@
         # CPU_MAX_PERF_ON_BAT = 20;
         START_CHARGE_THRESH_BAT0 = 65;
         STOP_CHARGE_THRESH_BAT0 = 60;
+
+        TLP_DEFAULT_MODE = "BAT";
+        TLP_PERSISTENT_DEFAULT = 1;
       };
     };
   };

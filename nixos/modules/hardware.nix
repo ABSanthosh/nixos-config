@@ -1,6 +1,4 @@
-{ config, pkgs, lib, ... }:
-
-{
+{ ... }: {
   hardware = {
     enableRedistributableFirmware = true; # For some unfree drivers
   };

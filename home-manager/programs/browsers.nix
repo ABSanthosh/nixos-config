@@ -1,8 +1,5 @@
-{ pkgs, config, ... }:
-
-{
+{ pkgs, config, ... }: {
   home.packages = with pkgs; [
-    # unstable.brave
     unstable.firefox
     unstable.chromium
     microsoft-edge-dev

@@ -1,6 +1,4 @@
-{ config, lib, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }: {
   networking = {
     hostName = "zoro";
     networkmanager.enable = true;

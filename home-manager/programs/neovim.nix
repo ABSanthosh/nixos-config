@@ -1,6 +1,4 @@
-{ pkgs, config, ... }:
-
-{
+{ pkgs, config, ... }: {
   programs = {
     neovim = {
       enable = true;
@@ -10,8 +8,8 @@
         unzip
         cargo
         ripgrep
-        tree-sitter
         gnumake
+        tree-sitter
       ];
       plugins = with pkgs.vimPlugins; [ ];
     };

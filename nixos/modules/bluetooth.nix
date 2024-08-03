@@ -1,7 +1,5 @@
 # https://github.com/MatthiasBenaets/nixos-config/blob/master/modules/hardware/bluetooth.nix
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;

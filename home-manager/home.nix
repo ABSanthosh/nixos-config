@@ -8,7 +8,7 @@ in
   imports = [
     # Programs
     ./programs/git.nix
-    ./programs/tmux.nix
+    # ./programs/tmux.nix
     ./programs/yazi.nix
     ./programs/bash.nix
     ./programs/kitty.nix
@@ -37,8 +37,6 @@ in
     username = username;
     stateVersion = stateVersion;
     homeDirectory = homeDirectory;
-    # TODO: change to true when home-manager is updated to 24.11
-    enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
       mpv

@@ -1,6 +1,4 @@
-{ inputs, config, lib, pkgs, ... }:
-
-{
+{ inputs, config, lib, pkgs, ... }: {
   imports =
     [
       ./hardware-configuration.nix
@@ -25,7 +23,7 @@
       ./modules/desktop-env/gnome.nix
       # ./modules/desktop-env/sway.nix
       # ./modules/desktop-env/hyprland.nix
-      
+
       # databases
       ./modules/database/mysql.nix
       ./modules/database/postgres.nix
@@ -41,7 +39,7 @@
       enableSSHSupport = true;
     };
   };
-  
+
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";

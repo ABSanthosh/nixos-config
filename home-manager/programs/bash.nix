@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   home.file.".bashrc" = {
     force = true;
     text = ''

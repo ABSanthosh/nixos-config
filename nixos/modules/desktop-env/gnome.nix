@@ -1,5 +1,4 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
   services = {
     displayManager = {
       autoLogin = {
@@ -11,7 +10,6 @@
       displayManager = {
         gdm = {
           enable = true;
-          # wayland = true;
           banner = ''
             Hello, Santhosh!
           '';

@@ -1,8 +1,5 @@
-{ config, ... }:
-
-{
+{ config, ... }: {
   home.file.".config/kitty/kitty.conf" = {
-    # Overwrite the file
     force = true;
     text = ''
       # Kitty confif file

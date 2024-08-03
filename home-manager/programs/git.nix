@@ -1,6 +1,4 @@
-{ pkgs, config, ... }:
-
-{
+{ pkgs, config, ... }: {
   programs.git = {
     enable = true;
     userName = "ABSanthosh";
@@ -10,13 +8,13 @@
       user.email = "a.b.santhosh02@gmail.com";
       init.defaultBranch = "main";
       core = {
-        fileMode = false;
         # git config core.filemode false   
+        fileMode = false;
         autocrlf = false;
       };
       safe = {
         # https://git-scm.com/docs/git-config#Documentation/git-config.txt-safedirectory
-        directory = "*"; 
+        directory = "*";
       };
       credential.helper = "${
           pkgs.git.override { withLibsecret = true; }

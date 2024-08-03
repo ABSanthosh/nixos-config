@@ -1,5 +1,4 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, ... }: {
   boot = {
     loader = {
       systemd-boot.enable = true;
@@ -24,6 +23,7 @@
       enable = true;
     };
   };
+
   systemd = {
     watchdog.rebootTime = "0";
     targets.network-online.wantedBy = pkgs.lib.mkForce [ ]; # Normally ["multi-user.target"]

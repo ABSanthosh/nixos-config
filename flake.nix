@@ -1,5 +1,5 @@
 {
-  description = "Nixos Config with Flakes";
+  description = "Santhosh's NixOS Config with Flakes";
 
   inputs = {
     # Nixpkgs
@@ -45,7 +45,6 @@
       #     pkgs = pkgs;
       #     extraSpecialArgs = { inherit inputs outputs; };
       #     modules = [
-      #       stylix.homeManagerModules.stylix
       #       ./home-manager/home.nix
       #     ];
       #     sharedModules = [{ stylix.enable = true; }];

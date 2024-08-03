@@ -17,8 +17,8 @@
         CPU_ENERGY_PERF_POLICY_ON_BAT = "balanced";
         CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
 
-        PLATFORM_PROFILE_ON_AC = "performance";
-        PLATFORM_PROFILE_ON_BAT = "balanced";
+        # PLATFORM_PROFILE_ON_AC = "performance";
+        # PLATFORM_PROFILE_ON_BAT = "balanced";
 
         # CPU_MIN_PERF_ON_AC = 0;
         # CPU_MAX_PERF_ON_AC = 100;
@@ -29,6 +29,17 @@
 
         TLP_DEFAULT_MODE = "BAT";
         TLP_PERSISTENT_DEFAULT = 1;
+
+        # Platform
+        PLATFORM_PROFILE_ON_BAT = "low-power";
+        PLATFORM_PROFILE_ON_AC = "perfomance";
+
+        # Processor
+        # CPU_SCALING_MAX_FREQ_ON_AC = 3200000;
+        CPU_BOOST_ON_BAT = 0;
+        CPU_BOOST_ON_AC = 1;
+        CPU_HWP_DYN_BOOST_ON_BAT = 0;
+        CPU_HWP_DYN_BOOST_ON_AC = 1;
       };
     };
   };

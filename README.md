@@ -4,6 +4,25 @@
   Santhosh's NixOS Configs
 </h1>
 
+## Installation
+1. Download and install the OS with GNOME config from here: https://nixos.org/download/
+2. Once the OS is setup, open terminal and do the following:
+```shell
+cd /etc/nixos
+mkdir ./temp
+mv ./* ./temp
+git clone https://github.com/ABSanthosh/nixos-config.git
+mv ./nixos-config/* ./
+mv ./nixos-config/.git ./
+mv ./nixos-config/.gitignore ./
+rm -fr ./nixos-config/
+rm ./nixos/hardware-configuration.nix
+mv ./temp/hardware-configuration.nix ./nixos/hardware-configuration.nix
+
+sudo nixos-rebuild switch --flake .#<device name>
+```
+3. This should give you an exact copy of my laptop.
+
 <details open="true">
 <summary>
 To Do 

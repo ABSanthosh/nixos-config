@@ -103,6 +103,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -126,9 +127,14 @@ in
       binding = "<Shift><Alt>s";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      name = "File Explorer";
+      name = "Yazi Explorer";
       command = "kitty yazi";
       binding = "<Super>e";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      name = "File Explorer";
+      command = "nautilus";
+      binding = "<Super><Shift>e";
     };
   };
 }

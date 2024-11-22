@@ -13,11 +13,12 @@
       ./modules/aliases.nix
       ./modules/hardware.nix
       ./modules/bluetooth.nix
+      ./modules/variables.nix
       ./modules/networking.nix
 
       # gpu
-      # ./modules/gpu/intel.nix
-      ./modules/gpu/nvidia.nix
+      ./modules/gpu/intel.nix
+      # ./modules/gpu/nvidia.nix
 
       # Desktop Env
       ./modules/desktop-env/gnome.nix
@@ -26,7 +27,7 @@
 
       # databases
       ./modules/database/mysql.nix
-      ./modules/database/postgres.nix
+      # ./modules/database/postgres.nix
 
       # services
       ./modules/services/default.nix
@@ -40,10 +41,17 @@
     };
   };
 
+   virtualisation = {
+    libvirtd = {
+      enable = true;
+    };
+    spiceUSBRedirection.enable = true;
+  };
+
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
-    extraGroups = [ "networkmanager" "wheel" "audio" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "docker" "libvirtd" ];
     packages = with pkgs; [ ];
   };
 

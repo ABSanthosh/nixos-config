@@ -15,7 +15,8 @@ in
     ./programs/neovim.nix
     ./programs/monitors.nix
     ./programs/browsers.nix
-
+    
+    ./system/vm.nix
 
     # Desktop Env
     ./desktop-env/gnome/default.nix
@@ -50,15 +51,21 @@ in
       go
       git
       yazi
+      deno
       kitty
+      samba
       nodejs
       docker
       mysql80
       openssl
       python311
-      zed-editor
       typescript
+      authenticator
+      
+      prisma-engines
       unstable.vscode
+      python312Packages.prisma
+      unstable.cockroachdb-bin
 
       black # Code format Python
       shfmt # Code format Shell

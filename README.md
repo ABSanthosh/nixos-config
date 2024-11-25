@@ -52,7 +52,7 @@ To Do
 <details>
 <summary> Misc Setups </summary>
 
-## Set up prism launcher for free offline account ([ref](https://github.com/antunnitraj/Prism-Launcher-PolyMC-Offline-Bypass))
+### Set up prism launcher for free offline account ([ref](https://github.com/antunnitraj/Prism-Launcher-PolyMC-Offline-Bypass))
 
 1. Install Prism Launcher
 2. Go through the quick setup
@@ -69,9 +69,7 @@ echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": t
 
 _Note: Don't delete the "No Profile" account before you create a new offline account, that will break it!_
 
-### Remove "Failed to save 'xyz': insufficient permissions" error
-
-[ref](https://stackoverflow.com/a/62515421/10376131)
+### Remove "Failed to save 'xyz': insufficient permissions" error ([ref](https://stackoverflow.com/a/62515421/10376131))
 
 ```sh
 sudo chown -R $USER .

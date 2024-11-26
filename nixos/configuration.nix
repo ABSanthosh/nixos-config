@@ -22,8 +22,8 @@
 
       # Desktop Env
       # ./modules/desktop-env/gnome.nix
-      # ./modules/desktop-env/sway.nix
-      ./modules/desktop-env/hyprland.nix
+      ./modules/desktop-env/sway.nix
+      # ./modules/desktop-env/hyprland.nix
 
       # databases
       ./modules/database/mysql.nix
@@ -41,17 +41,24 @@
     };
   };
 
-   virtualisation = {
-    libvirtd = {
-      enable = true;
-    };
+  virtualisation = {
+    libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
 
   users.users.santhosh = {
     isNormalUser = true;
     description = "Santhosh";
-    extraGroups = [ "networkmanager" "wheel" "audio" "docker" "libvirtd" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "docker"
+      "libvirtd"
+      "disk"
+      "storage"
+      "plugdev"
+    ];
     packages = with pkgs; [ ];
   };
 

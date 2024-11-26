@@ -15,13 +15,13 @@ in
     ./programs/neovim.nix
     ./programs/monitors.nix
     ./programs/browsers.nix
-    
+
     ./system/vm.nix
 
     # Desktop Env
     # ./desktop-env/gnome/default.nix
-    # ./desktop-env/sway/default.nix
-    ./desktop-env/hyprland/default.nix
+    ./desktop-env/sway/default.nix
+    # ./desktop-env/hyprland/default.nix
   ];
 
   nixpkgs = {
@@ -61,7 +61,7 @@ in
       python311
       typescript
       authenticator
-      
+
       prisma-engines
       unstable.vscode
       python312Packages.prisma

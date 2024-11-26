@@ -32,7 +32,8 @@ let
 in
 {
   imports = [
-    ./ags
+    # ./ags
+    ./waybar
   ];
 
   wayland.windowManager.sway = {
@@ -58,7 +59,8 @@ in
     extraConfig = ''
       set $mod ${mod4}
 
-      exec wl-paste -t text --watch clipman store --no-persist
+      exec clipse --listen
+      exec udiskie
 
       bindsym Print               exec shotman -c output
       bindsym Print+Shift         exec shotman -c region
@@ -83,11 +85,14 @@ in
       bindsym F11 exec playerctl next
 
       bindsym --no-warn $mod+e exec "kitty yazi"
+      bindsym --no-warn $mod+shift+e exec "nautilus"
+      bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
+      # bindsym --no-warn $mod+V exec kitty -e sh -c "swaymsg floating enable, move position center; swaymsg resize set 80ppt 80ppt && clipse"
+
       bindsym $mod+c exec "kitty"
       bindsym $mod+t layout toggle tabbed split
 
-      # Control Center
-      bindsym --no-warn $mod+a exec ags --toggle-window "cc"
+      bindsym --no-warn $mod+Space exec rofi -show drun
 
       # Borders
       default_border none 
@@ -108,6 +113,12 @@ in
       for_window [title="File Properties"] floating enable, move position center
       for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
+      for_window [app_id="clipse"] {
+        floating enable
+        resize set 622 652
+        move position center
+      }
+
       # Tap to click
       input "type:touchpad" {
         dwt enabled
@@ -127,42 +138,48 @@ in
 
       exec dbus-sway-environment
       # exec configure-gtk
+
+      # Bar
+      bar {
+        mode hide
+        hidden_state hide
+
+      }
     '';
   };
 
   home = {
     packages = with pkgs; [
-      libnotify
-      wl-clipboard
-
-      xfce.xfconf
-      xfce.thunar
-      xfce.thunar-volman
-      xfce.thunar-archive-plugin
-      xfce.thunar-media-tags-plugin
-
-      acpi #battery status
-      brightnessctl
-      
+      udiskie #automount
+      ntfs3g # NTFS support
+      exfat # exFAT support
+      udisks # disk utility
       glib
-      dconf
-      bemenu
-      playerctl
+      waybar
+
+      rofi #launcher
+      acpi #battery status
+      dconf #gsettings
+      clipse #clipboard manager
+      wl-clipboard #clipboard protocol
+      playerctl #media control
+      gnome.nautilus #file manager
+      brightnessctl #brightness control
+
       configure-gtk
       dbus-sway-environment
     ];
-    pointerCursor = {
-      name = "capitaine-cursors";
-      package = pkgs.capitaine-cursors;
-      size = 32;
-      x11 = {
-        enable = true;
-      };
-    };
+    # pointerCursor = {
+    #   name = "capitaine-cursors";
+    #   package = pkgs.capitaine-cursors;
+    #   size = 32;
+    #   x11 = {
+    #     enable = true;
+    #   };
+    # };
   };
 
   home.file.".config/gtk-3.0/settings.ini" = {
-    # Overwrite the file
     force = true;
     text = ''
       [Settings]

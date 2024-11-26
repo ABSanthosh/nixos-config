@@ -7,7 +7,21 @@
     };
     kernelPackages = pkgs.linuxPackages_zen;
     tmp.cleanOnBoot = true;
-    supportedFilesystems = [ "ntfs" "exfat" ];
+    supportedFilesystems = [
+      "ntfs"
+      "ntfs3"
+      "exfat"
+      "ext4"
+      "ext3"
+      "ext2"
+      "vfat"
+      "fat32"
+      "f2fs"
+      "xfs"
+      "jfs"
+      "hfs"
+      "hfsplus"
+    ];
     kernelParams = [
       "quiet"
       "loglevel=3"

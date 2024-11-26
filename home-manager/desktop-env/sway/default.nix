@@ -33,7 +33,7 @@ in
 {
   imports = [
     # ./ags
-    ./waybar
+    ./waybar.nix
   ];
 
   wayland.windowManager.sway = {
@@ -48,6 +48,9 @@ in
       startup = [
         { command = "brave"; }
         { command = "code"; }
+        { command = "waybar"; always = true; }
+        { command = "udiskie"; }
+        { command = "clipse --listen"; }
       ];
       output = {
         "eDP-1" = {
@@ -59,8 +62,6 @@ in
     extraConfig = ''
       set $mod ${mod4}
 
-      exec clipse --listen
-      exec udiskie
 
       bindsym Print               exec shotman -c output
       bindsym Print+Shift         exec shotman -c region
@@ -141,9 +142,9 @@ in
 
       # Bar
       bar {
+        swaybar_command waybar
         mode hide
         hidden_state hide
-
       }
     '';
   };
@@ -166,17 +167,21 @@ in
       gnome.nautilus #file manager
       brightnessctl #brightness control
 
+      xdg-desktop-portal
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+
       configure-gtk
       dbus-sway-environment
     ];
-    # pointerCursor = {
-    #   name = "capitaine-cursors";
-    #   package = pkgs.capitaine-cursors;
-    #   size = 32;
-    #   x11 = {
-    #     enable = true;
-    #   };
-    # };
+    pointerCursor = {
+      name = "capitaine-cursors";
+      package = pkgs.capitaine-cursors;
+      size = 32;
+      x11 = {
+        enable = true;
+      };
+    };
   };
 
   home.file.".config/gtk-3.0/settings.ini" = {

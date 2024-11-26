@@ -8,7 +8,7 @@ let
 in
 {
   imports = [
-    ./rofi.nix
+    # ./rofi.nix
   ];
 
   home = {

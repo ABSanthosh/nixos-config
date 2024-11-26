@@ -32,7 +32,7 @@ let
 in
 {
   imports = [
-    # ./ags
+    ./rofi.nix
     ./waybar.nix
   ];
 
@@ -45,6 +45,7 @@ in
       modifier = mod4;
       defaultWorkspace = "workspace number 1";
       terminal = "kitty";
+      bars = [{ command = "swaybar_command waybar"; }];
       startup = [
         { command = "brave"; }
         { command = "code"; }
@@ -139,13 +140,6 @@ in
 
       exec dbus-sway-environment
       # exec configure-gtk
-
-      # Bar
-      bar {
-        swaybar_command waybar
-        mode hide
-        hidden_state hide
-      }
     '';
   };
 

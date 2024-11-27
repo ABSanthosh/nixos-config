@@ -28,16 +28,18 @@ let
         export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
         export GTK_THEME=Adwaita:dark
       '';
-  };
+  }; 
 in
 {
   imports = [
     ./rofi.nix
     ./waybar.nix
+    ../gnome/gtk.nix
   ];
 
   wayland.windowManager.sway = {
     enable = true;
+    package = pkgs.swayfx;
     checkConfig = false;
     wrapperFeatures.gtk = true;
 
@@ -45,7 +47,7 @@ in
       modifier = mod4;
       defaultWorkspace = "workspace number 1";
       terminal = "kitty";
-      bars = [{ command = "swaybar_command waybar"; }];
+      # bars = [{ command = "swaybar_command waybar"; }];
       startup = [
         { command = "brave"; }
         { command = "code"; }
@@ -138,8 +140,13 @@ in
       # set window layout as tabbed by default
       workspace_layout tabbed
 
-      exec dbus-sway-environment
-      # exec configure-gtk
+
+      # fx
+      blur enable
+      blur_passes 10
+      blur_radius 10
+      blur_noise 0.1
+      corner_radius 7
     '';
   };
 
@@ -165,24 +172,23 @@ in
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
 
-      configure-gtk
       dbus-sway-environment
     ];
-    pointerCursor = {
-      name = "capitaine-cursors";
-      package = pkgs.capitaine-cursors;
-      size = 32;
-      x11 = {
-        enable = true;
-      };
-    };
+    # pointerCursor = {
+    #   name = "capitaine-cursors";
+    #   package = pkgs.capitaine-cursors;
+    #   size = 32;
+    #   x11 = {
+    #     enable = true;
+    #   };
+    # };
   };
 
-  home.file.".config/gtk-3.0/settings.ini" = {
-    force = true;
-    text = ''
-      [Settings]
-      gtk-application-prefer-dark-theme=true
-    '';
-  };
+  # home.file.".config/gtk-3.0/settings.ini" = {
+  #   force = true;
+  #   text = ''
+  #     [Settings]
+  #     gtk-application-prefer-dark-theme=true
+  #   '';
+  # };
 }

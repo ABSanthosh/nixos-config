@@ -43,6 +43,7 @@ in
     packages = with pkgs; [
       mpv
       vlc
+      htop
       amberol
       starship
       lm_sensors

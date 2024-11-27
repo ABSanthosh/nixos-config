@@ -14,7 +14,7 @@ in
       gtk-cursor-theme-name = "capitaine-cursors";
       gtk-cursor-theme-size = cursor-size;
     };
-    gtk2.extraConfig = "gtk-cursor-theme-size=32";
+    gtk2.extraConfig = "gtk-cursor-theme-size=${toString cursor-size}";
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = {

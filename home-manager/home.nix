@@ -1,5 +1,9 @@
 { vars, ... }:
 {
+  imports = [
+    ./programs/browsers.nix
+  ];
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -34,6 +38,12 @@
       typescript
       # authenticator move to gnome only
       # passExtensions.pass-otp move to sway only
+
+      # Browsers
+      unstable.brave
+      unstable.firefox
+      unstable.chromium
+      microsoft-edge-dev
 
       prisma-engines
       unstable.vscode

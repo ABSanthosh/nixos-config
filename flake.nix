@@ -1,6 +1,3 @@
-let
-  vars = import ./variables.nix;
-in
 {
   description = "Suckless NixOS config";
 
@@ -21,6 +18,7 @@ in
   outputs = { self, nixpkgs, stylix, home-manager, ... } @ inputs:
     let
       inherit (self) outputs;
+      vars = import ./variables.nix;
       pkgs = nixpkgs.legacyPackages.${vars.user.system};
     in
     {

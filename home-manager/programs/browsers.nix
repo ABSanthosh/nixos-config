@@ -8,13 +8,28 @@
   programs = {
     brave = {
       package = pkgs.unstable.brave;
-      commandLineArgs = [ "--enable-features=TouchpadOverscrollHistoryNavigation" ];
+      commandLineArgs = [
+        "--enable-features=TouchpadOverscrollHistoryNavigation"
+        "--ozone-platform=wayland" # Add Wayland support
+      ];
       extensions = [
         # { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
         { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # Video Speed Controller
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock
         { id = "aljlkinhomaaahfdojalfmimeidofpih"; } # Hide Youtube shorts
       ];
+    };
+
+    firefox = {
+      enable = true;
+      package = pkgs.unstable.firefox;
+      enableGnomeExtensions = false; # Explicitly disable GNOME integration
+      profiles.default = {
+        settings = {
+          "widget.use-xdg-desktop-portal" = true;
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
+        };
+      };
     };
   };
 }

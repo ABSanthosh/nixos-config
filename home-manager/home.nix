@@ -10,6 +10,9 @@
     ./programs/neovim.nix
     # ./programs/monitors.nix
     ./programs/browsers.nix
+
+    # Desktop-env
+    ./desktop-env/sway
   ];
 
   nixpkgs = {

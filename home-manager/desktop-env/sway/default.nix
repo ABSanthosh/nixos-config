@@ -1,6 +1,8 @@
 { pkgs, vars, ... }:
+let
+  mod4 = "Mod4";
+in
 {
-
   home.packages = with pkgs; [
     udiskie #automount
     ntfs3g # NTFS support
@@ -22,26 +24,30 @@
     brightnessctl #brightness control
   ];
 
-  # xdg.portal = {
-  #   enable = true;
-  #   configPackages = [ pkgs.xdg-desktop-portal-wlr ];
-  #   extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
-  # };
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+    config = {
+      common = {
+        default = "*";
+      };
+    };
+  };
 
   wayland.windowManager.sway = {
     enable = true;
     checkConfig = false;
-    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
 
     systemd = {
       enable = true;
-
-      extraCommands = lib.mkDefault [
+      extraCommands = [
         "systemctl --user stop sway-session.target"
         "systemctl --user start sway-session.target"
       ];
-
       variables = [ "--all" ];
     };
 
@@ -60,13 +66,18 @@
         "eDP-1" = {
           mode = "3840x2160@60Hz";
         };
+        # "HDMI-A-1" = {
+        #   disable = true;
+        #   mode = "1920x1080@60Hz";
+        # };
       };
     };
 
-    extraConfig = ''
+    extraConfig = ''   
+      set $mod ${mod4}
+      set $alt Mod1
 
       exec sleep 5; systemctl --user start kanshi.service
-
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
@@ -91,10 +102,20 @@
       ### Launch Apps ###
       ###################
 
+      bindsym $mod+c exec "kitty"
       bindsym --no-warn $mod+e exec "kitty yazi"
       bindsym --no-warn $mod+shift+e exec "nautilus"
-      bindsym $mod+c exec "kitty"
-      bindsym $mod+Shift+c exec "kitty --class=clipse clip
+      bindsym --no-warn $mod+Space exec rofi -show drun
+      bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
+      
+      bindsym $mod+t layout toggle tabbed split
+      bindsym $mod+Shift+t floating disable; focus parent
+
+      for_window [app_id="clipse"] {
+        floating enable
+        resize set 622 652
+        move position center
+      }
 
       # Tap to click
       input "type:touchpad" {
@@ -105,7 +126,21 @@
       }
 
       # Set wallpaper
-      output "*" bg '/etc/wallpaper.png' fill
+      output "*" bg '${vars.wallpaper}' fill
+
+      # Disable HDMI-4
+      output HDMI-A-1 disable
+
+      # Quick workspace switching
+      bindsym $alt+Tab workspace next_on_output
+      bindsym $alt+Shift+Tab workspace prev_on_output
+
+      # Borders
+      default_border none 
+      default_floating_border normal 0
+      default_border pixel 0
+      workspace_layout tabbed 
+      focus_follows_mouse no
     '';
   };
 }

@@ -22,6 +22,9 @@
 
       # Desktop env
       ./modules/desktop-env/sway.nix
+
+      # gpu
+      ./modules/gpu/optimus.nix
     ];
 
   programs = {
@@ -40,6 +43,9 @@
   stylix = {
     image = vars.wallpaper;
   };
+
+  # Enable general smartcard support without GNOME
+  services.pcscd.enable = true; # For smartcard support
 
   users.users.${vars.user.name} = {
     isNormalUser = true;

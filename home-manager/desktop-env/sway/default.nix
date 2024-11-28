@@ -58,7 +58,7 @@ in
       startup = [
         { command = "brave"; }
         { command = "code"; }
-        { command = "waybar"; always = true; }
+        # { command = "waybar"; always = true; }
         { command = "udiskie"; }
         { command = "clipse --listen"; }
       ];

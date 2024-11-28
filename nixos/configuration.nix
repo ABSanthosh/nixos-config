@@ -24,7 +24,8 @@
       ./modules/desktop-env/sway.nix
 
       # gpu
-      ./modules/gpu/optimus.nix
+      ./modules/gpu/intel.nix
+      # ./modules/gpu/nvidia.nix
     ];
 
   programs = {

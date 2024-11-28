@@ -11,6 +11,7 @@
       ./modules/tlp.nix
       ./modules/nix.nix
       ./modules/i18n.nix
+      ./modules/services
       ./modules/boot.nix
       ./modules/fonts.nix
       ./modules/docker.nix
@@ -34,6 +35,10 @@
   virtualisation = {
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
+  };
+
+  stylix = {
+    image = vars.wallpaper;
   };
 
   users.users.${vars.user.name} = {

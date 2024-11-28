@@ -11,6 +11,7 @@
 
     # dconf #gsettings
 
+
     kanshi
     rofi #launcher
     acpi #battery status
@@ -21,10 +22,28 @@
     brightnessctl #brightness control
   ];
 
+  # xdg.portal = {
+  #   enable = true;
+  #   configPackages = [ pkgs.xdg-desktop-portal-wlr ];
+  #   extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+  # };
+
   wayland.windowManager.sway = {
     enable = true;
     checkConfig = false;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
+
+    systemd = {
+      enable = true;
+
+      extraCommands = lib.mkDefault [
+        "systemctl --user stop sway-session.target"
+        "systemctl --user start sway-session.target"
+      ];
+
+      variables = [ "--all" ];
+    };
 
     config = rec {
       modifier = mod4;

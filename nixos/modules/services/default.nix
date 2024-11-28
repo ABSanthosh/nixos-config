@@ -40,6 +40,8 @@
         server role = standalone server
         guest account = nobody
         map to guest = bad user
+        
+        # Apple-specific protocol extensions
         fruit:aapl = yes
         fruit:nfs_aces = no
         fruit:metadata = stream

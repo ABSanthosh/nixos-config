@@ -1,6 +1,14 @@
 { vars, pkgs, lib, outputs, ... }:
 {
   imports = [
+    # Programs
+    ./programs/git.nix
+    # ./programs/tmux.nix
+    ./programs/yazi.nix
+    ./programs/bash.nix
+    ./programs/kitty.nix
+    ./programs/neovim.nix
+    # ./programs/monitors.nix
     ./programs/browsers.nix
   ];
 

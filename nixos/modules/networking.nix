@@ -1,7 +1,7 @@
-{ vars ... }: {
+{ vars, ... }: {
   networking = {
     hostName = vars.user.host;
-    networkmanage = { 
+    networkmanager = { 
       enable = true;
       wifi.powersave = true;
     };

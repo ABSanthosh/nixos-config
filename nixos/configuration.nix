@@ -14,6 +14,7 @@
       ./modules/services
       ./modules/boot.nix
       ./modules/fonts.nix
+      ./modules/sound.nix
       ./modules/docker.nix
       ./modules/aliases.nix
       ./modules/hardware.nix
@@ -44,9 +45,6 @@
   stylix = {
     image = vars.wallpaper;
   };
-
-  # Enable general smartcard support without GNOME
-  services.pcscd.enable = true; # For smartcard support
 
   users.users.${vars.user.name} = {
     isNormalUser = true;

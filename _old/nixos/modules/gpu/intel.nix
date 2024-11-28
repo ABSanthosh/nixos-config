@@ -10,6 +10,7 @@
       ];
     };
   };
+  
   environment = {
     variables = {
       VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
@@ -18,6 +19,7 @@
       LIBVA_DRIVER_NAME = "iHD";
     };
   };
+
   boot = {
     initrd.kernelModules = [ "i915" ];
     extraModprobeConfig = lib.mkDefault ''

@@ -11,6 +11,8 @@
       commandLineArgs = [
         "--enable-features=TouchpadOverscrollHistoryNavigation"
         "--ozone-platform=wayland" # Add Wayland support
+        "--enable-features=WebUIDarkMode" # Enable dark mode
+        "--ozone-platform-hint=auto" # Use Wayland if available
       ];
       extensions = [
         # { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration

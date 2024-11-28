@@ -14,7 +14,7 @@ in
     # dconf #gsettings
 
 
-    kanshi
+    # kanshi
     rofi #launcher
     acpi #battery status
     clipse #clipboard manager
@@ -48,7 +48,9 @@ in
         "systemctl --user stop sway-session.target"
         "systemctl --user start sway-session.target"
       ];
-      variables = [ "--all" ];
+      variables = [
+        "--all"
+      ];
     };
 
     config = rec {
@@ -66,18 +68,14 @@ in
         "eDP-1" = {
           mode = "3840x2160@60Hz";
         };
-        # "HDMI-A-1" = {
-        #   disable = true;
-        #   mode = "1920x1080@60Hz";
-        # };
       };
     };
 
     extraConfig = ''   
       set $mod ${mod4}
       set $alt Mod1
-
-      exec sleep 5; systemctl --user start kanshi.service
+      
+      # exec sleep 5; systemctl --user start kanshi.service
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-

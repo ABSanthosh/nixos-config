@@ -1,4 +1,10 @@
 { config, pkgs, ... }: {
+
+  imports = [
+    ./database/mysql.nix
+    ./database/postgresql.nix
+  ];
+
   services = {
     xserver = {
       enable = true;

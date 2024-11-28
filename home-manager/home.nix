@@ -1,10 +1,14 @@
-{ vars, ... }:
+{ vars, pkgs, lib, outputs, ... }:
 {
   imports = [
     ./programs/browsers.nix
   ];
 
   nixpkgs = {
+    overlays = [
+      outputs.overlays.unstable-packages
+    ];
+
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -13,7 +17,7 @@
 
   home = {
     username = vars.user.name;
-    homeDirectory = vars.user.home;
+    homeDirectory = lib.mkForce vars.user.home;
     stateVersion = vars.stateVersion;
 
     packages = with pkgs; [
@@ -21,7 +25,7 @@
       vlc
       htop
       amberol
-      # starship
+      starship
       # lm_sensors
 
       # Development

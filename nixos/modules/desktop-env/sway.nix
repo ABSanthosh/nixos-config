@@ -11,4 +11,24 @@
       ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
     };
   };
+
+  services = {
+    gnome.gnome-keyring.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session.command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+            --time \
+            --asterisks \
+            --user-menu \
+            --cmd sway
+        '';
+      };
+    };
+  };
+
+  environment.etc."greetd/environments".text = ''
+    sway
+  '';
 }

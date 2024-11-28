@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.05";
 
     # Home manager
     home-manager = {
@@ -22,6 +22,7 @@
       pkgs = nixpkgs.legacyPackages.${vars.user.system};
     in
     {
+      overlays = import ./overlays { inherit inputs; };
       nixosConfigurations.${vars.user.host} = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs vars; };
         modules = [
@@ -37,6 +38,5 @@
           }
         ];
       };
-
     };
 }

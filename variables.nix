@@ -7,8 +7,8 @@
 
   # User Configuration
   user = {
-    name = "ABSanthosh";
-    home = "/home/ABSanthosh";
+    name = "santhosh";
+    home = "/home/santhosh";
     host = "zoro";
     system = "x86_64-linux";
   };

@@ -1,6 +1,7 @@
 { ... }: {
   hardware = {
     enableRedistributableFirmware = true; # For some unfree drivers
+    enableAllFirmware = true;
   };
 
   services = {

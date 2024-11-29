@@ -39,6 +39,10 @@
     plymouth = {
       enable = true;
     };
+    # blacklistedKernelModules = [ "video" ];
+    extraModprobeConfig = ''
+      options asus-nb-wmi use_kbd_backlight=0
+    '';
   };
 
   systemd = {

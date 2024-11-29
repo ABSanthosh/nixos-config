@@ -1,5 +1,22 @@
 { vars, pkgs, ... }:
 {
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+    
+    config = { common = { default = "wlr"; }; };
+    wlr.enable = true;
+    wlr.settings.screencast = {
+      output_name = "DP-2";
+      chooser_type = "simple";
+      chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+    };
+  };
   security.polkit = {
     enable = true;
     extraConfig = ''
@@ -71,6 +88,8 @@
       OZONE_PLATFORM = "wayland";
       GTK_VERSION = "4";
       _JAVA_AWT_WM_NONREPARENTING = "1";
+      XDG_CURRENT_DESKTOP = "sway";
+      XDG_SESSION_DESKTOP = "sway";
     };
   };
 

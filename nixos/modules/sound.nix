@@ -6,6 +6,7 @@
     pulse.enable = false;
     alsa.support32Bit = true;
     wireplumber.enable = true;
+    jack.enable = false;
   };
   security.rtkit.enable = true;
   hardware.pulseaudio.enable = false;

@@ -44,6 +44,12 @@
 
   stylix = {
     image = vars.wallpaper;
+    polarity = "dark";
+    cursor = {
+      package = pkgs.capitaine-cursors;
+      name = "capitaine-cursors";
+      size = 32;
+    };
   };
 
   users.users.${vars.user.name} = {

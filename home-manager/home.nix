@@ -50,6 +50,7 @@
       docker
       mysql80
       openssl
+      # postgresql
       typescript
       # authenticator move to gnome only
       # passExtensions.pass-otp move to sway only

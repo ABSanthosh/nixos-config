@@ -1,8 +1,24 @@
 { pkgs, vars, ... }:
 let
   mod4 = "Mod4";
+
+  dbus-sway-environment = pkgs.writeTextFile {
+    name = "dbus-sway-environment";
+    destination = "/bin/dbus-sway-environment";
+    executable = true;
+
+    text = ''
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+      systemctl --user stop pipewire pipewire-media-session
+      systemctl --user start pipewire pipewire-media-session
+    '';
+  };
 in
 {
+  imports = [
+    ./common/gtk.nix
+  ];
+
   home.packages = with pkgs; [
     udiskie #automount
     ntfs3g # NTFS support
@@ -11,31 +27,16 @@ in
     glib
     waybar
 
-    # dconf #gsettings
-
-
-    # kanshi
-    rofi #launcher
+    wofi #launcher
     acpi #battery status
     clipse #clipboard manager
     wl-clipboard #clipboard protocol
     playerctl #media control
     gnome.nautilus #file manager
     brightnessctl #brightness control
-  ];
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-    ];
-    config = {
-      common = {
-        default = "*";
-      };
-    };
-  };
+    dbus-sway-environment
+  ];
 
   wayland.windowManager.sway = {
     enable = true;
@@ -74,8 +75,9 @@ in
     extraConfig = ''   
       set $mod ${mod4}
       set $alt Mod1
-      
-      # exec sleep 5; systemctl --user start kanshi.service
+
+      exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
@@ -103,11 +105,24 @@ in
       bindsym $mod+c exec "kitty"
       bindsym --no-warn $mod+e exec "kitty yazi"
       bindsym --no-warn $mod+shift+e exec "nautilus"
-      bindsym --no-warn $mod+Space exec rofi -show drun
+      bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
       
       bindsym $mod+t layout toggle tabbed split
       bindsym $mod+Shift+t floating disable; focus parent
+      bindsym $mod+Shift+f floating toggle
+
+      for_window [title="Picture-in-picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
+      for_window [title="Picture in picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
+      for_window [title="Open Files"] floating enable, move position center
+      for_window [title="Open Folders"] floating enable, move position center
+      for_window [title="Open File"] floating enable, move position center
+      for_window [title="Open Folder"] floating enable, move position center
+      for_window [title="Save File"] floating enable, move position center
+      for_window [title="Copy Files"] floating enable, move position center
+      for_window [title="Choose Files"] floating enable, move position center
+      for_window [title="File Properties"] floating enable, move position center
+      for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
       for_window [app_id="clipse"] {
         floating enable
@@ -121,6 +136,10 @@ in
         tap enabled
         natural_scroll enabled
         middle_emulation enabled
+      }
+      input type:keyboard {
+        repeat_delay 300
+        repeat_rate 30
       }
 
       # Set wallpaper

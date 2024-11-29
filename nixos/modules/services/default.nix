@@ -2,10 +2,14 @@
 
   imports = [
     ./database/mysql.nix
-    ./database/postgresql.nix
+    # ./database/postgres.nix
   ];
 
   services = {
+    udev.extraHwdb = ''
+      evdev:name:Video Bus:*
+        KEYBOARD_KEY_227=reserved
+    '';
     xserver = {
       enable = true;
       excludePackages = [ pkgs.xterm ];

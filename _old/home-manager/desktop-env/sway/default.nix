@@ -106,11 +106,11 @@ in
       for_window [title="Picture-in-picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
       for_window [title="Picture in picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
 
+      for_window [title="Settings"] floating enable, move position center
       for_window [title="Open Files"] floating enable, move position center
       for_window [title="Open Folders"] floating enable, move position center
       for_window [title="Open File"] floating enable, move position center
       for_window [title="Open Folder"] floating enable, move position center
-      for_window [title="Settings"] floating enable, move position center
       for_window [title="Save File"] floating enable, move position center
       for_window [title="Copy Files"] floating enable, move position center
       for_window [title="Choose Files"] floating enable, move position center

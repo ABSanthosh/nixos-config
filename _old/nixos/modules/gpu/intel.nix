@@ -10,7 +10,7 @@
       ];
     };
   };
-  
+
   environment = {
     variables = {
       VDPAU_DRIVER = lib.mkIf config.hardware.opengl.enable (lib.mkDefault "va_gl");
@@ -43,6 +43,8 @@
 
       # Remove NVIDIA VGA/3D controller devices
       ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
+
+      ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="Video Bus", RUN+="/bin/sh -c 'echo 0 > /sys$env{DEVPATH}/inhibited'"
     '';
   };
 }

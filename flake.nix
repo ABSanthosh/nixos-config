@@ -6,6 +6,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    # Programs
+    ags.url = "github:aylur/ags"; 
     stylix.url = "github:danth/stylix/release-24.05";
 
     # Home manager

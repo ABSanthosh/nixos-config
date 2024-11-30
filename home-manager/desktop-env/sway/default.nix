@@ -32,7 +32,7 @@ let
 in
 {
   imports = [
-    ./ags
+    # ./ags
     ../common/gtk.nix
   ];
 

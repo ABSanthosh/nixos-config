@@ -28,7 +28,7 @@ let
         export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
         export GTK_THEME=Adwaita:dark
       '';
-  }; 
+  };
 in
 {
   imports = [
@@ -61,6 +61,9 @@ in
         };
       };
     };
+
+    # More sane keybind configuration
+    # https://github.com/TheMaxMur/NixOS-Configuration/blob/master/home/modules/sway/keybinds/default.nix
 
     extraConfig = ''
       set $mod ${mod4}
@@ -167,6 +170,7 @@ in
       playerctl #media control
       gnome.nautilus #file manager
       brightnessctl #brightness control
+      overskride # bluetooth manager
 
       xdg-desktop-portal
       xdg-desktop-portal-wlr
@@ -174,21 +178,5 @@ in
 
       dbus-sway-environment
     ];
-    # pointerCursor = {
-    #   name = "capitaine-cursors";
-    #   package = pkgs.capitaine-cursors;
-    #   size = 32;
-    #   x11 = {
-    #     enable = true;
-    #   };
-    # };
   };
-
-  # home.file.".config/gtk-3.0/settings.ini" = {
-  #   force = true;
-  #   text = ''
-  #     [Settings]
-  #     gtk-application-prefer-dark-theme=true
-  #   '';
-  # };
 }

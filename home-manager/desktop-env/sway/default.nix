@@ -13,10 +13,27 @@ let
       systemctl --user start pipewire pipewire-media-session
     '';
   };
+
+  configure-gtk = pkgs.writeTextFile {
+    name = "configure-gtk";
+    destination = "/bin/configure-gtk";
+    executable = true;
+    text =
+      let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+        # gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
+      in
+      ''`
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        export GTK_THEME=Adwaita:dark
+      '';
+  };
 in
 {
   imports = [
-    ./common/gtk.nix
+    ./ags
+    ../common/gtk.nix
   ];
 
   home.packages = with pkgs; [
@@ -27,7 +44,8 @@ in
     glib
     waybar
 
-    wofi #launcher
+    dconf
+
     acpi #battery status
     clipse #clipboard manager
     wl-clipboard #clipboard protocol
@@ -36,6 +54,7 @@ in
     brightnessctl #brightness control
 
     dbus-sway-environment
+    configure-gtk
   ];
 
   wayland.windowManager.sway = {
@@ -78,7 +97,6 @@ in
 
       exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
       bindsym --locked XF86MonBrightnessUp exec brightnessctl --save set 1%+
@@ -103,9 +121,10 @@ in
       ###################
 
       bindsym $mod+c exec "kitty"
+      bindsym --no-warn $mod+a exec swaync-client -t -sw
       bindsym --no-warn $mod+e exec "kitty yazi"
       bindsym --no-warn $mod+shift+e exec "nautilus"
-      bindsym --no-warn $mod+Space exec wofi -show drun
+      # bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
       
       bindsym $mod+t layout toggle tabbed split

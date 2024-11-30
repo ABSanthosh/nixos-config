@@ -8,7 +8,7 @@
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
     ];
-    
+
     config = { common = { default = "wlr"; }; };
     wlr.enable = true;
     wlr.settings.screencast = {
@@ -87,6 +87,7 @@
       OZONE_PLATFORM_HINT = "auto";
       OZONE_PLATFORM = "wayland";
       GTK_VERSION = "4";
+      GTK_THEME = "Adwaita:dark";
       _JAVA_AWT_WM_NONREPARENTING = "1";
       XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_DESKTOP = "sway";

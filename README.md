@@ -46,6 +46,7 @@ To Do
   - [ ] brave browser
     - [ ] Addresses
     - [ ] passwords
+  - Screen sharing with external monitor
 
 </details>
 

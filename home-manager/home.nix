@@ -55,12 +55,6 @@
       # authenticator move to gnome only
       # passExtensions.pass-otp move to sway only
 
-      # Browsers
-      unstable.brave
-      unstable.firefox
-      unstable.chromium
-      microsoft-edge-dev
-
       prisma-engines
       unstable.vscode
       python312Packages.prisma

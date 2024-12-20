@@ -7,7 +7,17 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # Programs
-    ags.url = "github:aylur/ags"; 
+    astal = {
+      url = "github:Aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.astal.follows = "astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }; 
+
     stylix.url = "github:danth/stylix/release-24.05";
 
     # Home manager

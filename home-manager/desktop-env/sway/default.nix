@@ -1,4 +1,4 @@
-{ pkgs, vars, ... }:
+{ pkgs, vars, lib, ... }:
 let
   mod4 = "Mod4";
 
@@ -7,6 +7,7 @@ let
     destination = "/bin/dbus-sway-environment";
     executable = true;
 
+    # Needed for screen sharing 
     text = ''
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
       systemctl --user stop pipewire pipewire-media-session
@@ -32,7 +33,7 @@ let
 in
 {
   imports = [
-    # ./ags
+    ./ags
     ../common/gtk.nix
   ];
 
@@ -42,10 +43,14 @@ in
     exfat # exFAT support
     udisks # disk utility
     glib
+    grim
+    sass
+    slurp
     waybar
 
     dconf
 
+    cloak #authenticator
     acpi #battery status
     clipse #clipboard manager
     wl-clipboard #clipboard protocol
@@ -55,6 +60,9 @@ in
 
     dbus-sway-environment
     configure-gtk
+
+    # For minecraft
+    alsa-oss
   ];
 
   wayland.windowManager.sway = {
@@ -78,9 +86,6 @@ in
       defaultWorkspace = "workspace number 1";
       terminal = "kitty";
       startup = [
-        { command = "brave"; }
-        { command = "code"; }
-        # { command = "waybar"; always = true; }
         { command = "udiskie"; }
         { command = "clipse --listen"; }
       ];
@@ -94,6 +99,15 @@ in
     extraConfig = ''   
       set $mod ${mod4}
       set $alt Mod1
+
+      # capture all screens to clipboard    
+      bindsym Print exec grim - | wl-copy    
+          
+      # capture the specified screen area to clipboard    
+      bindsym Shift+Alt+s exec grim -g "$(slurp)" - | wl-copy   
+
+      # Save specific screen area to folder /home/username/Pictures/Screenshots
+      bindsym $mod+Shift+s exec grim -g "$(slurp)" /home/${vars.user.name}/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png
 
       exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
@@ -126,6 +140,7 @@ in
       bindsym --no-warn $mod+shift+e exec "nautilus"
       # bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
+      bindsym $alt+m exec "cloak view psu | wl-copy"
       
       bindsym $mod+t layout toggle tabbed split
       bindsym $mod+Shift+t floating disable; focus parent
@@ -164,8 +179,8 @@ in
       # Set wallpaper
       output "*" bg '${vars.wallpaper}' fill
 
-      # Disable HDMI-4
-      output HDMI-A-1 disable
+      # # Disable HDMI-4
+      # output HDMI-A-1 disable
 
       # Quick workspace switching
       bindsym $alt+Tab workspace next_on_output

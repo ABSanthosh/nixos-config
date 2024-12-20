@@ -6,14 +6,28 @@
   ];
 
   services = {
-    udev.extraHwdb = ''
-      evdev:name:Video Bus:*
-        KEYBOARD_KEY_227=reserved
+    asusd = {
+      enable = true;
+      enableUserService = true;
+    };
+
+    udev.extraRules = ''
+        # # Disable the touchscreen on the laptop
+        # SUBSYSTEM=="input", KERNEL=="event6", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+
+        # # Disable the video switch events from ASUS WMI
+        # SUBSYSTEM=="input", ATTRS{name}=="Asus WMI hotkeys", ATTRS{phys}=="asus-nb-wmi/video", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+
+        # # Disable the ELAN stylus completely
+        # SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+        # SUBSYSTEM=="input", ATTRS{id/vendor}=="04f3", ATTRS{id/product}=="2706", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+
+        # SUBSYSTEM=="input", KERNEL=="event1", ATTRS{name}=="Video Bus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
     '';
     xserver = {
       enable = true;
+      wacom.enable = false;
       excludePackages = [ pkgs.xterm ];
-
       xkb = {
         layout = "us";
         variant = "";

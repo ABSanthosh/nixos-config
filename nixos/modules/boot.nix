@@ -31,6 +31,15 @@
       "usbcore.autosuspend=-1"
       "elevator=noop"
       "fastboot"
+
+      # Fix for the Asus Zenbook
+      # "acpi_osi=!"
+      # "acpi_osi=Linux"
+      # "i915.enable_psr=0"
+      # "asus.use_lid_flip_devid=1"
+
+      # "video.use_native_backlight=1" # Use native backlight instead of ACPI
+      # "acpi_backlight=native"
     ];
     initrd = {
       verbose = false;
@@ -40,9 +49,10 @@
       enable = true;
     };
     # blacklistedKernelModules = [ "video" ];
-    extraModprobeConfig = ''
-      options asus-nb-wmi use_kbd_backlight=0
-    '';
+    # "acpi_video0"
+    # extraModprobeConfig = ''
+    #   options asus-nb-wmi use_kbd_backlight=0 dmi_check=0
+    # '';
   };
 
   systemd = {

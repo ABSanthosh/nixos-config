@@ -1,4 +1,4 @@
-{ vars, pkgs, ... }:
+{ lib, vars, pkgs, ... }:
 {
 
   xdg.portal = {
@@ -17,6 +17,7 @@
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
     };
   };
+  
   security.polkit = {
     enable = true;
     extraConfig = ''
@@ -72,7 +73,8 @@
           ${pkgs.greetd.tuigreet}/bin/tuigreet \
             --time \
             --asterisks \
-            --user-menu \
+            --remember \
+            --greeting "East or West... I don't know the difference, I'm Zoro" \
             --cmd sway
         '';
       };

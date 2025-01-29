@@ -30,10 +30,90 @@ let
         export GTK_THEME=Adwaita:dark
       '';
   };
+
+  swaybar-cmd = pkgs.writeTextFile {
+    name = "swaybar-cmd";
+    destination = "/bin/swaybar-cmd";
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+
+      get_mem_info() {
+        free | awk '/^Mem:/ {printf "%.0f", $3/1024}'
+      }
+
+      prev_mem_info=$(get_mem_info)
+
+      format_mem_info() {
+        local curr_mem_info=$(get_mem_info)
+        local gib_format=$(echo $curr_mem_info | awk '{printf "%.3f", $1/1024}')
+
+        # if memory delta is negative, then return "▼ {new_mem_info} GiB" in green
+        # if memory delta is positive, then return "▲ {new_mem_info} GiB" in red
+        # if memory delta is zero, then return "● {new_mem_info} GiB" in orange
+        local mem_delta=$(($curr_mem_info - $prev_mem_info))
+
+        # Escape interpolation: https://guergabo.substack.com/p/writing-a-bash-script-the-hard-waywith
+        if [ $mem_delta -gt 0 ]; then
+          # echo -e "''${RED}▲ ''${gib_format} GiB''${NC}"
+          json="{ \"full_text\": \"▲ ''${gib_format} GiB\", \"color\": \"#FF0000\" }"
+        elif [ $mem_delta -lt 0 ]; then
+          # echo -e "''${GREEN}▼ ''${gib_format} GiB''${NC}"
+          json="{ \"full_text\": \"▼ ''${gib_format} GiB\", \"color\": \"#00FF00\" }"
+        else
+          # echo -e "''${ORANGE}● ''${gib_format} GiB''${NC}"
+          json="{ \"full_text\": \"● ''${gib_format} GiB\", \"color\": \"#FFA500\" }"
+        fi
+
+       json_array=$(update_holder holder__memory "$json") 
+      }
+
+      function update_holder {
+        local instance="$1"
+        local replacement="$2"
+        echo "$json_array" | jq --argjson arg_j "$replacement" "(.[] | (select(.instance==\"$instance\"))) |= \$arg_j"
+      }
+
+      function remove_holder {
+        local instance="$1"
+        echo "$json_array" | jq "del(.[] | (select(.instance==\"$instance\")))"
+      }
+
+      function get_brightness {
+        local brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
+        local max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+        local percentage=$(expr $brightness \* 100 / $max_brightness)
+        local json="{ \"full_text\": \"☀ $percentage%\", \"color\": \"#FFFF00\" }"
+        json_array=$(update_holder holder__brightness "$json")
+      }
+
+      ${pkgs.i3status}/bin/i3status -c ${./swaybar.conf} | (
+        read line
+        echo "$line"
+        read line
+        echo "$line"
+        read line
+        echo "$line"
+        read line
+        echo "$line"
+        while true; do
+          read line
+          json_array="$(echo $line | sed -e 's/^,//')"
+          get_brightness
+          format_mem_info
+          echo ",$json_array"
+          prev_mem_info=$(get_mem_info)
+          # sleep 1
+        done
+      )
+    '';
+  };
 in
 {
+  # inherit (utils) dbus-sway-environment configure-gtk;
+
   imports = [
-    ./ags
+    # ./ags
     ../common/gtk.nix
   ];
 
@@ -46,7 +126,6 @@ in
     grim
     sass
     slurp
-    waybar
 
     dconf
 
@@ -55,7 +134,7 @@ in
     clipse #clipboard manager
     wl-clipboard #clipboard protocol
     playerctl #media control
-    gnome.nautilus #file manager
+    nautilus #file manager
     brightnessctl #brightness control
 
     dbus-sway-environment
@@ -63,6 +142,9 @@ in
 
     # For minecraft
     alsa-oss
+    jq
+
+    libinput
   ];
 
   wayland.windowManager.sway = {
@@ -88,12 +170,27 @@ in
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
+        # { command = "brave"; }
+        # { command = "kitty"; }
+        # { command = "code"; }
       ];
       output = {
         "eDP-1" = {
           mode = "3840x2160@60Hz";
         };
+        "Unknown-1" = {
+          mode = "3840x2160@60Hz";
+          scale = "2";
+        };
+        "HDMI-A-4" = {
+          mode = "1080x1920@60Hz";
+          position = "420 1080";
+        };
       };
+      # Config syntax: https://discourse.nixos.org/t/programs-i3status-rust-enable-has-no-effect-in-home-manager/19728/7
+      bars = [
+        { statusCommand = "${swaybar-cmd}/bin/swaybar-cmd"; }
+      ];
     };
 
     extraConfig = ''   
@@ -109,7 +206,7 @@ in
       # Save specific screen area to folder /home/username/Pictures/Screenshots
       bindsym $mod+Shift+s exec grim -g "$(slurp)" /home/${vars.user.name}/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png
 
-      exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+      # exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
@@ -135,11 +232,10 @@ in
       ###################
 
       bindsym $mod+c exec "kitty"
-      bindsym --no-warn $mod+a exec swaync-client -t -sw
       bindsym --no-warn $mod+e exec "kitty yazi"
       bindsym --no-warn $mod+shift+e exec "nautilus"
       # bindsym --no-warn $mod+Space exec wofi -show drun
-      bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse"
+      bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse" 
       bindsym $alt+m exec "cloak view psu | wl-copy"
       
       bindsym $mod+t layout toggle tabbed split
@@ -162,6 +258,7 @@ in
         floating enable
         resize set 622 652
         move position center
+        focus
       }
 
       # Tap to click
@@ -170,10 +267,6 @@ in
         tap enabled
         natural_scroll enabled
         middle_emulation enabled
-      }
-      input type:keyboard {
-        repeat_delay 300
-        repeat_rate 30
       }
 
       # Set wallpaper
@@ -192,6 +285,9 @@ in
       default_border pixel 0
       workspace_layout tabbed 
       focus_follows_mouse no
+
+      # Shutdown
+      bindsym $alt+F4 exec "systemctl poweroff"
     '';
   };
 }

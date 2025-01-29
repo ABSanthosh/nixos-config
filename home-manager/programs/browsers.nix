@@ -1,14 +1,14 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    unstable.firefox
+    # unstable.firefox
     unstable.chromium
-    microsoft-edge-dev
+    # unstable.microsoft-edge
   ];
 
   programs = {
     brave = {
       enable = true;
-      package = pkgs.unstable.brave;
+      package = pkgs.brave;
       commandLineArgs = [
         "--enable-features=TouchpadOverscrollHistoryNavigation"
         "--ozone-platform=wayland" # Add Wayland support

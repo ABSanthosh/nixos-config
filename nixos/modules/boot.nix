@@ -1,11 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   boot = {
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       timeout = 0;
     };
-    # kernelPackages = pkgs.linuxPackages_zen;
     tmp.cleanOnBoot = true;
     supportedFilesystems = [
       "ntfs"
@@ -31,16 +30,24 @@
       "usbcore.autosuspend=-1"
       "elevator=noop"
       "fastboot"
-
-      # Fix for the Asus Zenbook
-      # "acpi_osi=!"
-      # "acpi_osi=Linux"
-      # "i915.enable_psr=0"
-      # "asus.use_lid_flip_devid=1"
-
-      # "video.use_native_backlight=1" # Use native backlight instead of ACPI
-      # "acpi_backlight=native"
     ];
+
+    kernelPackages = pkgs.linuxPackages_zen;
+    # kernelModules = [
+    #   # Virtual Camera
+    #   "v4l2loopback"
+    #   # Virtual Microphone, built-in
+    #   "snd-aloop"
+    # ];
+
+    # extraModprobeConfig = ''
+    #   options v4l2loopback devices=1 video_nr=1 card_label="OBS Cam" exclusive_caps=1
+    # '';
+
+    # extraModulePackages = with config.boot.kernelPackages; [
+    #   v4l2loopback
+    # ];
+
     initrd = {
       verbose = false;
     };
@@ -48,11 +55,6 @@
     plymouth = {
       enable = true;
     };
-    # blacklistedKernelModules = [ "video" ];
-    # "acpi_video0"
-    # extraModprobeConfig = ''
-    #   options asus-nb-wmi use_kbd_backlight=0 dmi_check=0
-    # '';
   };
 
   systemd = {

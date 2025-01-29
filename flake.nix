@@ -3,26 +3,26 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
     # Programs
-    astal = {
-      url = "github:Aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # astal = {
+    #   url = "github:Aylur/astal";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
-    ags = {
-      url = "github:Aylur/ags";
-      inputs.astal.follows = "astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    }; 
+    # ags = {
+    #   url = "github:Aylur/ags";
+    #   inputs.astal.follows = "astal";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # }; 
 
-    stylix.url = "github:danth/stylix/release-24.05";
+    stylix.url = "github:danth/stylix/release-24.11";
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

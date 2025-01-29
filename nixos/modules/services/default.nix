@@ -6,23 +6,15 @@
   ];
 
   services = {
-    asusd = {
-      enable = true;
-      enableUserService = true;
-    };
-
     udev.extraRules = ''
-        # # Disable the touchscreen on the laptop
-        # SUBSYSTEM=="input", KERNEL=="event6", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      # Disable "KEY_SWITCHVIDEOMODE"
+      SUBSYSTEM=="input", ATTRS{name}=="Video Bus", ATTRS{phys}=="LNXVIDEO/video/input0", ATTRS{id}=="PNP0A08:00/device:13/LNXVIDEO:01", ENV{ID_INPUT_KEY}="0"
 
-        # # Disable the video switch events from ASUS WMI
-        # SUBSYSTEM=="input", ATTRS{name}=="Asus WMI hotkeys", ATTRS{phys}=="asus-nb-wmi/video", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      # Disable Ghost touch on the touchscreen
+      SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen*", ENV{LIBINPUT_PALM_PRESSURE_THRESHOLD}="200"
+      ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_CALIBRATION_MATRIX}="1 0 0 0 1 0"
 
-        # # Disable the ELAN stylus completely
-        # SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-        # SUBSYSTEM=="input", ATTRS{id/vendor}=="04f3", ATTRS{id/product}=="2706", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-
-        # SUBSYSTEM=="input", KERNEL=="event1", ATTRS{name}=="Video Bus", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="04f3", ATTRS{idProduct}=="2706", ATTR{authorized}="0"
     '';
     xserver = {
       enable = true;
@@ -57,25 +49,26 @@
 
     samba = {
       enable = true;
-      securityType = "user";
       openFirewall = true;
-      extraConfig = ''
-        server string = NixOS Samba Server
-        server role = standalone server
-        guest account = nobody
-        map to guest = bad user
-        
-        # Apple-specific protocol extensions
-        fruit:aapl = yes
-        fruit:nfs_aces = no
-        fruit:metadata = stream
-        fruit:model = MacSamba
-        fruit:posix_rename = yes 
-        fruit:veto_appledouble = no
-        fruit:wipe_intentionally_left_blank_rfork = yes
-        fruit:delete_empty_adfiles = yes
-      '';
-      shares = {
+      settings = {
+        global = {
+          "server string" = "NixOS Samba Server";
+          "server role" = "standalone server";
+          "guest account" = "nobody";
+          "map to guest" = "bad user";
+
+          # Apple-specific protocol extensions
+          "fruit:aapl" = "yes";
+          "fruit:nfs_aces" = "no";
+          "fruit:metadata" = "stream";
+          "fruit:model" = "MacSamba";
+          "fruit:posix_rename" = "yes";
+          "fruit:veto_appledouble" = "no";
+          "fruit:wipe_intentionally_left_blank_rfork" = "yes";
+          "fruit:delete_empty_adfiles" = "yes";
+
+          security = "user";
+        };
         public = {
           path = "/home/santhosh/iphone";
           browseable = "yes";

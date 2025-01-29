@@ -42,10 +42,13 @@
       # Development
       go
       git
+      jdk
       yazi
       deno
       kitty
       samba
+      cargo
+      rustc
       nodejs
       docker
       mysql80
@@ -61,6 +64,7 @@
       # unstable.cockroachdb-bin I don't think I need this
 
       black # Code format Python
+      rustfmt # Code format Rust
       shfmt # Code format Shell
       rustfmt # Code format Rust
       shellcheck # Code lint Shell

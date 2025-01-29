@@ -78,3 +78,12 @@ sudo chown -R $USER .
 </details>
 
 <p align="center"><img src="./assets/Readme/border_bottom.png" width=80%></p>
+
+
+### Connect to wifi with nmcli
+
+```bash
+nmcli dev wifi list
+nmcli device wifi connect "SSID"
+route -n #if its a public wifi and you want to open the captive portal. Used the first gateway
+```

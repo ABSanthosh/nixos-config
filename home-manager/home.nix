@@ -18,6 +18,7 @@
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
+      # outputs.overlays.old-revision-overlay
     ];
 
     config = {
@@ -43,8 +44,9 @@
       go
       git
       jdk
+      jetbrains.idea-community
       yazi
-      deno
+      unstable.deno
       kitty
       samba
       cargo
@@ -54,6 +56,7 @@
       mysql80
       openssl
       # postgresql
+      zed-editor
       typescript
       # authenticator move to gnome only
       # passExtensions.pass-otp move to sway only
@@ -68,7 +71,7 @@
       shfmt # Code format Shell
       rustfmt # Code format Rust
       shellcheck # Code lint Shell
-      nixpkgs-fmt # Code format Nix
+      nixfmt-rfc-style # Code format Nix
       nodePackages.prettier # Code format
 
       # Python
@@ -80,6 +83,7 @@
       jetbrains-mono
 
       # Games
+      # oldRevision.
       prismlauncher
     ];
   };

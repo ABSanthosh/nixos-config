@@ -61,6 +61,7 @@ To Do
 
 ```sh
 echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": true},"type": "Offline"}],"formatVersion": 3}' > ~/.local/share/PrismLauncher/accounts.json
+echo '{"accounts": [{"profile": {"capes": [],"id": "49787d61f64b3b94a8f13d331a9ce421","name": "MrSandman","skin": {"id": "","url": "","variant": ""}},"type": "Offline","ygg": {"extra": {"clientToken": "54e6a07be4414740bc08917e0a9a125c","userName": "MrSandman"},"iat": 1716738991,"token": "0"}}],"formatVersion": 3}' > ~/.local/share/PrismLauncher/accounts.json
 ```
 
 4. Create an offline account
@@ -71,6 +72,7 @@ echo '{"accounts": [{"entitlement": {"canPlayMinecraft": true,"ownsMinecraft": t
 _Note: Don't delete the "No Profile" account before you create a new offline account, that will break it!_
 
 ### Remove "Failed to save 'xyz': insufficient permissions" error ([ref](https://stackoverflow.com/a/62515421/10376131))
+
 
 ```sh
 sudo chown -R $USER .

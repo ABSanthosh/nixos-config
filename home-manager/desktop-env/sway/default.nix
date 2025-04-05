@@ -113,7 +113,6 @@ in
   # inherit (utils) dbus-sway-environment configure-gtk;
 
   imports = [
-    # ./ags
     ../common/gtk.nix
   ];
 
@@ -126,6 +125,7 @@ in
     grim
     sass
     slurp
+    swaylock
 
     dconf
 
@@ -177,14 +177,8 @@ in
       output = {
         "eDP-1" = {
           mode = "3840x2160@60Hz";
-        };
-        "Unknown-1" = {
-          mode = "3840x2160@60Hz";
           scale = "2";
-        };
-        "HDMI-A-4" = {
-          mode = "1080x1920@60Hz";
-          position = "420 1080";
+          pos = "1920,2160";
         };
       };
       # Config syntax: https://discourse.nixos.org/t/programs-i3status-rust-enable-has-no-effect-in-home-manager/19728/7
@@ -196,6 +190,34 @@ in
     extraConfig = ''   
       set $mod ${mod4}
       set $alt Mod1
+
+      # Configure display with conservative settings
+      output DP-2 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
+      output DP-2 max_render_time off
+      output DP-2 allow_tearing no
+      output DP-2 render_bit_depth 8
+
+      output DP-1 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
+      output DP-1 max_render_time off
+      output DP-1 allow_tearing no
+      output DP-1 render_bit_depth 8
+
+      workspace 1 output eDP-1
+      workspace 2 output eDP-1
+      workspace 3 output eDP-1
+      workspace 4 output eDP-1
+      workspace 5 output eDP-1
+      workspace 6 output DP-1
+      workspace 7 output DP-1
+      workspace 8 output DP-1
+      workspace 9 output DP-1
+      workspace 10 output DP-1
+      workspace 6 output DP-2
+      workspace 7 output DP-2
+      workspace 8 output DP-2
+      workspace 9 output DP-2
+      workspace 10 output DP-2
+      
 
       # capture all screens to clipboard    
       bindsym Print exec grim - | wl-copy    
@@ -226,6 +248,10 @@ in
       bindsym F10 exec playerctl play-pause
       bindsym F11 exec playerctl next
 
+      # Rotate screen
+      bindsym $alt+r+Right exec "swaymsg -- output - transform 90"
+      bindsym $alt+r+Down exec "swaymsg -- output - transform 0"
+      bindsym $alt+r+Left exec "swaymsg -- output - transform 270"
 
       ###################
       ### Launch Apps ###
@@ -237,7 +263,10 @@ in
       # bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse" 
       bindsym $alt+m exec "cloak view psu | wl-copy"
-      
+
+      # bindsym Mod4+d exec /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu_path | /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu | /nix/store/r99d2m4swgmrv9jvm4l9di40hvanq1aq-findutils-4.10.0/bin/xargs swaymsg exec --
+      bindsym --no-warn $mod+d exec ${pkgs.dmenu}/bin/dmenu_path | ${pkgs.dmenu}/bin/dmenu -m 0 | xargs swaymsg exec --
+
       bindsym $mod+t layout toggle tabbed split
       bindsym $mod+Shift+t floating disable; focus parent
       bindsym $mod+Shift+f floating toggle
@@ -271,9 +300,6 @@ in
 
       # Set wallpaper
       output "*" bg '${vars.wallpaper}' fill
-
-      # # Disable HDMI-4
-      # output HDMI-A-1 disable
 
       # Quick workspace switching
       bindsym $alt+Tab workspace next_on_output

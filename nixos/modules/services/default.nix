@@ -26,6 +26,12 @@
       };
     };
 
+    # ollama = {
+    #   enable = true;
+    #   acceleration = "cuda";
+    # };
+    # open-webui.enable = true;
+
     # Enable CUPS to print documents.
     printing.enable = false;
     avahi = {

@@ -26,10 +26,15 @@
       "loglevel=3"
       "systemd.show_status=auto"
       "rd.udev.log_level=3"
-      "i915.fastboot=1"
       "usbcore.autosuspend=-1"
       "elevator=noop"
       "fastboot"
+      "i915.fastboot=1"
+
+      "i915.enable_dpcd_backlight=0" # Disable DPCD, which can cause issues with some monitors
+      "i915.force_probe=*"           # Force driver to probe all connectors
+      "video=DP-2:1920x1080@60"      # Hardcode DP-2 mode
+      "video=DP-1:1920x1080@60"      # Hardcode DP-2 mode
     ];
 
     kernelPackages = pkgs.linuxPackages_zen;

@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     # unstable.firefox
     unstable.chromium
-    # unstable.microsoft-edge
+    microsoft-edge
   ];
 
   programs = {

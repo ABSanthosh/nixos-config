@@ -12,6 +12,16 @@
     # });
   # };
 
+  old-revision-overlay = final: _prev: {
+    oldRevision = import (builtins.fetchGit {
+      name = "my-old-revision";
+      url = "https://github.com/NixOS/nixpkgs/";
+      ref = "refs/heads/nixpkgs-unstable";
+      rev = "ab7b6889ae9d484eed2876868209e33eb262511d";
+    }) {};
+  };
+
+
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {

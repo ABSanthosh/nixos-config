@@ -58,7 +58,7 @@ in
   };
   services = {
     xserver = {
-      videoDrivers = lib.mkForce [ "modesetting" "nouveau" ]; #nvidia
+      videoDrivers = lib.mkForce [ "nouveau" ]; #nvidia
       # videoDrivers = lib.mkForce [ "nvidia" ]; #nvidia
     };
   };

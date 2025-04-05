@@ -1,4 +1,9 @@
-{ lib, vars, pkgs, ... }:
+{
+  lib,
+  vars,
+  pkgs,
+  ...
+}:
 {
 
   xdg.portal = {
@@ -9,7 +14,11 @@
       xdg-desktop-portal-gtk
     ];
 
-    config = { common = { default = "wlr"; }; };
+    config = {
+      common = {
+        default = "wlr";
+      };
+    };
     wlr.enable = true;
     wlr.settings.screencast = {
       output_name = "DP-2";
@@ -17,37 +26,40 @@
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
     };
   };
-  
-  security.polkit = {
-    enable = true;
-    extraConfig = ''
-        polkit.addRule(function(action, subject) {
-        var YES = polkit.Result.YES;
-        var permission = {
-          // Existing power management rules
-          "org.freedesktop.login1.reboot": YES,
-          "org.freedesktop.login1.reboot-multiple-sessions": YES,
-          "org.freedesktop.login1.power-off": YES,
-          "org.freedesktop.login1.power-off-multiple-sessions": YES,
 
-          // UDisks2
-          "org.freedesktop.udisks2.filesystem-mount": YES,
-          "org.freedesktop.udisks2.filesystem-mount-system": YES,
-          "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
-          "org.freedesktop.udisks2.filesystem-unmount-others": YES,
-          "org.freedesktop.udisks2.filesystem-take-ownership": YES,
-          // UDisks2 encrypted devices
-          "org.freedesktop.udisks2.encrypted-unlock": YES,
-          "org.freedesktop.udisks2.encrypted-unlock-system": YES,
-          // UDisks2 power management
-          "org.freedesktop.udisks2.eject-media": YES,
-          "org.freedesktop.udisks2.power-off-drive": YES,
-        };
-        if (subject.isInGroup("users")) {
-          return permission[action.id];
-        }
-      });
-    '';
+  security = {
+    pam.services.swaylock = { };
+    polkit = {
+      enable = true;
+      extraConfig = ''
+          polkit.addRule(function(action, subject) {
+          var YES = polkit.Result.YES;
+          var permission = {
+            // Existing power management rules
+            "org.freedesktop.login1.reboot": YES,
+            "org.freedesktop.login1.reboot-multiple-sessions": YES,
+            "org.freedesktop.login1.power-off": YES,
+            "org.freedesktop.login1.power-off-multiple-sessions": YES,
+
+            // UDisks2
+            "org.freedesktop.udisks2.filesystem-mount": YES,
+            "org.freedesktop.udisks2.filesystem-mount-system": YES,
+            "org.freedesktop.udisks2.filesystem-mount-other-seat": YES,
+            "org.freedesktop.udisks2.filesystem-unmount-others": YES,
+            "org.freedesktop.udisks2.filesystem-take-ownership": YES,
+            // UDisks2 encrypted devices
+            "org.freedesktop.udisks2.encrypted-unlock": YES,
+            "org.freedesktop.udisks2.encrypted-unlock-system": YES,
+            // UDisks2 power management
+            "org.freedesktop.udisks2.eject-media": YES,
+            "org.freedesktop.udisks2.power-off-drive": YES,
+          };
+          if (subject.isInGroup("users")) {
+            return permission[action.id];
+          }
+        });
+      '';
+    };
   };
 
   systemd.user.services = {
@@ -75,7 +87,7 @@
             --asterisks \
             --remember \
             --greeting "East or West... I don't know the difference, I'm Zoro" \
-            --cmd sway
+            --cmd "sway"
         '';
       };
     };

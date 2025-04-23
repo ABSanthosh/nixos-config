@@ -37,7 +37,7 @@ let
   };
 
   swaybar-cmd = pkgs.callPackage ./scripts/swaybar-cmd.nix { };
-  misc = import ./misc.nix { inherit pkgs; };
+  misc = import ./scripts/misc.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -82,7 +82,6 @@ in
     systemd = {
       enable = true;
       extraCommands = [
-        "systemctl --user stop sway-session.target"
         "systemctl --user start sway-session.target"
       ];
       variables = [
@@ -92,8 +91,8 @@ in
 
     config = rec {
       modifier = mod4;
-      defaultWorkspace = "workspace number 1";
       terminal = "kitty";
+      defaultWorkspace = "workspace number 1";
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
@@ -108,7 +107,14 @@ in
       };
       # Config syntax: https://discourse.nixos.org/t/programs-i3status-rust-enable-has-no-effect-in-home-manager/19728/7
       bars = [
-        { statusCommand = "${swaybar-cmd}/bin/swaybar-cmd"; }
+        {
+          fonts = {
+            names = [
+              "JetBrains Mono"
+            ];
+          };
+          statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
+        }
       ];
     };
 
@@ -153,7 +159,7 @@ in
       # Save specific screen area to folder /home/username/Pictures/Screenshots
       bindsym $mod+Shift+s exec grim -g "$(slurp)" /home/${vars.user.name}/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png
 
-      # exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+      exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
@@ -224,7 +230,7 @@ in
       }
 
       # Set wallpaper
-      # output "*" bg '${vars.wallpaper}' fill
+      output "*" bg '${vars.wallpaper}' fill
 
       # Quick workspace switching
       bindsym $alt+Tab workspace next_on_output

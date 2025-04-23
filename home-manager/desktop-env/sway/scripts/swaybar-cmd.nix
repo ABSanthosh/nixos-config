@@ -37,10 +37,10 @@ pkgs.writeTextFile {
        json_array=$(update_holder holder__memory "$json") 
       }
 
-      function update_holder {
+      update_holder() {
         local instance="$1"
         local replacement="$2"
-        echo "$json_array" | jq --argjson arg_j "$replacement" "(.[] | (select(.instance==\"$instance\"))) |= \$arg_j"
+        echo "$json_array" | jq "(.[] | select(.instance==\"$instance\")) |= (''${replacement})"
       }
 
       function remove_holder {

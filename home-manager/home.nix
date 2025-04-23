@@ -1,4 +1,10 @@
-{ vars, pkgs, lib, outputs, ... }:
+{
+  vars,
+  pkgs,
+  lib,
+  outputs,
+  ...
+}:
 {
   imports = [
     # Programs
@@ -33,39 +39,35 @@
     stateVersion = vars.stateVersion;
 
     packages = with pkgs; [
-      mpv
+      # Apps
       vlc
-      htop
       amberol
-      starship
-      # lm_sensors
 
-      # Development
+      # Programming Languages
       go
-      git
       jdk
-      jetbrains.idea-community
-      yazi
-      unstable.deno
-      kitty
       samba
       cargo
       rustc
       nodejs
       docker
-      mysql80
-      openssl
-      # postgresql
-      zed-editor
       typescript
-      # authenticator move to gnome only
-      # passExtensions.pass-otp move to sway only
+      unstable.deno
 
-      prisma-engines
+      # Editor
+      zed-editor
       unstable.vscode
-      python312Packages.prisma
-      # unstable.cockroachdb-bin I don't think I need this
 
+      # CLI tools
+      git
+      mpv
+      yazi
+      htop
+      kitty
+      openssl
+      starship
+
+      # Code formatters and linters
       black # Code format Python
       rustfmt # Code format Rust
       shfmt # Code format Shell
@@ -82,8 +84,14 @@
       # fonts
       jetbrains-mono
 
+      # Databases and utils
+      mysql80
+      # postgresql
+      # prisma-engines
+      # python312Packages.prisma
+      # unstable.cockroachdb-bin I don't think I need this
+
       # Games
-      # oldRevision.
       prismlauncher
     ];
   };

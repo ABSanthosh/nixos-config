@@ -170,9 +170,6 @@ in
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
-        # { command = "brave"; }
-        # { command = "kitty"; }
-        # { command = "code"; }
       ];
       output = {
         "eDP-1" = {

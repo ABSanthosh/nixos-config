@@ -28,9 +28,9 @@ sudo nixos-rebuild switch --flake .#<device name>
 To Do 
 </summary>
 
-  - [ ] Sounds
-    - [ ] move 'ocean' from `~/.local/share/sounds` to `/nixos/assets` and make a symlink to it.
-  - [ ] Bookmark in nautilus: https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
+  ~~- [ ] Sounds~~
+    ~~- [ ] move 'ocean' from `~/.local/share/sounds` to `/nixos/assets` and make a symlink to it.~~
+  - [x] Bookmark in nautilus: https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
   - [x] Git credentials, how to set up git so it won't ask for credentials every time?
   - [x] Fonts
   - [x] Editors
@@ -41,12 +41,19 @@ To Do
   - [x] Cursor
   - [x] Gnome extensions
   - [x] Wallpaper
-  - [ ] User picture not working
+  ~~- [ ] User picture not working~~
   - [x] Time to 12 hours format
   - [ ] brave browser
     - [ ] Addresses
     - [ ] passwords
-  - Screen sharing with external monitor
+  - [x] Screen sharing with external monitor
+  - [ ] Stylix for sway
+  - [ ] a side panel for auth codes (maybe with TUI)
+  - [ ] Keyboard shortcuts panel for reference
+  - [ ] better support for code env:
+    - [ ] python 
+    - [ ] general fix for linking issues
+  - [ ] Dynamic external monitor support. Right now, "video=DP-2:1920x1080@60" is hardcoded in the boot.nix file.
 
 </details>
 

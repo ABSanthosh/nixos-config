@@ -37,11 +37,9 @@ let
   };
 
   swaybar-cmd = pkgs.callPackage ./scripts/swaybar-cmd.nix { };
-
+  misc = import ./misc.nix { inherit pkgs; };
 in
 {
-  # inherit (utils) dbus-sway-environment configure-gtk;
-
   imports = [
     ../common/gtk.nix
   ];
@@ -51,13 +49,14 @@ in
     ntfs3g # NTFS support
     exfat # exFAT support
     udisks # disk utility
-    glib
+    glib # glibc
     grim # screenshot
     slurp # screen selector
     swaylock
 
     dconf
 
+    libinput # touchpad
     cloak # authenticator
     acpi # battery status
     clipse # clipboard manager
@@ -65,15 +64,14 @@ in
     playerctl # media control
     nautilus # file manager
     brightnessctl # brightness control
-
-    dbus-sway-environment
-    configure-gtk
+    gammastep # color temperature
 
     # For minecraft
     alsa-oss
     jq
 
-    libinput
+    misc.dbusSwayEnvironment
+    misc.configureGtk
   ];
 
   wayland.windowManager.sway = {
@@ -99,6 +97,7 @@ in
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
+        { command = "gammastep -l 40.7:74.0"; }
       ];
       output = {
         "eDP-1" = {

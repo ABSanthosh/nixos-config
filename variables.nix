@@ -16,6 +16,6 @@
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
   terminal = "kitty"; # Set Default System Terminal
-  wallpaper = assets/Wallpapers/Misc/anime-cplusplus.png;
+  wallpaper = assets/Wallpapers/Misc/anime-cplusplus.jpg;
   stateVersion = "24.05";
 }

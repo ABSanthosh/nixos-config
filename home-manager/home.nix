@@ -24,7 +24,6 @@
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
-      # outputs.overlays.old-revision-overlay
     ];
 
     config = {

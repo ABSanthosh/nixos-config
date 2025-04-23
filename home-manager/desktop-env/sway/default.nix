@@ -1,4 +1,9 @@
-{ pkgs, vars, lib, ... }:
+{
+  pkgs,
+  vars,
+  lib,
+  ...
+}:
 let
   mod4 = "Mod4";
 
@@ -7,7 +12,7 @@ let
     destination = "/bin/dbus-sway-environment";
     executable = true;
 
-    # Needed for screen sharing 
+    # Needed for screen sharing
     text = ''
       dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
       systemctl --user stop pipewire pipewire-media-session
@@ -23,91 +28,16 @@ let
       let
         schema = pkgs.gsettings-desktop-schemas;
         datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-        # gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
       in
-      ''`
+      # gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
+      ''
         export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
         export GTK_THEME=Adwaita:dark
       '';
   };
 
-  swaybar-cmd = pkgs.writeTextFile {
-    name = "swaybar-cmd";
-    destination = "/bin/swaybar-cmd";
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
+  swaybar-cmd = pkgs.callPackage ./scripts/swaybar-cmd.nix { };
 
-      get_mem_info() {
-        free | awk '/^Mem:/ {printf "%.0f", $3/1024}'
-      }
-
-      prev_mem_info=$(get_mem_info)
-
-      format_mem_info() {
-        local curr_mem_info=$(get_mem_info)
-        local gib_format=$(echo $curr_mem_info | awk '{printf "%.3f", $1/1024}')
-
-        # if memory delta is negative, then return "▼ {new_mem_info} GiB" in green
-        # if memory delta is positive, then return "▲ {new_mem_info} GiB" in red
-        # if memory delta is zero, then return "● {new_mem_info} GiB" in orange
-        local mem_delta=$(($curr_mem_info - $prev_mem_info))
-
-        # Escape interpolation: https://guergabo.substack.com/p/writing-a-bash-script-the-hard-waywith
-        if [ $mem_delta -gt 0 ]; then
-          # echo -e "''${RED}▲ ''${gib_format} GiB''${NC}"
-          json="{ \"full_text\": \"▲ ''${gib_format} GiB\", \"color\": \"#FF0000\" }"
-        elif [ $mem_delta -lt 0 ]; then
-          # echo -e "''${GREEN}▼ ''${gib_format} GiB''${NC}"
-          json="{ \"full_text\": \"▼ ''${gib_format} GiB\", \"color\": \"#00FF00\" }"
-        else
-          # echo -e "''${ORANGE}● ''${gib_format} GiB''${NC}"
-          json="{ \"full_text\": \"● ''${gib_format} GiB\", \"color\": \"#FFA500\" }"
-        fi
-
-       json_array=$(update_holder holder__memory "$json") 
-      }
-
-      function update_holder {
-        local instance="$1"
-        local replacement="$2"
-        echo "$json_array" | jq --argjson arg_j "$replacement" "(.[] | (select(.instance==\"$instance\"))) |= \$arg_j"
-      }
-
-      function remove_holder {
-        local instance="$1"
-        echo "$json_array" | jq "del(.[] | (select(.instance==\"$instance\")))"
-      }
-
-      function get_brightness {
-        local brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
-        local max_brightness=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-        local percentage=$(expr $brightness \* 100 / $max_brightness)
-        local json="{ \"full_text\": \"☀ $percentage%\", \"color\": \"#FFFF00\" }"
-        json_array=$(update_holder holder__brightness "$json")
-      }
-
-      ${pkgs.i3status}/bin/i3status -c ${./swaybar.conf} | (
-        read line
-        echo "$line"
-        read line
-        echo "$line"
-        read line
-        echo "$line"
-        read line
-        echo "$line"
-        while true; do
-          read line
-          json_array="$(echo $line | sed -e 's/^,//')"
-          get_brightness
-          format_mem_info
-          echo ",$json_array"
-          prev_mem_info=$(get_mem_info)
-          # sleep 1
-        done
-      )
-    '';
-  };
 in
 {
   # inherit (utils) dbus-sway-environment configure-gtk;
@@ -117,25 +47,24 @@ in
   ];
 
   home.packages = with pkgs; [
-    udiskie #automount
+    udiskie # automount
     ntfs3g # NTFS support
     exfat # exFAT support
     udisks # disk utility
     glib
-    grim
-    sass
-    slurp
+    grim # screenshot
+    slurp # screen selector
     swaylock
 
     dconf
 
-    cloak #authenticator
-    acpi #battery status
-    clipse #clipboard manager
-    wl-clipboard #clipboard protocol
-    playerctl #media control
-    nautilus #file manager
-    brightnessctl #brightness control
+    cloak # authenticator
+    acpi # battery status
+    clipse # clipboard manager
+    wl-clipboard # clipboard protocol
+    playerctl # media control
+    nautilus # file manager
+    brightnessctl # brightness control
 
     dbus-sway-environment
     configure-gtk
@@ -184,7 +113,7 @@ in
       ];
     };
 
-    extraConfig = ''   
+    extraConfig = ''
       set $mod ${mod4}
       set $alt Mod1
 
@@ -214,7 +143,7 @@ in
       workspace 8 output DP-2
       workspace 9 output DP-2
       workspace 10 output DP-2
-      
+
 
       # capture all screens to clipboard    
       bindsym Print exec grim - | wl-copy    
@@ -296,7 +225,7 @@ in
       }
 
       # Set wallpaper
-      output "*" bg '${vars.wallpaper}' fill
+      # output "*" bg '${vars.wallpaper}' fill
 
       # Quick workspace switching
       bindsym $alt+Tab workspace next_on_output

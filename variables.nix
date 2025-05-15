@@ -13,6 +13,12 @@
     system = "x86_64-linux";
   };
 
+  # Colorscheme
+  catppuccin = {
+    flavor = "mocha";
+    kitty_theme = "catppuccin-mocha"; # catppuccin-frappe | catppuccin-latte | catppuccin-macchiato | catppuccin-mocha
+  };
+
   # Program Options
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
   terminal = "kitty"; # Set Default System Terminal

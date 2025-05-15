@@ -1,98 +1,97 @@
-{ config, ... }: {
-  home.file.".config/kitty/kitty.conf" = {
-    force = true;
-    text = ''
-      # Kitty confif file
-      confirm_os_window_close 0
+# Ref:
+# - https://github.com/kovidgoyal/kitty-themes/blob/master/themes/Catppuccin-Mocha.conf
+# - https://github.com/Sigmanificient/dotfiles/blob/9440c9af7b0c6a21294b54f26eb5d3dcd98f2e69/home/kitty.nix#L4
+{ vars, pkgs, ... }:
+{
+  programs.kitty = {
+    enable = true;
+    font = {
+      name = "JetBrains Mono";
+      size = 11;
+    };
 
-      # Set margin
-      window_padding_width 2
+    settings = {
+      confirm_os_window_close = -1;
+      window_padding_width = 2;
+      detectUrls = true;
+      background_opacity = 1;
+      background_image = "none";
+      editor = "nvim";
+      hide_window_decorations = "titlebar-only";
 
-      # Fonts
-      font_family      Jetbrains Mono
-      bold_font        auto
-      italic_font      auto
-      bold_italic_font auto
+      # # Colors
+      # foreground = "$text";
+      # background = "$base";
+      # selection_foreground = "$base";
+      # selection_background = "$rosewater";
 
+      # # Cursor colors
+      # cursor = "$rosewater";
+      # cursor_text_color = "$base";
 
-      # Change font size
-      font_size 11.0
+      # # URL underline color when hovering with mouse
+      # url_color = "$rosewater";
 
-      detect_urls yes
-      background_opacity 1
-      background_image none
+      # # Kitty window border colors
+      # active_border_color = "$lavender";
+      # inactive_border_color = "$overlay0";
+      # bell_border_color = "$yellow";
 
-      # Set nvim as default editor
-      editor nvim
+      # # OS Window titlebar colors
+      # wayland_titlebar_color = "system";
+      # macos_titlebar_color = "system";
 
-      hide_window_decorations titlebar-only
+      # # Tab bar colors
+      # active_tab_foreground = "$crust";
+      # active_tab_background = "$mauve";
+      # inactive_tab_foreground = "$text";
+      # inactive_tab_background = "$mantle";
+      # tab_bar_background = "$crust";
 
-      # The basic colors
-      foreground              #cdd6f4
-      background              #1e1e2e
-      selection_foreground    #1e1e2e
-      selection_background    #f5e0dc
+      # # Colors for marks (marked text in the terminal)
+      # mark1_foreground = "$base";
+      # mark1_background = "$lavender";
+      # mark2_foreground = "$base";
+      # mark2_background = "$mauve";
+      # mark3_foreground = "$base";
+      # mark3_background = "$sapphire";
 
-      # Cursor colors
-      cursor                  #f5e0dc
-      cursor_text_color       #1e1e2e
+      # # The 16 terminal colors
+      # # black
+      # color0 = "$surface1";
+      # color8 = "$surface2";
 
-      # URL underline color when hovering with mouse
-      url_color               #f5e0dc
+      # # red
+      # color1 = "$red";
+      # color9 = "$red";
 
-      # Kitty window border colors
-      active_border_color     #b4befe
-      inactive_border_color   #6c7086
-      bell_border_color       #f9e2af
+      # # green
+      # color2 = "$green";
+      # color10 = "$green";
 
-      # Tab bar colors
-      active_tab_foreground   #11111b
-      active_tab_background   #cba6f7
-      inactive_tab_foreground #cdd6f4
-      inactive_tab_background #181825
-      tab_bar_background      #11111b
+      # # yellow
+      # color3 = "$yellow";
+      # color11 = "$yellow";
 
-      # Colors for marks (marked text in the terminal)
-      mark1_foreground #1e1e2e
-      mark1_background #b4befe
-      mark2_foreground #1e1e2e
-      mark2_background #cba6f7
-      mark3_foreground #1e1e2e
-      mark3_background #74c7ec
+      # # blue
+      # color4 = "$blue";
+      # color12 = "$blue";
 
-      # The 16 terminal colors
+      # # magenta
+      # color5 = "$pink";
+      # color13 = "$pink";
 
-      # black
-      color0 #45475a
-      color8 #585b70
+      # # cyan
+      # color6 = "$teal";
+      # color14 = "$teal";
 
-      # red
-      color1 #f38ba8
-      color9 #f38ba8
+      # # white
+      # color7 = "$subtext1";
+      # color15 = "$subtext0";
+    };
 
-      # green
-      color2  #a6e3a1
-      color10 #a6e3a1
-
-      # yellow
-      color3  #f9e2af
-      color11 #f9e2af
-
-      # blue
-      color4  #89b4fa
-      color12 #89b4fa
-
-      # magenta
-      color5  #f5c2e7
-      color13 #f5c2e7
-
-      # cyan
-      color6  #94e2d5
-      color14 #94e2d5
-
-      # white
-      color7  #bac2de
-      color15 #a6adc8
-    '';
+    # extraConfig = ''
+    #   include ${pkgs.catppuccin}/${vars.catppuccin.kitty_theme}
+    # '';
   };
 }

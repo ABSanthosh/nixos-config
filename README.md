@@ -93,6 +93,9 @@ sudo chown -R $USER .
 
 ```bash
 nmcli dev wifi list
-nmcli device wifi connect "SSID"
+nmcli device wifi connect "SSID" password "<Pass>"
 route -n #if its a public wifi and you want to open the captive portal. Used the first gateway
 ```
+
+## References  
+- It has a lot of good stuff: https://github.com/3rd/config/tree/b9e4c0ea11d724e9d94c413d790b1a2151a694ff

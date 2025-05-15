@@ -6,7 +6,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Home manager
+    catppuccin.url = "github:catppuccin/nix";
+
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,7 +22,9 @@
   outputs =
     {
       self,
+      nix-ld,
       nixpkgs,
+      catppuccin,
       home-manager,
       ...
     }@inputs:
@@ -31,11 +39,47 @@
         specialArgs = { inherit inputs outputs vars; };
         modules = [
           ./nixos/configuration.nix
+          # catppuccin.nixosModules.catppuccin
           home-manager.nixosModules.home-manager
+          nix-ld.nixosModules.nix-ld
+          {
+            programs.nix-ld = {
+              enable = true;
+              dev.enable = false;
+              libraries = with pkgs; [
+                acl
+                attr
+                bzip2
+                dbus
+                expat
+                fontconfig
+                freetype
+                fuse3
+                icu
+                libnotify
+                libsodium
+                libssh
+                libunwind
+                libusb1
+                libuuid
+                nspr
+                nss
+                stdenv.cc.cc
+                util-linux
+                zlib
+                zstd
+              ];
+            };
+          }
           {
             home-manager = {
               useUserPackages = true;
-              users.${vars.user.name} = ./home-manager/home.nix;
+              users.${vars.user.name} = {
+                imports = [
+                  ./home-manager/home.nix
+                  catppuccin.homeModules.catppuccin
+                ];
+              };
               extraSpecialArgs = { inherit inputs outputs vars; };
             };
           }

@@ -12,6 +12,7 @@
     # +-------------------------------------------+
     # | *432C338E13B8D7FB08E225BECBD0C0959CF98292 |
     # +-------------------------------------------+
+    # mysql -u root -p Ranchero0
 
     # [nix-shell:~]$ sudo mysql_secure_installation
     # then paste the above password and follow the instructions

@@ -1,43 +1,15 @@
 {
+  lib,
   pkgs,
   vars,
-  lib,
+  config,
   ...
 }:
 let
   mod4 = "Mod4";
 
-  dbus-sway-environment = pkgs.writeTextFile {
-    name = "dbus-sway-environment";
-    destination = "/bin/dbus-sway-environment";
-    executable = true;
-
-    # Needed for screen sharing
-    text = ''
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire pipewire-media-session
-      systemctl --user start pipewire pipewire-media-session
-    '';
-  };
-
-  configure-gtk = pkgs.writeTextFile {
-    name = "configure-gtk";
-    destination = "/bin/configure-gtk";
-    executable = true;
-    text =
-      let
-        schema = pkgs.gsettings-desktop-schemas;
-        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-      in
-      # gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita:dark'
-      ''
-        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        export GTK_THEME=Adwaita:dark
-      '';
-  };
-
-  swaybar-cmd = pkgs.callPackage ./scripts/swaybar-cmd.nix { };
-  misc = import ./scripts/misc.nix { inherit pkgs; };
+  swaybar-cmd = pkgs.callPackage ./swaybar/swaybar-cmd.nix { };
+  misc = import ./misc.nix { inherit pkgs; };
 in
 {
   imports = [
@@ -52,7 +24,7 @@ in
     glib # glibc
     grim # screenshot
     slurp # screen selector
-    swaylock
+    i3blocks # status bar
 
     dconf
 
@@ -64,7 +36,6 @@ in
     playerctl # media control
     nautilus # file manager
     brightnessctl # brightness control
-    gammastep # color temperature
 
     # For minecraft
     alsa-oss
@@ -96,7 +67,6 @@ in
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
-        { command = "gammastep -l 40.7:74.0"; }
       ];
       output = {
         "eDP-1" = {
@@ -113,9 +83,77 @@ in
               "JetBrains Mono"
             ];
           };
-          statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
+          # statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
+          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${./i3blocks.conf}";
+          colors = {
+            background = "$crust";
+            statusline = "$text";
+            focusedStatusline = "$text";
+            focusedSeparator = "$base";
+
+            # Workspace colors
+            focusedWorkspace = {
+              border = "$base";
+              background = "$mauve";
+              text = "$crust";
+            };
+            activeWorkspace = {
+              border = "$base";
+              background = "$surface2";
+              text = "$text";
+            };
+            inactiveWorkspace = {
+              border = "$base";
+              background = "$base";
+              text = "$text";
+            };
+            urgentWorkspace = {
+              border = "$base";
+              background = "$red";
+              text = "$crust";
+            };
+          };
         }
       ];
+
+      colors = {
+        focused = {
+          border = "$base";
+          background = "$surface0";
+          text = "$text";
+          indicator = "$rosewater";
+          childBorder = "$lavender";
+        };
+        focusedInactive = {
+          border = "$base";
+          background = "$crust";
+          text = "$text";
+          indicator = "$rosewater";
+          childBorder = "$overlay0";
+        };
+        unfocused = {
+          border = "$base";
+          background = "$crust";
+          text = "$subtext0";
+          indicator = "$rosewater";
+          childBorder = "$overlay0";
+        };
+        urgent = {
+          border = "$base";
+          background = "$base";
+          text = "$peach";
+          indicator = "$overlay0";
+          childBorder = "$peach";
+        };
+        placeholder = {
+          border = "$base";
+          background = "$base";
+          text = "$text";
+          indicator = "$overlay0";
+          childBorder = "$overlay0";
+        };
+        background = "$base";
+      };
     };
 
     extraConfig = ''
@@ -148,7 +186,6 @@ in
       workspace 8 output DP-2
       workspace 9 output DP-2
       workspace 10 output DP-2
-
 
       # capture all screens to clipboard    
       bindsym Print exec grim - | wl-copy    

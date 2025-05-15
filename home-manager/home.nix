@@ -3,9 +3,10 @@
   pkgs,
   lib,
   outputs,
+  catppuccin,
   ...
 }:
-{
+{ 
   imports = [
     # Programs
     ./programs/git.nix
@@ -30,6 +31,11 @@
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
+  };
+
+  catppuccin = {
+    enable = true;
+    flavor = vars.catppuccin.flavor;
   };
 
   home = {
@@ -62,7 +68,7 @@
       mpv
       yazi
       htop
-      kitty
+      # kitty
       openssl
       starship
 
@@ -76,6 +82,7 @@
       nodePackages.prettier # Code format
 
       # Python
+      uv
       python311
       python311Packages.pip
       python311Packages.python-lsp-server

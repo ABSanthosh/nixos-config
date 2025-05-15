@@ -56,7 +56,7 @@ pkgs.writeTextFile {
         json_array=$(update_holder holder__brightness "$json")
       }
 
-      ${pkgs.i3status}/bin/i3status -c ${../swaybar.conf} | (
+      ${pkgs.i3status}/bin/i3status -c ${./swaybar.conf} | (
         read line
         echo "$line"
         read line

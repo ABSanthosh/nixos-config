@@ -1,66 +1,56 @@
 { pkgs }:
 let
-  # Brightness script
-  conf_brightness = pkgs.writeTextFile {
-    name = "brightness";
-    destination = "/bin/i3blocks/brightness";
-    executable = true;
-    text = (builtins.readFile ./scripts/brightness.sh);
-  };
+  # List of scripts to install
+  scriptNames = [
+    "brightness"
+    "memory"
+    "volume"
+    "battery"
+    "wifi"
+  ];
 
-  conf_memory = pkgs.writeTextFile {
-    name = "memory";
-    destination = "/bin/i3blocks/memory";
-    executable = true;
-    text = (builtins.readFile ./scripts/memory.sh);
-  };
+  # Function to generate a writeTextFile for each script
+  mkScript =
+    name:
+    pkgs.writeTextFile {
+      name = name;
+      destination = "/bin/i3blocks/${name}";
+      executable = true;
+      text = builtins.readFile (./scripts + "/${name}.sh");
+    };
 
-  conf_volume = pkgs.writeTextFile {
-    name = "volume";
-    destination = "/bin/i3blocks/volume";
-    executable = true;
-    text = (builtins.readFile ./scripts/volume.sh);
-  };
-
-  conf_battery = pkgs.writeTextFile {
-    name = "battery";
-    destination = "/bin/i3blocks/battery";
-    executable = true;
-    text = (builtins.readFile ./scripts/battery.sh);
-  };
-
-  conf_wifi = pkgs.writeTextFile {
-    name = "wifi";
-    destination = "/bin/i3blocks/wifi";
-    executable = true;
-    text = (builtins.readFile ./scripts/wifi.sh);
-  };
-
+  # Generate an attribute set with script names as keys and paths as values
+  scripts = builtins.listToAttrs (
+    map (name: {
+      inherit name;
+      value = mkScript name;
+    }) scriptNames
+  );
 in
 pkgs.writeTextFile {
   name = "i3blocks-conf";
   text = ''
     [wifi]
-    command=${conf_wifi}/bin/i3blocks/wifi
+    command=${scripts.wifi}/bin/i3blocks/wifi
     interval=5
 
     [battery]
-    command=${conf_battery}/bin/i3blocks/battery
+    command=${scripts.battery}/bin/i3blocks/battery
     interval=5
 
     [volume]
-    command=${conf_volume}/bin/i3blocks/volume
+    command=${scripts.volume}/bin/i3blocks/volume
     signal=1
     interval=5
 
     [brightness]
-    command=${conf_brightness}/bin/i3blocks/brightness
+    command=${scripts.brightness}/bin/i3blocks/brightness
     color=#FFFF00
     interval=once
     signal=10
 
     [memory]
-    command=${conf_memory}/bin/i3blocks/memory
+    command=${scripts.memory}/bin/i3blocks/memory
     interval=5
 
     [date]

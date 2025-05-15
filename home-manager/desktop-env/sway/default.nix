@@ -9,6 +9,7 @@ let
   mod4 = "Mod4";
 
   swaybar-cmd = pkgs.callPackage ./swaybar/swaybar-cmd.nix { };
+  i3blocks-conf = pkgs.callPackage ./i3blocks/i3blocks-conf.nix { };
   misc = import ./misc.nix { inherit pkgs; };
 in
 {
@@ -84,7 +85,7 @@ in
             ];
           };
           # statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
-          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${./i3blocks.conf}";
+          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocks-conf}/bin/i3blocks-conf";
           colors = {
             background = "$crust";
             statusline = "$text";

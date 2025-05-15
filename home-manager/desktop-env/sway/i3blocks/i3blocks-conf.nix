@@ -5,121 +5,28 @@ let
     name = "brightness";
     destination = "/bin/i3blocks/brightness";
     executable = true;
-    text = ''
-      #!/usr/bin/env bash
-
-      brightness=$(cat /sys/class/backlight/intel_backlight/brightness)
-      max=$(cat /sys/class/backlight/intel_backlight/max_brightness)
-      percentage=$((brightness * 100 / max))
-
-      echo "☀ ''${percentage}%"
-    '';
+    text = (builtins.readFile ./scripts/brightness.sh);
   };
 
   conf_memory = pkgs.writeTextFile {
     name = "memory";
     destination = "/bin/i3blocks/memory";
     executable = true;
-    text = ''
-      MEM_FILE="/tmp/.prev_mem"
-      current=$(free | awk '/^Mem:/ {printf "%.0f", $3/1024}')
-
-      if [ -f "$MEM_FILE" ]; then
-        prev=$(cat "$MEM_FILE")
-      else
-        prev=$current
-      fi
-
-      delta=$((current - prev))
-      gib=$(awk "BEGIN {printf \"%.3f\", $current/1024}")
-
-      # Third line is color
-      # https://www.reddit.com/r/i3wm/comments/51rwo2/comment/d7ec6cc/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-
-      if [ $delta -gt 0 ]; then
-        echo "▲ ''${gib} GiB"
-        echo ""
-        echo "#FF0000"
-      elif [ $delta -lt 0 ]; then
-        echo "▼ ''${gib} GiB"
-        echo ""
-        echo "#00FF00"
-      else
-        echo "● ''${gib} GiB"
-        echo ""
-        echo "#FFA500"
-      fi
-
-      echo $current >"$MEM_FILE"
-    '';
+    text = (builtins.readFile ./scripts/memory.sh);
   };
 
   conf_volume = pkgs.writeTextFile {
     name = "volume";
     destination = "/bin/i3blocks/volume";
     executable = true;
-    text = ''
-      # Get the default audio sink's volume and mute status
-      info=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
-      volume=$(echo "$info" | awk '{print int($2 * 100)}')
-      muted=$(echo "$info" | grep -q MUTED && echo "yes" || echo "no")
-
-      if [ "$muted" = "yes" ]; then
-        echo "♪ ''${volume}% (Muted)"
-        echo ""
-        echo "#FFFF00"   # Red for muted
-      else
-        echo "♪ ''${volume}%"
-      fi
-    '';
+    text = (builtins.readFile ./scripts/volume.sh);
   };
 
   conf_battery = pkgs.writeTextFile {
     name = "battery";
     destination = "/bin/i3blocks/battery";
     executable = true;
-    text = ''
-      #!/usr/bin/env bash
-
-      # Get battery info from acpi
-      output=$(acpi -b | grep '^Battery 0:')
-
-      # Extract status and percentage
-      status=$(echo "$output" | awk -F': |, ' '{print $2}')
-      percentage=$(echo "$output" | awk -F', ' '{print $2}' | tr -d ' %')
-
-      # Set icon or symbol based on status
-      case "$status" in
-      Charging)
-        symbol="CHR"
-        color="#00FF00" # green
-        ;;
-      Discharging)
-        symbol="BAT"
-        # Optional: color based on charge level
-        if [ "$percentage" -le 20 ]; then
-          color="#FF0000" # red
-        elif [ "$percentage" -le 50 ]; then
-          color="#FFA500" # orange
-        else
-          color=""
-        fi
-        ;;
-      Full)
-        symbol="FULL"
-        color="#00FFFF" # cyan
-        ;;
-      *)
-        symbol="IDLE"
-        color="#CCCCCC" # gray
-        ;;
-      esac
-
-      # Output text and color
-      echo "$symbol $percentage%"
-      echo ""
-      echo "$color"
-    '';
+    text = (builtins.readFile ./scripts/battery.sh);
   };
 
   conf_wifi = pkgs.writeTextFile {

@@ -26,6 +26,7 @@ in
     grim # screenshot
     slurp # screen selector
     i3blocks # status bar
+    iw # wifi details
 
     dconf
 
@@ -85,17 +86,17 @@ in
             ];
           };
           # statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
-          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocks-conf}/bin/i3blocks-conf";
+          statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocks-conf}";
           colors = {
             background = "$crust";
             statusline = "$text";
             focusedStatusline = "$text";
-            focusedSeparator = "$base";
+            focusedSeparator = "$surface0";
 
             # Workspace colors
             focusedWorkspace = {
-              border = "$base";
-              background = "$mauve";
+              border = "$blue";
+              background = "$lavender";
               text = "$crust";
             };
             activeWorkspace = {
@@ -120,8 +121,8 @@ in
       colors = {
         focused = {
           border = "$base";
-          background = "$surface0";
-          text = "$text";
+          background = "$lavender";
+          text = "$base";
           indicator = "$rosewater";
           childBorder = "$lavender";
         };
@@ -200,13 +201,13 @@ in
       exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
       # Brightness
-      bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%-
-      bindsym --locked XF86MonBrightnessUp exec brightnessctl --save set 1%+
+      bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%- && pkill -SIGRTMIN+10 i3blocks
+      bindsym --locked XF86MonBrightnessUp exec brightnessctl --save set 1%+ && pkill -SIGRTMIN+10 i3blocks
 
       # Volume
-      bindsym XF86AudioRaiseVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+'
-      bindsym XF86AudioLowerVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-
-      bindsym XF86AudioMute         exec 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'
+      bindsym XF86AudioRaiseVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks'
+      bindsym XF86AudioLowerVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks'
+      bindsym XF86AudioMute         exec 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks'
 
       # Media  
       bindsym XF86AudioPrev exec playerctl previous

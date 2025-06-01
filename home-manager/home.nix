@@ -36,6 +36,7 @@
   catppuccin = {
     enable = true;
     flavor = vars.catppuccin.flavor;
+    mako.enable = false;
   };
 
   home = {
@@ -99,6 +100,7 @@
 
       # Games
       prismlauncher
+      tailscale
     ];
   };
 

@@ -21,4 +21,15 @@
       config.allowUnfree = true;
     };
   };
+
+  # add matlab overlay
+  matlab = final: prev: {
+    matlab = prev.matlab.overrideAttrs (oldAttrs: {
+      version = "R2023b";
+      src = inputs.nixpkgs-unstable.fetchurl {
+        url = "https://example.com/path/to/matlab-R2023b.tar.gz"; # Replace with actual URL
+        sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; # Replace with actual hash
+      };
+    });
+  };
 }

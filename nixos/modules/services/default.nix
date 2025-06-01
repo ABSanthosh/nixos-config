@@ -26,6 +26,8 @@
       };
     };
 
+    tailscale.enable = true;
+
     # ollama = {
     #   enable = true;
     #   acceleration = "cuda";

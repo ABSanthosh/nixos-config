@@ -6,7 +6,7 @@
   catppuccin,
   ...
 }:
-{ 
+{
   imports = [
     # Programs
     ./programs/git.nix
@@ -74,10 +74,10 @@
       starship
 
       # Code formatters and linters
+      nil # Lang server for Nix
       black # Code format Python
       rustfmt # Code format Rust
       shfmt # Code format Shell
-      rustfmt # Code format Rust
       shellcheck # Code lint Shell
       nixfmt-rfc-style # Code format Nix
       nodePackages.prettier # Code format
@@ -94,8 +94,6 @@
       # Databases and utils
       mysql80
       # postgresql
-      # prisma-engines
-      # python312Packages.prisma
       # unstable.cockroachdb-bin I don't think I need this
 
       # Games

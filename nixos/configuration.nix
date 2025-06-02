@@ -25,6 +25,7 @@
     ./modules/hardware.nix
     ./modules/bluetooth.nix
     ./modules/networking.nix
+    ./modules/fhs-compat.nix
 
     # Desktop env
     ./modules/desktop-env/sway.nix

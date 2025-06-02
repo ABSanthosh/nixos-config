@@ -7,7 +7,7 @@
     alsa.support32Bit = true;
     wireplumber.enable = true;
     jack.enable = false;
-    pulseaudio.enable = false;
   };
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
 }

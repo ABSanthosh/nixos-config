@@ -1,26 +1,13 @@
-{ config, ... }:
+{ ... }:
 {
   home.file.".bashrc" = {
     force = true;
     text = ''
+      # Ref: https://github.com/mcdonc/.nixconfig/blob/master/videos/pydev/script.rst
+      export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
       eval "$(starship init bash)"
       # Enable direnv bash integration
       # eval "$(direnv hook bash)"
     '';
-  };
-
-  programs = {
-    direnv = {
-      enable = true;
-      enableBashIntegration = true; # see note on other shells below
-      nix-direnv.enable = true;
-
-      # https://direnv.net/man/direnv.toml.1.html#whitelist
-      config = {
-        whitelist = {
-          prefix = [ "/home/santhosh" ];
-        };
-      };
-    };
   };
 }

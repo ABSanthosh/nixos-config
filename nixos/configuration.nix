@@ -1,11 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  vars,
-  ...
-}:
-
+{ vars, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -62,5 +55,5 @@
       "video"
     ];
   };
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

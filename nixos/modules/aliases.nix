@@ -1,4 +1,19 @@
-{ ... }:
+{ vars, ... }:
+let
+  # Helper function to map attributes to a list of key-value pairs
+  mapAttrsToList = f: attrs: builtins.map (name: f name attrs.${name}) (builtins.attrNames attrs);
+
+  # Generate Bluetooth aliases for connecting to devices
+  # Commonly used Bluetooth devices are defined in `vars.bluetooth`
+  generateBluetoothAliases =
+    bluetooth:
+    builtins.listToAttrs (
+      mapAttrsToList (name: device: {
+        name = "blue-${device."command-name"}";
+        value = ''bluetoothctl <<< "connect ${device.address}"'';
+      }) bluetooth
+    );
+in
 {
   environment.shellAliases = {
     # https://github.com/Misterio77/nix-starter-configs#usage
@@ -15,5 +30,5 @@
     "...." = "cd ../../../";
     "....." = "cd ../../../../";
     "......" = "cd ../../../../../";
-  };
+  } // generateBluetoothAliases vars.bluetooth;
 }

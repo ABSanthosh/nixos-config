@@ -5,8 +5,12 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     catppuccin.url = "github:catppuccin/nix";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-ld = {
       url = "github:Mic92/nix-ld";
@@ -24,6 +28,7 @@
       self,
       nix-ld,
       nixpkgs,
+      sops-nix,
       catppuccin,
       home-manager,
       ...
@@ -40,6 +45,7 @@
         modules = [
           ./nixos/configuration.nix
           home-manager.nixosModules.home-manager
+          sops-nix.nixosModules.sops
           {
             home-manager = {
               useUserPackages = true;
@@ -49,6 +55,9 @@
                   catppuccin.homeModules.catppuccin
                 ];
               };
+              sharedModules = [
+                sops-nix.homeManagerModules.sops
+              ];
               extraSpecialArgs = { inherit inputs outputs vars; };
             };
           }

@@ -69,7 +69,7 @@
       wantedBy = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --tray";
+        ExecStart = "${pkgs.udiskie}/bin/udiskie --automount --notify --no-tray";
         Restart = "always";
         RestartSec = 3;
       };

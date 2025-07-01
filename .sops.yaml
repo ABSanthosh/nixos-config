@@ -1,0 +1,7 @@
+keys:
+  - &zoro age12q65phscpnj3hrvul7mc20p07hmzwewzvfm5fr2m0dvv8yy563tq7t27y8
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+    - age:
+      - *zoro

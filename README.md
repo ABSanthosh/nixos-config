@@ -106,3 +106,9 @@ route -n #if its a public wifi and you want to open the captive portal. Used the
 - It has a lot of good stuff: https://github.com/3rd/config/tree/b9e4c0ea11d724e9d94c413d790b1a2151a694ff
 
 <p align="center"><img src="./assets/Readme/border_bottom.png" width=80%></p>
+
+- SOPS:
+  - https://bmcgee.ie/posts/2022/11/getting-nixos-to-keep-a-secret/
+  - https://zohaib.me/managing-secrets-in-nixos-home-manager-with-sops/
+  - https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
+  

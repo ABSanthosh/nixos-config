@@ -1,14 +1,12 @@
 {
-  lib,
   pkgs,
   vars,
-  config,
   ...
 }:
 let
   mod4 = "Mod4";
 
-  swaybar-cmd = pkgs.callPackage ./swaybar/swaybar-cmd.nix { };
+  # swaybar-cmd = pkgs.callPackage ./swaybar/swaybar-cmd.nix { };
   i3blocks-conf = pkgs.callPackage ./i3blocks/i3blocks-conf.nix { };
   misc = import ./misc.nix { inherit pkgs; };
 in
@@ -31,7 +29,6 @@ in
     dconf
 
     libinput # touchpad
-    cloak # authenticator
     acpi # battery status
     clipse # clipboard manager
     wl-clipboard # clipboard protocol
@@ -69,6 +66,7 @@ in
       startup = [
         { command = "udiskie"; }
         { command = "clipse --listen"; }
+        { command = "systemctl --user start sops-nix"; }
       ];
       output = {
         "eDP-1" = {
@@ -142,8 +140,8 @@ in
         };
         urgent = {
           border = "$base";
-          background = "$base";
-          text = "$peach";
+          background = "$peach";
+          text = "$base";
           indicator = "$overlay0";
           childBorder = "$peach";
         };
@@ -232,7 +230,7 @@ in
       bindsym --no-warn $mod+shift+e exec "nautilus"
       # bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse" 
-      bindsym $alt+m exec "cloak view psu | wl-copy"
+      bindsym $alt+m exec "sotp PSU | wl-copy"
 
       # bindsym Mod4+d exec /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu_path | /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu | /nix/store/r99d2m4swgmrv9jvm4l9di40hvanq1aq-findutils-4.10.0/bin/xargs swaymsg exec --
       bindsym --no-warn $mod+d exec ${pkgs.dmenu}/bin/dmenu_path | ${pkgs.dmenu}/bin/dmenu -m 0 | xargs swaymsg exec --

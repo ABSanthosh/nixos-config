@@ -1,4 +1,3 @@
-# This file defines overlays
 { inputs, ... }:
 {
   # This one brings our custom packages from the 'pkgs' directory
@@ -13,6 +12,32 @@
   # });
   # };
 
+  patched-phinger-cursors = final: prev: {
+    phinger-cursors = prev.phinger-cursors.overrideAttrs (old: {
+      postInstall = ''
+        ${old.postInstall or ""}
+
+        for theme in $out/share/icons/phinger-cursors*; do
+          themefile="$theme/index.theme"
+          if [ -f "$themefile" ]; then
+            echo "Patching $themefile"
+
+            # Replace invalid name
+            sed -i 's/^Name=.*$/Name=Phinger-Cursors-Light/' "$themefile"
+
+            grep -q '^Comment=' "$themefile" || \
+              sed -i '/^\[Icon Theme\]/a Comment=Phinger Cursor Theme' "$themefile"
+
+            grep -q '^Directories=' "$themefile" || \
+              echo "Directories=cursors" >> "$themefile"
+
+            mkdir -p "$theme/cursors"
+          fi
+        done
+      '';
+    });
+  };
+
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
@@ -20,16 +45,5 @@
       system = final.system;
       config.allowUnfree = true;
     };
-  };
-
-  # add matlab overlay
-  matlab = final: prev: {
-    matlab = prev.matlab.overrideAttrs (oldAttrs: {
-      version = "R2023b";
-      src = inputs.nixpkgs-unstable.fetchurl {
-        url = "https://example.com/path/to/matlab-R2023b.tar.gz"; # Replace with actual URL
-        sha256 = "sha256-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; # Replace with actual hash
-      };
-    });
   };
 }

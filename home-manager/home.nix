@@ -3,14 +3,19 @@
   pkgs,
   lib,
   outputs,
-  catppuccin,
   ...
 }:
+let
+  # Custom Packages
+  sotp = import ./programs/sotp { inherit pkgs; };
+  ingest = import ./programs/ingest { inherit pkgs; };
+in
 {
   imports = [
     # Programs
     ./programs/git.nix
     # ./programs/tmux.nix
+    ./programs/sops.nix
     ./programs/yazi.nix
     ./programs/bash.nix
     ./programs/kitty.nix
@@ -20,11 +25,15 @@
 
     # Desktop-env
     ./desktop-env/sway
-  ];
 
+    # Scripts
+    # ./scripts/ingest
+
+  ];
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
+      outputs.overlays.patched-phinger-cursors
     ];
 
     config = {
@@ -65,11 +74,14 @@
       unstable.vscode
 
       # CLI tools
+      age
       git
       mpv
+      sops
       yazi
       htop
-      # kitty
+      sotp # CLI TOTP generator
+      ingest # CLI to read git repos and count tokens
       openssl
       starship
 
@@ -100,6 +112,14 @@
       prismlauncher
       tailscale
     ];
+  };
+  services = {
+    gammastep = {
+      enable = true;
+      provider = "manual";
+      latitude = 49.0;
+      longitude = 8.4;
+    };
   };
 
   programs = {

@@ -36,6 +36,10 @@ in
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+    # iconTheme = {
+    #   name = "adwaita-icon-theme";
+    #   package = pkgs.adwaita-icon-theme;
+    # };
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = {

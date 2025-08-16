@@ -12,7 +12,9 @@ let
 in
 {
   imports = [
-    ../common/gtk.nix
+    # ../common/gtk.nix
+
+    ./hyprlock
   ];
 
   home.packages = with pkgs; [
@@ -25,6 +27,7 @@ in
     slurp # screen selector
     i3blocks # status bar
     iw # wifi details
+    hyprlock
 
     dconf
 
@@ -221,18 +224,19 @@ in
       bindsym $alt+r+Down exec "swaymsg -- output - transform 0"
       bindsym $alt+r+Left exec "swaymsg -- output - transform 270"
 
+
       ###################
       ### Launch Apps ###
       ###################
 
       bindsym $mod+c exec "kitty"
+      bindsym --no-warn $mod+l exec hyprlock
+      bindsym $alt+m exec "sotp PSU | wl-copy"
       bindsym --no-warn $mod+e exec "kitty yazi"
       bindsym --no-warn $mod+shift+e exec "nautilus"
       # bindsym --no-warn $mod+Space exec wofi -show drun
       bindsym --no-warn $mod+v exec "kitty --class clipse -e clipse" 
-      bindsym $alt+m exec "sotp PSU | wl-copy"
 
-      # bindsym Mod4+d exec /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu_path | /nix/store/4pr63jvy3s2ch8crazigwxa4pd46cf5i-dmenu-5.3/bin/dmenu | /nix/store/r99d2m4swgmrv9jvm4l9di40hvanq1aq-findutils-4.10.0/bin/xargs swaymsg exec --
       bindsym --no-warn $mod+d exec ${pkgs.dmenu}/bin/dmenu_path | ${pkgs.dmenu}/bin/dmenu -m 0 | xargs swaymsg exec --
 
       bindsym $mod+t layout toggle tabbed split
@@ -241,14 +245,15 @@ in
 
       for_window [title="Picture-in-picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
       for_window [title="Picture in picture"] floating enable, sticky enable, resize set 340 210, move position 1580 849
-      for_window [title="Open Files"] floating enable, move position center
-      for_window [title="Open Folders"] floating enable, move position center
-      for_window [title="Open File"] floating enable, move position center
-      for_window [title="Open Folder"] floating enable, move position center
-      for_window [title="Save File"] floating enable, move position center
-      for_window [title="Copy Files"] floating enable, move position center
-      for_window [title="Choose Files"] floating enable, move position center
-      for_window [title="File Properties"] floating enable, move position center
+      for_window [title="Open Files"] floating enable, move position center, resize set 880 580
+      for_window [title="Open Folders"] floating enable, move position center, resize set 880 580
+      for_window [title="Open File"] floating enable, move position center, resize set 880 580
+      for_window [title="Open Folder"] floating enable, move position center, resize set 880 580
+      for_window [title="Save File"] floating enable, move position center, resize set 880 580
+      for_window [title="Copy Files"] floating enable, move position center, resize set 880 580
+      for_window [title="Copy Folder"] floating enable, move position center, resize set 880 580
+      for_window [title="Choose Files"] floating enable, move position center, resize set 880 580
+      for_window [title="File Properties"] floating enable, move position center, resize set 880 580
       for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
       for_window [app_id="clipse"] {

@@ -52,7 +52,7 @@ sudo nixos-rebuild switch --flake .#<device name>
 To Do 
 </summary>
 
-- [ ] ~~Sounds~~
+- [ ] Sounds
 - [ ] ~~move 'ocean' from `~/.local/share/sounds` to `/nixos/assets` and make a symlink to it.~~
 - [x] Bookmark in nautilus: https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
 - [x] Git credentials, how to set up git so it won't ask for credentials every time?
@@ -79,6 +79,8 @@ To Do
   - [ ] general fix for linking issues
 - [ ] Use sops to manage cloak secrets and git credentials
 - [ ] Dynamic external monitor support. Right now, "video=DP-2:1920x1080@60" is hardcoded in the boot.nix file.
+- [ ] demenu doesn't work properly for some reason
+- [ ] set multiscreen position properly for "Acer" monitor
 
 </details>
 

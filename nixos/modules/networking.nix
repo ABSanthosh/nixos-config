@@ -1,4 +1,4 @@
-{ vars, ... }:
+{ vars, config, ... }:
 {
   networking = {
     hostName = vars.user.host;
@@ -25,10 +25,12 @@
       allowedTCPPorts = [
         445
         139
+        22
       ];
       allowedUDPPorts = [
         137
         138
+        config.services.tailscale.port
       ];
       allowedTCPPortRanges = [
         {
@@ -36,6 +38,8 @@
           to = 9999;
         } # Allows all ports in this range
       ];
+
+      trustedInterfaces = [ "tailscale0" ];
     };
   };
 }

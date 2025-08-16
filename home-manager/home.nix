@@ -26,10 +26,17 @@ in
     # Desktop-env
     ./desktop-env/sway
 
-    # Scripts
-    # ./scripts/ingest
-
+    # Common
+    ./desktop-env/common/gtk.nix
+    ./desktop-env/common/xdg.nix
   ];
+
+  home.file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
+    globalSection = {
+      prefix = "${vars.user.home}/.global-npm-packages";
+    };
+  };
+
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
@@ -56,6 +63,7 @@ in
     packages = with pkgs; [
       # Apps
       vlc
+      loupe
       amberol
 
       # Programming Languages
@@ -84,7 +92,9 @@ in
       ingest # CLI to read git repos and count tokens
       openssl
       starship
-
+      usbmuxd
+      libimobiledevice
+      
       # Code formatters and linters
       nil # Lang server for Nix
       black # Code format Python

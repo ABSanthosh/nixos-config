@@ -49,6 +49,7 @@
           {
             home-manager = {
               useUserPackages = true;
+              backupFileExtension = "bak";
               users.${vars.user.name} = {
                 imports = [
                   ./home-manager/home.nix

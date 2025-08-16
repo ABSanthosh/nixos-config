@@ -1,8 +1,12 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
 
   imports = [
     ./database/mysql.nix
     # ./database/postgres.nix
+
+    ./minecraft.nix
+    ./tailscale.nix
   ];
 
   services = {
@@ -25,14 +29,6 @@
         variant = "";
       };
     };
-
-    tailscale.enable = true;
-
-    # ollama = {
-    #   enable = true;
-    #   acceleration = "cuda";
-    # };
-    # open-webui.enable = true;
 
     # Enable CUPS to print documents.
     printing.enable = false;

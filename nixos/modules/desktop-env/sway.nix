@@ -7,18 +7,13 @@
 {
 
   xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-    ];
+    # enable = true;
+    # extraPortals = with pkgs; [
+    #   xdg-desktop-portal
+    #   xdg-desktop-portal-wlr
+    #   xdg-desktop-portal-gtk
+    # ];
 
-    config = {
-      common = {
-        default = "wlr";
-      };
-    };
     wlr.enable = true;
     wlr.settings.screencast = {
       output_name = "DP-2";
@@ -28,7 +23,8 @@
   };
 
   security = {
-    pam.services.swaylock = { };
+    # pam.services.swaylock = { };
+    pam.services.hyprlock = { };
     polkit = {
       enable = true;
       extraConfig = ''

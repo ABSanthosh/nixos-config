@@ -40,6 +40,8 @@
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
+  
+  services.usbmuxd.enable = true;
 
   users.users.${vars.user.name} = {
     isNormalUser = true;
@@ -53,6 +55,7 @@
       "storage"
       "plugdev"
       "video"
+      "usbmux"
     ];
   };
   system.stateVersion = "25.05";

@@ -102,7 +102,7 @@ def main():
     
     argcomplete.autocomplete(parser)
     args = parser.parse_args()
-    exclude_patterns = [OUTPUT_FILE, ".git/**", ".git"]
+    exclude_patterns = [OUTPUT_FILE, ".git/**", ".git", ".node_modules/**", ".node_modules", "node_modules/**", "node_modules"]
     if args.exclude:
         exclude_patterns += [pat.strip() for pat in args.exclude.split(",") if pat.strip()]
 

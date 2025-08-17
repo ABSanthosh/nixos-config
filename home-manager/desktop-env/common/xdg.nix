@@ -106,7 +106,7 @@
 
       config = {
         common = {
-          default = "wlr";
+          default = [ "wlr" ];
         };
       };
     };

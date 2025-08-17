@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # Get battery info from acpi
-output=$(acpi -b | grep '^Battery 0:')
+# output=$(acpi -b | grep '^Battery 0:')
+output=$(acpi -b | grep '^Battery' | grep -v 'Unknown' | grep -v 'rate information unavailable' | head -n1)
 
 # Extract status and percentage
 status=$(echo "$output" | awk -F': |, ' '{print $2}')

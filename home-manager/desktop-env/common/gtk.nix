@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   cursor = {
     size = 32;
@@ -51,6 +51,23 @@ in
 
     "org/gnome/portal/gtk-theme" = {
       color-scheme = "prefer-dark";
+    };
+
+    "org/gnome/nautilus/window-state" = {
+      # Default window size as a tuple (width, height)
+      initial-size = lib.hm.gvariant.mkTuple [
+        880
+        580
+      ];
+      maximized = false;
+    };
+
+    "org/gnome/nautilus/preferences" = {
+      show-hidden-files = true; # Show dotfiles by default
+    };
+
+    "org/gnome/desktop/sound" = {
+      theme-name = "Ocean";
     };
   };
 

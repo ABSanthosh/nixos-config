@@ -77,10 +77,12 @@ To Do
 - [ ] better support for code env:
   - [ ] python
   - [ ] general fix for linking issues
-- [ ] Use sops to manage cloak secrets and git credentials
+- [x] Use sops to manage ~~cloak~~ secrets and git credentials
 - [ ] Dynamic external monitor support. Right now, "video=DP-2:1920x1080@60" is hardcoded in the boot.nix file.
 - [ ] demenu doesn't work properly for some reason
 - [ ] set multiscreen position properly for "Acer" monitor
+- [x] fix nautilus dimension in GTK instead of sway
+- [x] battery sometimes selects the wrong power profile
 
 </details>
 

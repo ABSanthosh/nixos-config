@@ -29,12 +29,16 @@ in
     # Common
     ./desktop-env/common/gtk.nix
     ./desktop-env/common/xdg.nix
+    ./desktop-env/common/wireplumber.nix
   ];
 
-  home.file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
-    globalSection = {
-      prefix = "${vars.user.home}/.global-npm-packages";
+  home = {
+    file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
+      globalSection = {
+        prefix = "${vars.user.home}/.global-npm-packages";
+      };
     };
+    file.".local/share/sounds/ocean".source = ./../../assets/audio/ocean;
   };
 
   nixpkgs = {
@@ -94,7 +98,7 @@ in
       starship
       usbmuxd
       libimobiledevice
-      
+
       # Code formatters and linters
       nil # Lang server for Nix
       black # Code format Python

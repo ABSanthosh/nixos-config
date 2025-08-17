@@ -1,22 +1,13 @@
 {
-  lib,
-  vars,
   pkgs,
   ...
 }:
 {
 
   xdg.portal = {
-    # enable = true;
-    # extraPortals = with pkgs; [
-    #   xdg-desktop-portal
-    #   xdg-desktop-portal-wlr
-    #   xdg-desktop-portal-gtk
-    # ];
-
     wlr.enable = true;
     wlr.settings.screencast = {
-      output_name = "DP-2";
+      output_name = "eDP-1";
       chooser_type = "simple";
       chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
     };

@@ -7,7 +7,11 @@ let
     "volume"
     "battery"
     "wifi"
+    "airpod"
   ];
+  
+  # Ref:
+  # - UDEV update: https://bbs.archlinux.org/viewtopic.php?id=291849
 
   # Function to generate a writeTextFile for each script
   mkScript =
@@ -32,6 +36,10 @@ pkgs.writeTextFile {
   text = ''
     [wifi]
     command=${scripts.wifi}/bin/i3blocks/wifi
+    interval=5
+
+    [airpod]
+    command=${scripts.airpod}/bin/i3blocks/airpod
     interval=5
 
     [battery]

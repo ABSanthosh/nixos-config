@@ -116,3 +116,5 @@ route -n #if its a public wifi and you want to open the captive portal. Used the
   - https://zohaib.me/managing-secrets-in-nixos-home-manager-with-sops/
   - https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
   
+
+student aid backup code: 18YRAXNBXART

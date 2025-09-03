@@ -1,8 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    # unstable.firefox
     unstable.chromium
-    # microsoft-edge
   ];
 
   programs = {
@@ -14,7 +12,6 @@
         "--ozone-platform=wayland" # Add Wayland support
       ];
       extensions = [
-        # { id = "gphhapmejobijbbhgpjhcjognlahblep"; } # GNOME Shell integration
         { id = "nffaoalbilbmmfgbnbgppjihopabppdk"; } # Video Speed Controller
         { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; } # sponsorblock
       ];

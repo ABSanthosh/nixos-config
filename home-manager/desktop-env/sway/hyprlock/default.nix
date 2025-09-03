@@ -1,88 +1,95 @@
-{ vars, config, ... }:
+{ vars, ... }:
 {
   home.file.".config/hypr/hyprlock.conf" = {
     # Overwrite the file
     force = true;
     text = ''
-
-      # BACKGROUND
-      background {
-          monitor =
-          # path = screenshot
-          path = ${vars.wallpaper}
-          # color = $background
-          blur_passes = 2
-          contrast = 1
-          brightness = 0.5
-          vibrancy = 0.2
-          vibrancy_darkness = 0.2
-      }
-
-      # GENERAL
       general {
-          no_fade_in = true
-          no_fade_out = true
-          hide_cursor = false
-          grace = 0
-          disable_loading_bar = true
+        disable_loading_bar = true
+        hide_cursor = true
+        grace = 0
+        no_fade_in = true
+        no_fade_out = true
+        ignore_empty_input = true
       }
 
-      # INPUT FIELD
-      input-field {
-          monitor =
-          size = 250, 60
-          outline_thickness = 2
-          dots_size = 0.2 # Scale of input-field height, 0.2 - 0.8
-          dots_spacing = 0.35 # Scale of dots' absolute size, 0.0 - 1.0
-          dots_center = true
-          outer_color = rgba(0, 0, 0, 0)
-          inner_color = rgba(0, 0, 0, 0.2)
-          font_color = $foreground
-          fade_on_empty = false
-          rounding = -1
-          check_color = rgb(204, 136, 34)
-          placeholder_text = <i><span foreground="##cdd6f4">Input Password...</span></i>
-          hide_input = false
-          position = 0, -200
-          halign = center
-          valign = center
+      auth {
+        pam:enabled = true
       }
 
-      # DATE
+      background {
+        monitor =
+        path = ${vars.wallpaper}
+        blur_passes = 3
+        blur_size = 8
+        noise = 0.0117
+        contrast = 0.8916
+        brightness = 0.8172
+        vibrancy = 0.1696
+        vibrancy_darkness = 0.0
+      }
+
+      image {
+        monitor =
+        path = ${vars.profile}
+        size = 200
+        rounding = -1  # -1 for circle
+        border_size = 4
+        position = 0, 850
+        halign = center
+        valign = center
+      }
+
       label {
         monitor =
-        text = cmd[update:1000] echo "$(date +"%A, %B %d")"
-        color = rgba(242, 243, 244, 0.75)
-        font_size = 22
-        font_family = JetBrains Mono
-        position = 0, 300
+        text = cmd[update:1000] echo "$(date +'%I')"
+        color = rgba(ffffffff)
+        font_size = 370
+        font_family = Jetbrains Mono Bold
+        position = 0, 500
         halign = center
         valign = center
       }
 
-      # TIME
       label {
-        monitor = 
-        text = cmd[update:1000] echo "$(date +"%-I:%M")"
-        color = rgba(242, 243, 244, 0.75)
-        font_size = 95
-        font_family = JetBrains Mono Extrabold
-        position = 0, 200
+        monitor =
+        text = cmd[update:1000] echo "$(date +'%M')"
+        color = rgba(DDDDDDff)
+        font_size = 370
+        font_family = Jetbrains Mono Bold
+        position = 0, 70
         halign = center
         valign = center
       }
 
+      label {
+        monitor =
+        text = cmd[update:86400000] echo "$(date +'%A, %b %d, %Y')"
+        color = rgba(ffffffcc)
+        font_size = 35
+        font_family = Jetbrains Mono Italic
+        position = 0, -200
+        halign = center
+        valign = center
+      }
 
-      # Profile Picture
-      image {
-          monitor =
-          path = ${vars.profile}
-          size = 100
-          border_size = 2
-          border_color = $foreground
-          position = 0, -100
-          halign = center
-          valign = center
+      input-field {
+        monitor =
+        size = 400, 70
+        outline_thickness = 2
+        dots_size = 0.2
+        dots_spacing = 0.35
+        dots_center = true
+        outer_color = rgba(ffffff55)
+        inner_color = rgba(25252566)
+        font_color = rgb(ffffff)
+        font_size = 30
+        fade_on_empty = false
+        # placeholder_text = <span foreground="##ffffff99">Enter Password...</span>
+        hide_input = false
+        position = 0, -330
+        halign = center
+        valign = center
       }
     '';
   };

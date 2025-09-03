@@ -1,10 +1,8 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
-
   imports = [
     ./database/mysql.nix
     # ./database/postgres.nix
-
     ./minecraft.nix
     ./tailscale.nix
   ];
@@ -30,7 +28,6 @@
       };
     };
 
-    # Enable CUPS to print documents.
     printing.enable = false;
     avahi = {
       enable = true;
@@ -45,7 +42,6 @@
       };
     };
 
-    # Enable the OpenSSH daemon.
     openssh = {
       enable = true;
       settings.PasswordAuthentication = true;

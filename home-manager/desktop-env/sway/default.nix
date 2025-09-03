@@ -13,7 +13,6 @@ in
 {
   imports = [
     # ../common/gtk.nix
-
     ./hyprlock
   ];
 
@@ -62,7 +61,7 @@ in
       ];
     };
 
-    config = rec {
+    config = {
       modifier = mod4;
       terminal = "kitty";
       defaultWorkspace = "workspace number 1";
@@ -164,15 +163,15 @@ in
       set $alt Mod1
 
       # Configure display with conservative settings
-      output DP-2 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
-      output DP-2 max_render_time off
-      output DP-2 allow_tearing no
-      output DP-2 render_bit_depth 8
+      output DP-5 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync of
+      output DP-5 max_render_time off
+      output DP-5 allow_tearing no
+      output DP-5 render_bit_depth 8
 
-      output DP-1 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
-      output DP-1 max_render_time off
-      output DP-1 allow_tearing no
-      output DP-1 render_bit_depth 8
+      output DP-6 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
+      output DP-6 max_render_time off
+      output DP-6 allow_tearing no
+      output DP-6 render_bit_depth 8
 
       workspace 1 output eDP-1
       workspace 2 output eDP-1
@@ -206,7 +205,7 @@ in
       bindsym --locked XF86MonBrightnessUp exec brightnessctl --save set 1%+ && pkill -SIGRTMIN+10 i3blocks
 
       # Volume
-      bindsym XF86AudioRaiseVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks'
+      bindsym XF86AudioRaiseVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && pkill -RTMIN+1 i3blocks' 
       bindsym XF86AudioLowerVolume  exec 'wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 i3blocks'
       bindsym XF86AudioMute         exec 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 i3blocks'
 

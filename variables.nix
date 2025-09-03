@@ -35,17 +35,17 @@
     airpods = {
       command-name = "inheritance";
       name = "Inheritance(AirPods ProMax)";
-      address = "90:9C:4A:E3:B6:FB"; # Replace with your AirPods MAC address
+      address = "90:9C:4A:E3:B6:FB";
     };
     jawbone = {
       command-name = "jawbone";
       name = "Jawbone Mini Jambox";
-      address = "E0:D1:E6:05:A6:67"; # Replace with your Jawbone MAC address
+      address = "E0:D1:E6:05:A6:67";
     };
     recurrence = {
       command-name = "recurrence";
       name = "Recurrence(iPhone 12 Pro)";
-      address = "94:5C:9A:D5:58:35"; # Replace with your Recurrence MAC address
+      address = "94:5C:9A:D5:58:35";
     };
   };
 }

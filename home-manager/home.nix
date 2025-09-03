@@ -29,7 +29,6 @@ in
     # Common
     ./desktop-env/common/gtk.nix
     ./desktop-env/common/xdg.nix
-    ./desktop-env/common/wireplumber.nix
   ];
 
   home = {
@@ -38,7 +37,6 @@ in
         prefix = "${vars.user.home}/.global-npm-packages";
       };
     };
-    file.".local/share/sounds/ocean".source = ./../../assets/audio/ocean;
   };
 
   nixpkgs = {

@@ -5,6 +5,11 @@
 {
 
   xdg.portal = {
+    config = {
+      common = {
+        default = [ "wlr" ];
+      };
+    };
     wlr.enable = true;
     wlr.settings.screencast = {
       output_name = "eDP-1";

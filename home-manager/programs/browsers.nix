@@ -22,6 +22,7 @@
       package = pkgs.unstable.firefox;
       enableGnomeExtensions = false; # Explicitly disable GNOME integration
       profiles.default = {
+        extensions.force = true;
         settings = {
           "widget.use-xdg-desktop-portal" = true;
           "widget.use-xdg-desktop-portal.file-picker" = 1;

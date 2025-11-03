@@ -1,7 +1,7 @@
 # Ref:
 # - https://github.com/kovidgoyal/kitty-themes/blob/master/themes/Catppuccin-Mocha.conf
 # - https://github.com/Sigmanificient/dotfiles/blob/9440c9af7b0c6a21294b54f26eb5d3dcd98f2e69/home/kitty.nix#L4
-{ vars, pkgs, ... }:
+{ ... }:
 {
   programs.kitty = {
     enable = true;
@@ -11,7 +11,7 @@
     };
 
     settings = {
-      confirm_os_window_close = -1;
+      confirm_os_window_close = 0;
       window_padding_width = 2;
       detectUrls = true;
       background_opacity = 1;

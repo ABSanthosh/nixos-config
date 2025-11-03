@@ -67,7 +67,7 @@ in
       vlc
       loupe
       amberol
-
+      vivid
       # Programming Languages
       go
       jdk
@@ -82,6 +82,8 @@ in
       # Editor
       zed-editor
       unstable.vscode
+      # davinci-resolve
+      libsForQt5.kdenlive
 
       # CLI tools
       age
@@ -96,6 +98,7 @@ in
       starship
       usbmuxd
       libimobiledevice
+      perl540Packages.LaTeXML
 
       # Code formatters and linters
       nil # Lang server for Nix

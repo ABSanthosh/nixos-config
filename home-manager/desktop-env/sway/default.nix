@@ -26,6 +26,7 @@ in
     slurp # screen selector
     i3blocks # status bar
     iw # wifi details
+    fzf # fuzzy finder
     hyprlock
 
     dconf
@@ -253,7 +254,26 @@ in
       for_window [title="Copy Folder"] floating enable, move position center, resize set 880 580
       for_window [title="Choose Files"] floating enable, move position center, resize set 880 580
       for_window [title="File Properties"] floating enable, move position center, resize set 880 580
+      #  14: floating_con "grok.com wants to open" (xdg_shell, pid: 4231, app_id: "brave")
+      
+
       for_window [title="File Operation Progress"] floating enable, resize set 300 200
+
+      for_window [app_id="btmenu"] {
+        focus
+        border pixel 4
+        floating enable
+        resize set 400 200
+        move position 1520 858
+      }
+
+      for_window [app_id="calendar"] {
+        focus
+        border pixel 4
+        floating enable
+        resize set 200 200
+        move position 1520 858
+      }
 
       for_window [app_id="clipse"] {
         floating enable

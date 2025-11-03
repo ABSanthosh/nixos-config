@@ -32,7 +32,7 @@ in
       gtk-cursor-theme-size = ${toString cursor.size};
     '';
 
-    iconTheme = {
+    iconTheme = lib.mkForce {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
@@ -56,6 +56,10 @@ in
     "org/gnome/nautilus/window-state" = {
       # Default window size as a tuple (width, height)
       initial-size = lib.hm.gvariant.mkTuple [
+        880
+        580
+      ];
+      initial-size-file-chooser = lib.hm.gvariant.mkTuple [
         880
         580
       ];

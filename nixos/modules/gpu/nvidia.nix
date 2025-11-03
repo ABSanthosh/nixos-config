@@ -1,7 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
-  nvidiaDriverChannel =
-    config.boot.kernelPackages.nvidiaPackages.latest; # stable, latest, etc.
+  # Define your GPU driver choice here
+  gpuDriver = "nvidia"; # or "nouveau"
+
+  nvidiaDriverChannel = config.boot.kernelPackages.nvidiaPackages.stable;
 
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -13,37 +20,41 @@ let
 in
 {
   boot = {
-    initrd.kernelModules = [ "i915" "nouveau" ];
-    kernelModules = [ "i915" "nouveau" ];
-    kernelParams = [
-      "nouveau.modeset=1"
-      "nouveau.config=NvForcePost=1"
-      "nouveau.noaccel=0"
-
-      # "video=HDMI-A-4:1920x1080@60eR"
-      # "video=HDMI-A-4:pos:1920x0"
-
-      # "video=eDP-1:3840x2160@60e" # Internal display
-      # "video=HDMI-A-4:1080x1920@60eR" # External display in portrait mode
-      # "video=HDMI-A-4:pos:420x1080" # Center below primary display
-    ];
-    blacklistedKernelModules = lib.mkDefault [ "nvidia" "nvidia_uvm" "nvidia_drm" "nvidia_modeset" ];
+    initrd.kernelModules = if gpuDriver == "nvidia" then [ "nvidia" ] else [ "nouveau" ];
+    kernelModules = if gpuDriver == "nvidia" then [ "nvidia" ] else [ "nouveau" ];
+    kernelParams =
+      if gpuDriver == "nvidia" then
+        [ "nouveau.modeset=0" ]
+      else
+        [
+          "nouveau.modeset=1"
+          "nouveau.config=NvForcePost=1"
+          "nouveau.noaccel=0"
+        ];
+    blacklistedKernelModules =
+      if gpuDriver == "nvidia" then
+        [ "nouveau" ]
+      else
+        [
+          "nvidia"
+          "nvidia_uvm"
+          "nvidia_drm"
+          "nvidia_modeset"
+        ];
   };
-  hardware = {
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        mesa
-        mesa.drivers
-      ];
-    };
 
-    nvidia = {
+  hardware = {
+    graphics.enable = true;
+    graphics.extraPackages = with pkgs; [ mesa ];
+
+    # Only enable NVIDIA-specific options if using proprietary drivers
+    nvidia = lib.mkIf (gpuDriver == "nvidia") {
       open = false;
       nvidiaSettings = true;
       modesetting.enable = true;
       powerManagement.enable = true;
       powerManagement.finegrained = true;
+      package = nvidiaDriverChannel;
 
       prime = {
         offload = {
@@ -56,11 +67,15 @@ in
       };
     };
   };
-  services = {
-    xserver = {
-      videoDrivers = lib.mkForce [ "nouveau" ]; #nvidia
-      # videoDrivers = lib.mkForce [ "nvidia" ]; #nvidia
-    };
-  };
 
+  # For offloading, `modesetting` is needed additionally,
+  # otherwise the X-server will be running permanently on nvidia,
+  # thus keeping the GPU always on
+  services.xserver.videoDrivers = [
+    "modesetting"
+    gpuDriver
+  ];
+
+  # Optionally install the offload script only if NVIDIA is used
+  environment.systemPackages = lib.optional (gpuDriver == "nvidia") nvidia-offload;
 }

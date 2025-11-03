@@ -8,6 +8,7 @@ let
     "battery"
     "wifi"
     "airpod"
+    "calendar"
   ];
   
   # Ref:

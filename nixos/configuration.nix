@@ -24,7 +24,7 @@
     ./modules/desktop-env/sway.nix
 
     # gpu
-    ./modules/gpu/intel.nix
+    # ./modules/gpu/intel.nix
     # ./modules/gpu/nvidia.nix
   ];
 
@@ -36,11 +36,26 @@
     };
   };
 
+  # -----------------------------------------
+  # GPU Specialisations
+  # -----------------------------------------
+  specialisation = {
+    nvidia.configuration = {
+      system.nixos.tags = [ "gpu-nvidia" ];
+      imports = [ ./modules/gpu/nvidia.nix ];
+    };
+
+    intel.configuration = {
+      system.nixos.tags = [ "gpu-intel" ];
+      imports = [ ./modules/gpu/intel.nix ];
+    };
+  };
+
   virtualisation = {
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
-  
+
   services.usbmuxd.enable = true;
 
   users.users.${vars.user.name} = {

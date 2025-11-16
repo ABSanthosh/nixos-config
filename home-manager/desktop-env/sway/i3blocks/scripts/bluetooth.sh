@@ -21,6 +21,10 @@ elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
     kitty --class="$APPID" -e bash -lc '
       CHOICE=$(bluetoothctl devices | awk "{print \$2, substr(\$0, index(\$0,\$3))}" | fzf --prompt="Select device: ")
       if [[ -n "$CHOICE" ]]; then
+        STATUS=$(bluetoothctl show | grep "Powered:" | awk "{print \$2}")
+        if [[ "$STATUS" == "no" ]]; then
+            bluetoothctl power on >/dev/null
+        fi
         MAC=$(echo "$CHOICE" | awk "{print \$1}")
         bluetoothctl connect "$MAC"
       fi

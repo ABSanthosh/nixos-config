@@ -31,14 +31,6 @@ in
     ./desktop-env/common/xdg.nix
   ];
 
-  home = {
-    file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
-      globalSection = {
-        prefix = "${vars.user.home}/.global-npm-packages";
-      };
-    };
-  };
-
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
@@ -66,8 +58,9 @@ in
       # Apps
       vlc
       loupe
-      amberol
       vivid
+      amberol
+
       # Programming Languages
       go
       jdk
@@ -95,8 +88,10 @@ in
       sotp # CLI TOTP generator
       ingest # CLI to read git repos and count tokens
       openssl
-      starship
       usbmuxd
+      dmenu-rs
+      starship
+      libqalculate
       libimobiledevice
       perl540Packages.LaTeXML
 
@@ -127,6 +122,12 @@ in
       prismlauncher
       tailscale
     ];
+
+    file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
+      globalSection = {
+        prefix = "${vars.user.home}/.global-npm-packages";
+      };
+    };
   };
   services = {
     gammastep = {

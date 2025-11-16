@@ -7,7 +7,7 @@ let
     "volume"
     "battery"
     "wifi"
-    "airpod"
+    "bluetooth"
     "calendar"
   ];
   
@@ -39,8 +39,8 @@ pkgs.writeTextFile {
     command=${scripts.wifi}/bin/i3blocks/wifi
     interval=5
 
-    [airpod]
-    command=${scripts.airpod}/bin/i3blocks/airpod
+    [bluetooth]
+    command=${scripts.bluetooth}/bin/i3blocks/bluetooth
     interval=5
 
     [battery]

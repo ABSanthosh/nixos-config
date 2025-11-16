@@ -36,7 +36,6 @@
     let
       inherit (self) outputs;
       vars = import ./variables.nix;
-      pkgs = nixpkgs.legacyPackages.${vars.user.system};
     in
     {
       overlays = import ./overlays { inherit inputs; };

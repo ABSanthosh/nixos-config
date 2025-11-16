@@ -25,6 +25,8 @@ in
     nix-update = "nix flake update";
     yy = "yazi";
 
+    captive= "route -n | awk '$1 == \"0.0.0.0\" {print $2}' | wl-copy";
+
     ".." = "cd ..";
     "..." = "cd ../../";
     "...." = "cd ../../../";

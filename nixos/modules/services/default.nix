@@ -8,16 +8,18 @@
   ];
 
   services = {
-    udev.extraRules = ''
-      # Disable "KEY_SWITCHVIDEOMODE"
-      SUBSYSTEM=="input", ATTRS{name}=="Video Bus", ATTRS{phys}=="LNXVIDEO/video/input0", ATTRS{id}=="PNP0A08:00/device:13/LNXVIDEO:01", ENV{ID_INPUT_KEY}="0"
+    udev = {
+      extraRules = ''
+        SUBSYSTEM=="input", ATTRS{name}=="Video Bus", KERNEL=="event1", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+        
+        # Disable Ghost touch on the touchscreen
+        SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen*", ENV{LIBINPUT_PALM_PRESSURE_THRESHOLD}="200"
+        ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_CALIBRATION_MATRIX}="1 0 0 0 1 0"
 
-      # Disable Ghost touch on the touchscreen
-      SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen*", ENV{LIBINPUT_PALM_PRESSURE_THRESHOLD}="200"
-      ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="ELAN Touchscreen Stylus", ENV{LIBINPUT_CALIBRATION_MATRIX}="1 0 0 0 1 0"
-
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="04f3", ATTRS{idProduct}=="2706", ATTR{authorized}="0"
-    '';
+        SUBSYSTEM=="usb", ATTRS{idVendor}=="04f3", ATTRS{idProduct}=="2706", ATTR{authorized}="0"
+      '';
+      # sudo libinput debug-events
+    };
     xserver = {
       enable = true;
       wacom.enable = false;

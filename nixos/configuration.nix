@@ -24,7 +24,9 @@
     ./modules/desktop-env/sway.nix
 
     # gpu
-    # ./modules/gpu/intel.nix
+    # I want to keep intel graphics as default
+    # and nvidia for offloading
+    ./modules/gpu/intel.nix
     # ./modules/gpu/nvidia.nix
   ];
 
@@ -33,21 +35,6 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-    };
-  };
-
-  # -----------------------------------------
-  # GPU Specialisations
-  # -----------------------------------------
-  specialisation = {
-    nvidia.configuration = {
-      system.nixos.tags = [ "gpu-nvidia" ];
-      imports = [ ./modules/gpu/nvidia.nix ];
-    };
-
-    intel.configuration = {
-      system.nixos.tags = [ "gpu-intel" ];
-      imports = [ ./modules/gpu/intel.nix ];
     };
   };
 

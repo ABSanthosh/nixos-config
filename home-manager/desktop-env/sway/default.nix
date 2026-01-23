@@ -255,7 +255,7 @@ in
       for_window [title="Choose Files"] floating enable, move position center, resize set 880 580
       for_window [title="File Properties"] floating enable, move position center, resize set 880 580
       #  14: floating_con "grok.com wants to open" (xdg_shell, pid: 4231, app_id: "brave")
-      
+
 
       for_window [title="File Operation Progress"] floating enable, resize set 300 200
 
@@ -288,6 +288,9 @@ in
         tap enabled
         natural_scroll enabled
         middle_emulation enabled
+
+        # https://www.reddit.com/r/swaywm/comments/1ll6cbx/psa_touchpad_draganddrop_changed_in_sway_111/
+        drag_lock disabled
       }
 
       # Set wallpaper

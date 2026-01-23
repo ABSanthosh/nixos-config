@@ -1,92 +1,35 @@
 #!/bin/bash
 
-# Dependencies: fzf, qalc, dmenu_path
-# Ensure they're installed
-command -v fzf >/dev/null 2>&1 || { echo "fzf is required but not installed."; exit 1; }
-command -v qalc >/dev/null 2>&1 || { echo "qalc is required but not installed."; exit 1; }
-command -v dmenu_path >/dev/null 2>&1 || { echo "dmenu_path is required but not installed."; exit 1; }
+# App launcher with fzf and dmenu_path
+# Supports math mode: type ">" followed by math expression for live preview of result
+# On enter:
+# - If query starts with ">", compute math with bc and copy result to clipboard (requires xclip)
+# - Else, launch the selected app
 
-# Function to evaluate math expression with qalc
-evaluate_math() {
-    local input="$1"
-    # Remove '>' and trim whitespace
-    expr=$(echo "$input" | sed 's/^>//' | xargs)
-    if [ -n "$expr" ]; then
-        # Use qalc to calculate, suppress interactive prompt
-        result=$(qalc -t "$expr" 2>/dev/null)
-        if [ $? -eq 0 ]; then
-            echo "Result: $result"
-        else
-            echo "Invalid expression"
-        fi
-    else
-        echo ""
-    fi
-}
+# Get list of apps
+apps=$(dmenu_path)
 
-# Main launcher function
-launcher() {
-    # Get list of applications from dmenu_path
-    apps=$(dmenu_path | sort -u)
+# Run fzf with print-query and preview
+result=$(echo "$apps" | fzf --print-query \
+  --preview='query={q}; if [[ $query == ">"* ]]; then expr="${query#>}"; echo "$expr = $(echo "$expr" | bc -l 2>/dev/null || echo "Invalid expression")"; else echo "Select to launch"; fi' \
+  --preview-window=up:30% \
+  --prompt="Launch or >math: ")
 
-    # Initialize input
-    input=""
-    prompt="Launcher (> for math): "
+# Extract query and selected (if any)
+query=$(echo "$result" | head -n1)
+selected=$(echo "$result" | tail -n +2)
 
-    while true; do
-        # Clear screen for clean display
-        clear
-
-        # Display math preview if input starts with '>'
-        if [[ "$input" =~ ^\> ]]; then
-            math_result=$(evaluate_math "$input")
-            echo -e "Math Preview:\n$math_result\n"
-        else
-            # Show app suggestions
-            echo -e "Applications:\n$apps" | grep -i "$input" | head -n 10
-        fi
-
-        # Display prompt and input
-        echo -n "$prompt"
-        echo "$input"
-
-        # Read a single character without pressing enter
-        read -n 1 -s char
-
-        case "$char" in
-            $'\x7f') # Backspace
-                input="${input%?}"
-                ;;
-            $'\n') # Enter
-                if [[ "$input" =~ ^\> ]]; then
-                    # If math mode, display final result and exit
-                    final_result=$(evaluate_math "$input")
-                    clear
-                    echo "Final Result: $final_result"
-                    read -p "Press Enter to exit..."
-                    exit 0
-                elif [ -n "$input" ]; then
-                    # If app mode, launch app and exit
-                    if echo "$apps" | grep -Fx "$input" >/dev/null; then
-                        exec "$input" &
-                        exit 0
-                    else
-                        clear
-                        echo "Application '$input' not found."
-                        read -p "Press Enter to continue..."
-                        input=""
-                    fi
-                fi
-                ;;
-            $'\e') # Escape
-                exit 0
-                ;;
-            *)
-                input="$input$char"
-                ;;
-        esac
-    done
-}
-
-# Run fzf to filter apps or handle input
-launcher | fzf --prompt="Launcher (> for math): " --preview-window=up:30% --preview="echo {}"
+# If query starts with ">", compute math
+if [[ $query == ">"* ]]; then
+  expr="${query#>}"
+  math_result=$(echo "$expr" | bc -l 2>/dev/null)
+  if [ -n "$math_result" ]; then
+    echo -n "$math_result" | xclip -selection clipboard
+    echo "Result copied to clipboard: $math_result"
+  else
+    echo "Invalid math expression"
+  fi
+elif [ -n "$selected" ]; then
+  # Launch the selected app
+  exec "$selected"
+fi

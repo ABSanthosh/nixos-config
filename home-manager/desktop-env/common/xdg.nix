@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   xdg = {
     mimeApps = {
@@ -94,21 +94,7 @@
       file:///home/santhosh/Pictures Pictures
       file:///home/santhosh/Downloads Downloads
       file:///home/santhosh/Music Music
+      file:///tmp Tmp
     '';
-
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal
-        xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
-      ];
-
-      config = {
-        common = {
-          default = [ "wlr" ];
-        };
-      };
-    };
   };
 }

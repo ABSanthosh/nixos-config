@@ -67,16 +67,15 @@ in
       samba
       cargo
       rustc
-      nodejs
+      nodejs_24
       docker
       typescript
       unstable.deno
 
       # Editor
       zed-editor
-      unstable.vscode
-      # davinci-resolve
-      libsForQt5.kdenlive
+      vscode
+      # kdePackages.kdenlive
 
       # CLI tools
       age
@@ -85,12 +84,14 @@ in
       sops
       yazi
       htop
+      tree
       sotp # CLI TOTP generator
       ingest # CLI to read git repos and count tokens
       openssl
       usbmuxd
       dmenu-rs
       starship
+      imagemagick
       libqalculate
       libimobiledevice
       perl540Packages.LaTeXML
@@ -106,9 +107,9 @@ in
 
       # Python
       uv
-      python311
-      python311Packages.pip
-      python311Packages.python-lsp-server
+      python313
+      python313Packages.black
+      python313Packages.python-lsp-server
 
       # fonts
       jetbrains-mono
@@ -121,6 +122,12 @@ in
       # Games
       prismlauncher
       tailscale
+
+      # Temp
+      ifuse
+      libplist
+      python312Packages.osxphotos
+      exiftool
     ];
 
     file.".npmrc".text = lib.generators.toINIWithGlobalSection { } {
@@ -129,14 +136,14 @@ in
       };
     };
   };
-  services = {
-    gammastep = {
-      enable = true;
-      provider = "manual";
-      latitude = 49.0;
-      longitude = 8.4;
-    };
-  };
+  # services = {
+  #   gammastep = {
+  #     enable = true;
+  #     provider = "manual";
+  #     latitude = 49.0;
+  #     longitude = 8.4;
+  #   };
+  # };
 
   programs = {
     home-manager.enable = true;

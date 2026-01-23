@@ -86,7 +86,7 @@
   };
 
   systemd = {
-    watchdog.rebootTime = "0";
+    settings.Manager.RebootWatchdogSec = "0";
     targets.network-online.wantedBy = pkgs.lib.mkForce [ ];
     services = {
       systemd-udev-settle.enable = false;

@@ -3,20 +3,55 @@
   ...
 }:
 {
+  # xdg.portal = {
+  #   enable = true;
+
+  #   wlr.enable = true;
+  #   wlr.settings.screencast = {
+  #     output_name = "eDP-1";
+  #     chooser_type = "simple";
+  #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+  #   };
+
+  #   extraPortals = with pkgs; [
+  #     xdg-desktop-portal
+  #     xdg-desktop-portal-wlr
+  #     xdg-desktop-portal-gtk
+  #   ];
+
+  #   config = {
+  #     common = {
+  #       default = [ "wlr" ];
+  #     };
+  #   };
+  # };
 
   xdg.portal = {
-    config = {
-      common = {
-        default = [ "wlr" ];
-      };
-    };
+    enable = true;
     wlr.enable = true;
-    wlr.settings.screencast = {
-      output_name = "eDP-1";
-      chooser_type = "simple";
-      chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-    };
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = [
+      "wlr"
+      "gtk"
+    ];
   };
+
+  # xdg.portal = {
+  #   config = {
+  #     common = {
+  #       default = [ "wlr" ];
+  #     };
+  #   };
+  #   wlr.enable = true;
+  #   wlr.settings.screencast = {
+  #     output_name = "eDP-1";
+  #     chooser_type = "simple";
+  #     chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+  #   };
+  # };
 
   security = {
     # pam.services.swaylock = { };
@@ -74,7 +109,7 @@
       enable = true;
       settings = {
         default_session.command = ''
-          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+          ${pkgs.tuigreet}/bin/tuigreet \
             --time \
             --asterisks \
             --remember \

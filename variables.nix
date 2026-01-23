@@ -23,7 +23,8 @@
   browser = "brave"; # Set Default Browser (google-chrome-stable for google-chrome)
   terminal = "kitty"; # Set Default System Terminal
   profile = assets/santhosh;
-  wallpaper = assets/Wallpapers/Misc/anime-cplusplus.jpg;
+  # wallpaper = assets/Wallpapers/Misc/anime-cplusplus.jpg;
+  wallpaper = assets/Wallpapers/Misc/Riya2.jpg;
   stateVersion = "25.05";
 
   # Sops

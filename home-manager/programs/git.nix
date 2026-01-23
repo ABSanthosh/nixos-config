@@ -1,9 +1,7 @@
 { pkgs, vars, ... }: {
   programs.git = {
     enable = true;
-    userName = vars.git.userName;
-    userEmail = vars.git.userEmail;
-    extraConfig = {
+    settings = {
       user.name = vars.git.userName;
       user.email = vars.git.userEmail;
       init.defaultBranch = "main";

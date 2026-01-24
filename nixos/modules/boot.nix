@@ -73,14 +73,6 @@
       kernelModules = [ "i915" ]; # Only i915 in early boot
     };
 
-    # Nvidia modules loaded AFTER boot by systemd
-    kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
-
     consoleLogLevel = 0;
     plymouth.enable = false;
   };

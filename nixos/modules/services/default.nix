@@ -1,10 +1,11 @@
 { pkgs, ... }:
 {
   imports = [
-    ./database/mysql.nix
+    # TODO: uncomment when I need these services
+    # ./database/mysql.nix
     # ./database/postgres.nix
     ./minecraft.nix
-    ./tailscale.nix
+    # ./tailscale.nix
   ];
 
   services = {

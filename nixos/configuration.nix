@@ -27,10 +27,11 @@
     # I want to keep intel graphics as default
     # and nvidia for offloading
     ./modules/gpu/intel.nix
-    ./modules/gpu/nvidia.nix
+    # ./modules/gpu/nvidia.nix
   ];
 
   programs = {
+    gamemode.enable = true;
     mtr.enable = true;
     gnupg.agent = {
       enable = true;

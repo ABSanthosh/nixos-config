@@ -20,6 +20,7 @@ in
     ./programs/bash.nix
     ./programs/kitty.nix
     ./programs/neovim.nix
+    ./programs/lutris.nix
     ./programs/browsers.nix
     ./programs/fastfetch.nix
 
@@ -34,6 +35,7 @@ in
   nixpkgs = {
     overlays = [
       outputs.overlays.unstable-packages
+      outputs.overlays.old-packages
       outputs.overlays.patched-phinger-cursors
     ];
 
@@ -74,13 +76,14 @@ in
 
       # Editor
       zed-editor
-      vscode
+      unstable.vscode
       # kdePackages.kdenlive
 
       # CLI tools
       age
       git
       mpv
+      _7zz
       sops
       yazi
       htop

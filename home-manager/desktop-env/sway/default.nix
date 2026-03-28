@@ -38,6 +38,7 @@ in
     playerctl # media control
     nautilus # file manager
     brightnessctl # brightness control
+    wl-mirror # screen mirroring
 
     # For minecraft
     alsa-oss
@@ -75,7 +76,7 @@ in
         "eDP-1" = {
           mode = "3840x2160@60Hz";
           scale = "2";
-          pos = "1920,2160";
+          pos = "0,0";
         };
       };
       # Config syntax: https://discourse.nixos.org/t/programs-i3status-rust-enable-has-no-effect-in-home-manager/19728/7
@@ -164,12 +165,12 @@ in
       set $alt Mod1
 
       # Configure display with conservative settings
-      output DP-5 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync of
+      output DP-5 resolution 1920x1080@60Hz position 0,-1080 scale 1 adaptive_sync of
       output DP-5 max_render_time off
       output DP-5 allow_tearing no
       output DP-5 render_bit_depth 8
 
-      output DP-6 resolution 1920x1080@60Hz position 1920,1080 scale 1 adaptive_sync off
+      output DP-6 resolution 1920x1080@60Hz position 0,-1080 scale 1 adaptive_sync off
       output DP-6 max_render_time off
       output DP-6 allow_tearing no
       output DP-6 render_bit_depth 8

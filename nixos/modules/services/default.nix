@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, vars, ... }:
 {
   imports = [
     # TODO: uncomment when I need these services
@@ -73,7 +73,7 @@
           security = "user";
         };
         public = {
-          path = "/home/santhosh/iphone";
+          path = "${vars.user.home}/iphone";
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "yes";

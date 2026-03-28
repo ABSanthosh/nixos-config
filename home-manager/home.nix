@@ -48,7 +48,7 @@ in
   catppuccin = {
     enable = true;
     flavor = vars.catppuccin.flavor;
-    mako.enable = false;
+    mako.enable = true;
   };
 
   home = {
@@ -119,8 +119,6 @@ in
 
       # Databases and utils
       mysql80
-      # postgresql
-      # unstable.cockroachdb-bin I don't think I need this
 
       # Games
       prismlauncher
@@ -139,18 +137,15 @@ in
       };
     };
   };
-  # services = {
-  #   gammastep = {
-  #     enable = true;
-  #     provider = "manual";
-  #     latitude = 49.0;
-  #     longitude = 8.4;
-  #   };
-  # };
-
   programs = {
     home-manager.enable = true;
   };
+
+  services.mako.enable = true;
+
+  home.activation.createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "${vars.user.home}/Pictures/Screenshots"
+  '';
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

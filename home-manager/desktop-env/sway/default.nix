@@ -6,13 +6,10 @@
 let
   mod4 = "Mod4";
 
-  # swaybar-cmd = pkgs.callPackage ./swaybar/swaybar-cmd.nix { };
   i3blocks-conf = pkgs.callPackage ./i3blocks/i3blocks-conf.nix { };
-  misc = import ./misc.nix { inherit pkgs; };
 in
 {
   imports = [
-    # ../common/gtk.nix
     ./hyprlock
   ];
 
@@ -43,14 +40,11 @@ in
     # For minecraft
     alsa-oss
     jq
-
-    misc.dbusSwayEnvironment
-    misc.configureGtk
   ];
 
   wayland.windowManager.sway = {
     enable = true;
-    checkConfig = false;
+    checkConfig = true;
     wrapperFeatures.gtk = true;
 
     systemd = {
@@ -68,7 +62,6 @@ in
       terminal = "kitty";
       defaultWorkspace = "workspace number 1";
       startup = [
-        { command = "udiskie"; }
         { command = "clipse --listen"; }
         { command = "systemctl --user start sops-nix"; }
       ];
@@ -180,16 +173,16 @@ in
       workspace 3 output eDP-1
       workspace 4 output eDP-1
       workspace 5 output eDP-1
-      workspace 6 output DP-1
-      workspace 7 output DP-1
-      workspace 8 output DP-1
-      workspace 9 output DP-1
-      workspace 10 output DP-1
-      workspace 6 output DP-2
-      workspace 7 output DP-2
-      workspace 8 output DP-2
-      workspace 9 output DP-2
-      workspace 10 output DP-2
+      workspace 6 output DP-5
+      workspace 7 output DP-5
+      workspace 8 output DP-5
+      workspace 9 output DP-5
+      workspace 10 output DP-5
+      workspace 6 output DP-6
+      workspace 7 output DP-6
+      workspace 8 output DP-6
+      workspace 9 output DP-6
+      workspace 10 output DP-6
 
       # capture all screens to clipboard    
       bindsym Print exec grim - | wl-copy    
@@ -199,8 +192,6 @@ in
 
       # Save specific screen area to folder /home/username/Pictures/Screenshots
       bindsym $mod+Shift+s exec grim -g "$(slurp)" /home/${vars.user.name}/Pictures/Screenshots/$(date +%Y-%m-%d-%H-%M-%S).png
-
-      exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
       # Brightness
       bindsym --locked XF86MonBrightnessDown exec brightnessctl --save set 1%- && pkill -SIGRTMIN+10 i3blocks
@@ -302,7 +293,6 @@ in
       bindsym $alt+Shift+Tab workspace prev_on_output
 
       # Borders
-      default_border none 
       default_floating_border normal 0
       default_border pixel 0
       workspace_layout tabbed 

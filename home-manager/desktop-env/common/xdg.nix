@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   xdg = {
     mimeApps = {
@@ -90,10 +90,10 @@
     };
 
     configFile."gtk-3.0/bookmarks".text = ''
-      file:///home/santhosh/Desktop Desktop
-      file:///home/santhosh/Pictures Pictures
-      file:///home/santhosh/Downloads Downloads
-      file:///home/santhosh/Music Music
+      file://${config.home.homeDirectory}/Desktop Desktop
+      file://${config.home.homeDirectory}/Pictures Pictures
+      file://${config.home.homeDirectory}/Downloads Downloads
+      file://${config.home.homeDirectory}/Music Music
       file:///tmp Tmp
     '';
   };

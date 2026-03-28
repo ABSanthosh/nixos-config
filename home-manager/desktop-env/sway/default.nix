@@ -80,7 +80,6 @@ in
               "JetBrains Mono"
             ];
           };
-          # statusCommand = "${swaybar-cmd}/bin/swaybar-cmd";
           statusCommand = "${pkgs.i3blocks}/bin/i3blocks -c ${i3blocks-conf}";
           colors = {
             background = "$crust";

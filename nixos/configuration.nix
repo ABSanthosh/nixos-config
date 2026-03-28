@@ -4,30 +4,33 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
-    # Modules
-    ./modules/env.nix
-    ./modules/tlp.nix
+    # System
     ./modules/nix.nix
     ./modules/i18n.nix
-    ./modules/services
     ./modules/boot.nix
-    ./modules/fonts.nix
-    ./modules/sound.nix
-    ./modules/docker.nix
-    ./modules/aliases.nix
-    ./modules/hardware.nix
-    ./modules/bluetooth.nix
-    ./modules/networking.nix
     ./modules/fhs-compat.nix
 
-    # Desktop env
-    ./modules/desktop-env/sway.nix
-
-    # gpu
-    # I want to keep intel graphics as default
-    # and nvidia for offloading
+    # Hardware
+    ./modules/hardware.nix
+    ./modules/tlp.nix
     ./modules/gpu/intel.nix
     # ./modules/gpu/nvidia.nix
+
+    # Desktop
+    ./modules/fonts.nix
+    ./modules/sound.nix
+    ./modules/bluetooth.nix
+    ./modules/desktop-env/sway.nix
+
+    # Networking
+    ./modules/networking.nix
+
+    # Services
+    ./modules/services/docker.nix
+    ./modules/services/minecraft.nix
+    # ./modules/services/tailscale.nix
+    # ./modules/services/database/mysql.nix
+    # ./modules/services/database/postgres.nix
   ];
 
   programs = {

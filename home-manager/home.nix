@@ -37,6 +37,7 @@ in
       outputs.overlays.unstable-packages
       outputs.overlays.old-packages
       outputs.overlays.patched-phinger-cursors
+      outputs.overlays.vscode-custom
     ];
 
     config = {
@@ -76,7 +77,7 @@ in
 
       # Editor
       zed-editor
-      unstable.vscode
+      vscode-custom
       # kdePackages.kdenlive
 
       # CLI tools

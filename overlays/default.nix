@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  vscode-custom = final: _prev: {
+    vscode-custom = final.callPackage ../pkgs/vscode.nix { };
+  };
+
   patched-phinger-cursors = final: prev: {
     phinger-cursors = prev.phinger-cursors.overrideAttrs (old: {
       postInstall = ''

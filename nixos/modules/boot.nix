@@ -37,7 +37,7 @@
       "video=DP-1:1920x1080@60"
     ];
 
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
 
     initrd = {
       verbose = false;

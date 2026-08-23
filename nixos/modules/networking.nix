@@ -1,10 +1,18 @@
-{ vars, config, ... }:
+{
+  vars,
+  config,
+  lib,
+  ...
+}:
 {
   networking = {
     hostName = vars.user.host;
     networkmanager = {
       enable = true;
-      wifi.powersave = true;
+      wifi = {
+        powersave = true;
+        backend = "iwd";
+      };
     };
     wireless = {
       enable = false;
@@ -56,8 +64,8 @@
     };
 
     openssh = {
-      enable = true;
-      settings.PasswordAuthentication = true;
+      enable = false;
+      # settings.PasswordAuthentication = true;
     };
 
     samba = {

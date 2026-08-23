@@ -50,6 +50,7 @@ in
     enable = true;
     flavor = vars.catppuccin.flavor;
     mako.enable = true;
+    gemini-cli.enable = false;
   };
 
   home = {
@@ -66,14 +67,14 @@ in
 
       # Programming Languages
       go
-      jdk
       samba
       cargo
       rustc
-      nodejs_24
       docker
+      nodejs_24
       typescript
       unstable.deno
+      javaPackages.compiler.openjdk25
 
       # Editor
       zed-editor
@@ -98,7 +99,7 @@ in
       imagemagick
       libqalculate
       libimobiledevice
-      perl540Packages.LaTeXML
+      perlPackages.LaTeXML
 
       # Code formatters and linters
       nil # Lang server for Nix
@@ -106,8 +107,8 @@ in
       rustfmt # Code format Rust
       shfmt # Code format Shell
       shellcheck # Code lint Shell
-      nixfmt-rfc-style # Code format Nix
-      nodePackages.prettier # Code format
+      nixfmt # Code format Nix
+      prettier # Code format
 
       # Python
       uv
@@ -119,7 +120,7 @@ in
       jetbrains-mono
 
       # Databases and utils
-      mysql80
+      mysql84
 
       # Games
       prismlauncher
@@ -128,7 +129,7 @@ in
       # Temp
       ifuse
       libplist
-      python312Packages.osxphotos
+      # unstable.python313Packages.osxphotos
       exiftool
     ];
 

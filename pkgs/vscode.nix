@@ -11,10 +11,10 @@ let
   throwSystem = throw "Unsupported system: ${system}";
 
   # ── UPDATE THESE TWO FIELDS ─────────────────────────────────────────────────
-  version = "1.113.0";
+  version = "1.128.0";
 
   hashes = {
-    x86_64-linux   = "sha256-p+8hlq6eB/d3oyPMirJ4ZRqY65xQyEk0jc8k2FiduuY=";
+    x86_64-linux   = "sha256-qbTOl07MEMdFbamHl2O/CnpDJxC9JslaiaihaPKv9Xs=";
     aarch64-linux  = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
     x86_64-darwin  = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
     aarch64-darwin = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";

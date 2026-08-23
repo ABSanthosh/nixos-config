@@ -38,15 +38,21 @@ in
         echo "VSCode: $CURRENT → $LATEST, fetching hash..."
         local URL="https://update.code.visualstudio.com/$LATEST/linux-x64/stable"
         local SRI
-        SRI=$(nix store prefetch-file --hash-type sha256 --unpack --json "$URL" 2>/dev/null \
+        SRI=$(nix store prefetch-file --hash-type sha256 --json "$URL" 2>/dev/null \
           | jq -r '.hash')
 
         if [[ -z "$SRI" || "$SRI" == "null" ]]; then
           echo "Error: could not fetch VSCode hash" >&2; return 1
         fi
 
-        sed -i "s|  version = \".*\";|  version = \"$LATEST\";|" "$VSCODE_NIX"
-        sed -i "s|    x86_64-linux  = \"sha256-[^\"]*\";|    x86_64-linux  = \"$SRI\";|" "$VSCODE_NIX"
+        python3 - "$VSCODE_NIX" "$LATEST" "$SRI" <<'EOF'
+  import re, sys
+  path, version, sri = sys.argv[1], sys.argv[2], sys.argv[3]
+  txt = open(path).read()
+  txt = re.sub(r'(version\s*=\s*)"[^"]*"', rf'\1"{version}"', txt, count=1)
+  txt = re.sub(r'(x86_64-linux\s*=\s*)"sha256-[^"]*"', rf'\1"{sri}"', txt)
+  open(path, "w").write(txt)
+  EOF
         echo "Updated pkgs/vscode.nix → $LATEST"
         echo "Run nix-refresh to rebuild."
       }
@@ -60,7 +66,8 @@ in
         nix-update = "nix flake update";
 
         yy = "yazi";
-        captive = "route -n | awk '$1 == \"0.0.0.0\" {print $2}' | wl-copy";
+        captive = "ip route show default | awk '{print $3}' | wl-copy";
+
 
         ".." = "cd ..";
         "..." = "cd ../../";

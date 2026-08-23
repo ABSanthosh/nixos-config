@@ -1,7 +1,8 @@
 { config, pkgs, lib, ... }:
 {
   # Time zone.
-  time.timeZone = "America/New_York";
+  # time.timeZone = "America/New_York";
+  time.timeZone = "America/Los_Angeles";
 
   # Internationalisation properties.
   i18n = {
